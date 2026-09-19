@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Packages Matrix & Day-by-Day Itineraries | Ceylon Chauffeur</title>
+  <meta name="description" content="Browse our 11 master Sri Lanka tour itineraries across Cultural Highlights, Wildlife Safari, and Tropical Beaches. Available as private daily chauffeur service or full package.">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <div class="top-bar-item">
+          <i class="fas fa-envelope text-gold"></i>
+          <a href="mailto:bookings@ceylonchauffeur.com">bookings@ceylonchauffeur.com</a>
+        </div>
+        <div class="top-bar-item">
+          <i class="fas fa-phone-alt text-gold"></i>
+          <span>24/7 Island Concierge: +94 77 123 4567</span>
+        </div>
+        <div class="top-bar-item">
+          <i class="fas fa-shield-alt text-gold"></i>
+          <span>100% All-Inclusive Daily Rates • No Hidden Costs</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="top-whatsapp-btn action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
+          <i class="fab fa-whatsapp"></i> Book via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="main-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="brand-logo-img">
+        <div class="brand-text">
+          <h2>CEYLON CHAUFFEURS</h2>
+          <span>Explore Sri Lanka in Luxury</span>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="packages.html" class="nav-link active">Tour Packages</a></li>
+        <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+        <li><a href="booking.html" class="nav-link">Custom Itinerary</a></li>
+        <li><a href="reviews.html" class="nav-link">Trust & Reviews</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="booking.html" class="btn btn-primary btn-sm">
+          <i class="fas fa-calendar-check"></i> Get a Custom Quote
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle Navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header Banner -->
+  <section style="background: linear-gradient(180deg, rgba(4, 23, 18, 0.85) 0%, rgba(9, 44, 35, 0.95) 100%), url('assets/images/sigiriya.jpg') center/cover no-repeat; padding: 70px 0; color: #ffffff; text-align: center;">
+    <div class="container">
+      <span class="section-tag" style="color: var(--accent-gold-light);">Curated Sri Lanka Journeys</span>
+      <h1 style="color: #ffffff; font-size: clamp(2.2rem, 4vw, 3.4rem); margin-bottom: 16px;">
+        Master Tour Packages & Day-by-Day Itineraries
+      </h1>
+      <p style="max-width: 720px; margin: 0 auto 28px; color: rgba(255, 255, 255, 0.9); font-size: 1.1rem;">
+        Choose your desired itinerary with your private vehicle and driver-guide. Select between transparent <strong>Base Daily Chauffeur Rates</strong> (fuel & tolls included) or <strong>Full All-Inclusive Packages</strong>.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+        <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking a tour package.">
+          <i class="fab fa-whatsapp"></i> Inquire on WhatsApp
+        </button>
+        <a href="booking.html" class="btn btn-outline-light">
+          <i class="fas fa-sliders-h"></i> Customize Any Route
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tour Packages Matrix Section -->
+  <section class="packages-section">
+    <div class="container">
+
+      <!-- Filter Controls & Pricing Switcher -->
+      <div class="packages-filter-bar">
+        <div class="category-tabs">
+          <button class="tab-btn active" data-category="all">All Packages (11)</button>
+          <button class="tab-btn" data-category="all-rounder">All-Rounder / Island Highlights (5)</button>
+          <button class="tab-btn" data-category="wildlife">Wildlife & Nature Explorer (3)</button>
+          <button class="tab-btn" data-category="beach">Beach & Coastal Escape (3)</button>
+        </div>
+
+        <div class="pricing-mode-toggle">
+          <span>Base Chauffeur Rate</span>
+          <label class="switch">
+            <input type="checkbox" id="pricing-mode-toggle-checkbox">
+            <span class="slider"></span>
+          </label>
+          <span style="color: var(--primary-emerald); font-weight: 700;">Full Package Estimate</span>
+        </div>
+      </div>
+
+      <!-- Packages Grid Container (Populated dynamically by packages.js) -->
+      <div id="packages-grid-container" class="packages-grid">
+        <!-- Rendered via JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Inclusions Callout Banner -->
+  <section class="inclusions-banner">
+    <div class="container">
+      <div class="inclusions-header">
+        <span class="section-tag" style="color: var(--accent-gold-light);">Guaranteed Inclusions</span>
+        <h2>Every Tour Includes 100% Comprehensive Chauffeur Care</h2>
+        <p>All fuel, airport and expressway tolls, parking fees, and driver lodging & food are completely covered. You enjoy Sri Lanka with total peace of mind.</p>
+      </div>
+
+      <div class="inclusions-grid">
+        <div class="inclusion-card">
+          <div class="inclusion-icon"><i class="fas fa-gas-pump"></i></div>
+          <h4>Fuel & Mileage</h4>
+          <p>Unlimited mileage for your itinerary with all fuel costs 100% included.</p>
+        </div>
+        <div class="inclusion-card">
+          <div class="inclusion-icon"><i class="fas fa-road"></i></div>
+          <h4>Highway Tolls & Parking</h4>
+          <p>Southern expressway, central expressway, and all monument parking fees covered.</p>
+        </div>
+        <div class="inclusion-card">
+          <div class="inclusion-icon"><i class="fas fa-hotel"></i></div>
+          <h4>Driver Food & Lodging</h4>
+          <p>No extra fees or hotel bookings required for your driver. Handled entirely by us.</p>
+        </div>
+        <div class="inclusion-card">
+          <div class="inclusion-icon"><i class="fas fa-route"></i></div>
+          <h4>Itinerary Flexibility</h4>
+          <p>Stop whenever you want for scenic photos, king coconuts, viewpoints, or tea breaks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Day-by-Day Itinerary Modal -->
+  <div id="itinerary-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-pkg-title">Tour Itinerary</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div id="modal-pkg-body" class="modal-content">
+        <!-- Timeline injected via packages.js -->
+      </div>
+      <div class="modal-footer">
+        <button id="modal-pkg-whatsapp-btn" class="btn btn-whatsapp btn-sm">
+          <i class="fab fa-whatsapp"></i> Book This Tour via WhatsApp
+        </button>
+        <button id="modal-pkg-quote-btn" class="btn btn-primary btn-sm">
+          <i class="fas fa-edit"></i> Customize & Get Quote
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp CTA (Persistent) -->
+  <div class="floating-whatsapp">
+    <div class="whatsapp-tooltip">Chat with Chauffeur Concierge</div>
+    <a href="#" class="floating-whatsapp-btn action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka." aria-label="WhatsApp Us">
+      <div class="whatsapp-pulse"></div>
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <div class="footer-logo-badge">
+            <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="footer-logo-img">
+            <div class="brand-text">
+              <h2 style="font-size: 1.1rem; color: var(--primary-emerald); margin: 0;">CEYLON CHAUFFEURS</h2>
+              <span style="font-size: 0.65rem; color: var(--accent-gold-hover); letter-spacing: 1.5px;">Explore Sri Lanka in Luxury</span>
+            </div>
+          </div>
+          <p>
+            Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
+          </p>
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
+              <i class="fab fa-whatsapp"></i> WhatsApp Concierge
+            </button>
+            <a href="booking.html" class="btn btn-primary btn-sm">Get Custom Quote</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Master Tours</h4>
+          <ul class="footer-links">
+            <li><a href="packages.html">4-Day Cultural Highlights</a></li>
+            <li><a href="packages.html">7-Day Heritage Classic</a></li>
+            <li><a href="packages.html">10-Day Complete Island</a></li>
+            <li><a href="packages.html">14-Day Grand Loop</a></li>
+            <li><a href="packages.html">21-Day Ultimate Ceylon</a></li>
+            <li><a href="packages.html">Wildlife & Safari Tours</a></li>
+            <li><a href="packages.html">Tropical Coastal Escapes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Our Fleet</h4>
+          <ul class="footer-links">
+            <li><a href="fleet.html">Toyota Premio Sedan (1-3 Pax)</a></li>
+            <li><a href="fleet.html">Toyota Axio / Prius Hybrid</a></li>
+            <li><a href="fleet.html">Honda Vezel Crossover (1-4 Pax)</a></li>
+            <li><a href="fleet.html">Mitsubishi Outlander SUV</a></li>
+            <li><a href="fleet.html">Toyota KDH Luxury Van (4-8 Pax)</a></li>
+            <li><a href="fleet.html">100% Inclusions Guarantee</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact & Bookings</h4>
+          <div class="footer-contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <strong>Inquiries & Bookings:</strong><br>
+              <a href="mailto:bookings@ceylonchauffeur.com">bookings@ceylonchauffeur.com</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fab fa-whatsapp"></i>
+            <div>
+              <strong>WhatsApp (24/7 Available):</strong><br>
+              <a href="#" class="action-whatsapp-btn">+94 77 123 4567</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <strong>Head Office:</strong><br>
+              Colombo & Katunayake Airport Hub, Sri Lanka
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
+        <div style="display: flex; gap: 20px;">
+          <a href="reviews.html">Trust Guarantee</a>
+          <a href="booking.html">Booking Terms</a>
+          <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/packages.js"></script>
+</body>
+</html>
