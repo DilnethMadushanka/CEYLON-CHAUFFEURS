@@ -221,64 +221,8 @@ h1, h2, h3, h4, .font-serif {
 }
 
 /* ==========================================================================
-   Header & Top Bar
+   Main Navigation
    ========================================================================== */
-.top-bar {
-  background-color: var(--primary-emerald-dark);
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.82rem;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-}
-
-.top-bar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.top-bar-left {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.top-bar-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.top-bar-item a:hover {
-  color: var(--accent-gold);
-}
-
-.top-bar-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.top-whatsapp-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--whatsapp-green);
-  color: #ffffff;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  transition: var(--transition);
-}
-
-.top-whatsapp-btn:hover {
-  background-color: var(--whatsapp-green-hover);
-  color: #ffffff;
-  transform: scale(1.03);
-}
-
-/* Main Navigation */
 .main-header {
   position: sticky;
   top: 0;
@@ -1847,19 +1791,6 @@ input:checked + .slider:before {
 @media (max-width: 768px) {
   .container {
     padding: 0 16px;
-  }
-
-  /* Top Bar */
-  .top-bar {
-    padding: 6px 0;
-  }
-
-  .top-bar-left {
-    display: none;
-  }
-
-  .top-bar-inner {
-    justify-content: flex-end;
   }
 
   /* Hero Section */
