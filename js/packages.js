@@ -1,5 +1,6 @@
 /**
  * Ceylon Chauffeur - Master Tour Packages Dataset & Logic
+ * Master Tour Package Itineraries (Relaxed Pace & Multi-Night Stays)
  * All 11 Packages across 3 Categories: All-Rounder, Wildlife & Nature, Beach & Coastal
  * Enhanced with Leaflet interactive mapping, multi-currency display, vehicle selection, and duration/search filtering.
  */
@@ -12,19 +13,26 @@ const DESTINATION_COORDS = {
   'Anuradhapura': [8.3114, 80.4037],
   'Polonnaruwa': [7.9403, 81.0188],
   'Kandy': [7.2906, 80.6337],
+  'Matale': [7.4675, 80.6234],
+  'Pinnawala': [7.3013, 80.3857],
   'Nuwara Eliya': [6.9497, 80.7891],
   'Ella': [6.8667, 81.0466],
   'Yala': [6.3685, 81.5204],
   'Udawalawe': [6.4746, 80.8987],
   'Mirissa': [5.9482, 80.4578],
+  'Weligama': [5.9722, 80.4283],
   'Galle': [6.0535, 80.2210],
   'Bentota': [6.4259, 79.9958],
+  'Hikkaduwa': [6.1408, 80.1011],
+  'Kalutara': [6.5854, 79.9607],
+  'Tangalle': [6.0244, 80.7941],
+  'Hiriketiya': [5.9628, 80.6974],
   'Wilpattu': [8.4489, 80.0094],
   'Trincomalee': [8.5874, 81.2152],
   'Pasikudah': [7.9250, 81.5642],
   'Arugam Bay': [6.8415, 81.8347],
   'Jaffna': [9.6615, 80.0255],
-  'Hiriketiya': [5.9628, 80.6974],
+  'Knuckles': [7.4667, 80.7833],
   'Horton Plains': [6.8028, 80.8044],
   'Habarana': [8.0336, 80.7513]
 };
@@ -36,327 +44,678 @@ const VEHICLE_RATES = {
 };
 
 const MASTER_PACKAGES = [
+  // =========================================================================
   // CATEGORY 1: ALL-ROUNDER / ISLAND HIGHLIGHTS
+  // =========================================================================
   {
     id: 'pkg-4d-cultural',
     category: 'all-rounder',
-    categoryName: 'All-Rounder',
-    title: '4-Day Cultural Highlights Tour',
+    categoryName: 'All-Rounder / Island Highlights',
+    title: '4-Day Cultural Highlights (Compact & Relaxed)',
+    keyFeature: 'Kandy / Sigiriya Base | Zero Rush',
     days: 4,
     image: 'assets/images/kandy.jpg',
     baseRateSedan: 260,
     fullRate: 580,
-    route: 'Negombo → Sigiriya → Dambulla → Kandy → Colombo',
+    route: 'Airport → Negombo → Sigiriya → Dambulla → Kandy → Colombo / Airport Drop',
     routePoints: ['Negombo', 'Sigiriya', 'Dambulla', 'Kandy', 'Colombo'],
     highlights: [
-      'Sigiriya Lion Rock Fortress climb at sunrise',
-      'Golden Temple of Dambulla cave murals',
-      'Sacred Temple of the Tooth Relic in Kandy',
-      'Pinnawala Elephant Sanctuary & Ceylon Tea Estate'
+      'Sigiriya Lion Rock Fortress climb at cool morning hours',
+      'Golden Temple of Dambulla ancient cave murals',
+      'Paced leisurely Kandy City Tour & sacred Temple of the Tooth',
+      'Peradeniya Royal Botanical Gardens & Pinnawala Elephants'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Sightseeing → Drive to Sigiriya', details: 'VIP pickup at Bandaranaike International Airport (CMB). Short city tour of Negombo colonial canals & fishing harbor, followed by a scenic drive through tropical coconut plantations to Sigiriya.' },
-      { day: 2, title: 'Sigiriya Rock Fortress Climb → Dambulla Cave Temple → Kandy', details: 'Early morning climb of the UNESCO World Heritage Sigiriya Rock Fortress. Afternoon visit to the historic Dambulla Cave Temple complex. Evening drive to royal Kandy.' },
-      { day: 3, title: 'Kandy City Tour (Temple of Tooth & Botanical Gardens) → Tea Plantation', details: 'Visit the sacred Temple of the Tooth Relic, stroll through the lush Peradeniya Royal Botanical Gardens, and tour a working high-altitude Ceylon tea factory with tasting.' },
-      { day: 4, title: 'Kandy → Pinnawala Elephant Sanctuary → Colombo City Tour → Airport Drop-off', details: 'Witness bathing elephants at Pinnawala, drive to the commercial capital Colombo for landmark sightseeing and shopping, followed by expressway transfer to airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Negombo Sightseeing → Sigiriya (Check-in)',
+        details: 'VIP greeting by your private chauffeur at Bandaranaike International Airport (CMB). Tour Negombo\'s historic colonial canals and vibrant fishing harbor, followed by a scenic, relaxed drive to your Sigiriya resort for check-in and evening rest.'
+      },
+      {
+        day: 2,
+        tag: 'EXPLORE & RELAX',
+        title: '[EXPLORE & RELAX] Morning Sigiriya Rock Climb → Dambulla Cave Temple → Kandy (Check-in)',
+        details: 'Ascend the 5th-century UNESCO Sigiriya Rock Fortress during the cool morning. Journey onwards to the ancient rock monastery at Dambulla, then transfer comfortably to royal Kandy for evening check-in.'
+      },
+      {
+        day: 3,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Kandy City Tour, Temple of the Tooth & Royal Botanical Gardens (Paced leisurely)',
+        details: 'A calm, unhurried day in the hill capital. Stroll through the lush 147-acre Peradeniya Royal Botanical Gardens, explore the sacred Temple of the Tooth Relic, and enjoy lakeside cafes at your own pace.'
+      },
+      {
+        day: 4,
+        title: 'Kandy → Tea Factory → Pinnawala Elephant Orphanage → Colombo / Airport Drop',
+        details: 'Tour an authentic highland Ceylon tea factory with tasting, observe bathing elephant herds at Pinnawala, and transfer via highway to Colombo or direct to CMB airport for departure.'
+      }
     ]
   },
   {
     id: 'pkg-7d-heritage',
     category: 'all-rounder',
-    categoryName: 'All-Rounder',
-    title: '7-Day Heritage & Hill Country Classic',
+    categoryName: 'All-Rounder / Island Highlights',
+    title: '7-Day Heritage & Hill Country Classic (Balanced Loop)',
+    keyFeature: '2 Nights in Sigiriya + 2 Nights in Ella | Driving Hours Minimized',
     days: 7,
     image: 'assets/images/ella.jpg',
     baseRateSedan: 455,
     fullRate: 980,
-    route: 'Negombo → Dambulla → Sigiriya → Polonnaruwa → Kandy → Ella → Colombo',
-    routePoints: ['Negombo', 'Dambulla', 'Sigiriya', 'Polonnaruwa', 'Kandy', 'Ella', 'Colombo'],
+    route: 'Negombo → Dambulla → Sigiriya → Matale → Kandy → Ella → Southern Expressway → Colombo / Airport',
+    routePoints: ['Negombo', 'Dambulla', 'Sigiriya', 'Matale', 'Kandy', 'Ella', 'Colombo'],
     highlights: [
-      'Sigiriya Rock Fortress & Polonnaruwa ancient kingdom',
-      'Minneriya elephant gathering 4x4 safari',
-      'World-famous scenic blue train ride from Kandy to Ella',
-      'Nine Arches Bridge & Little Adam\'s Peak hike'
+      '2 Nights in Sigiriya & 2 Nights in Ella for relaxed pacing',
+      'UNESCO Sigiriya Lion Rock & Dambulla Cave Temples',
+      'Scenic highland blue train journey to Ella',
+      'Nine Arches Bridge, cafe hopping & Ravana Falls without rush'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Beach Rest', details: 'Warm airport welcome by your private chauffeur. Check in to your Negombo beachside resort to unwind from your flight.' },
-      { day: 2, title: 'Negombo → Dambulla Cave Temple → Sigiriya Rock Fortress', details: 'Journey into the cultural triangle. Explore ancient cave shrines in Dambulla and take in sunset views around Sigiriya.' },
-      { day: 3, title: 'Polonnaruwa Ancient City → Minneriya Elephant Safari', details: 'Cycle or walk through the 12th-century ruins of Polonnaruwa. Afternoon thrilling 4x4 jeep safari in Minneriya National Park.' },
-      { day: 4, title: 'Sigiriya → Matale Spice Garden → Kandy (Temple of Tooth & Dance Show)', details: 'Discover aromatic spices in Matale. Arrive in Kandy for the evening Cultural Dance Show and the sacred Temple of the Tooth ceremony.' },
-      { day: 5, title: 'Kandy → Tea Factory → Scenic Train Ride to Ella', details: 'Visit lush tea hills of Nuwara Eliya. Board the iconic scenic blue train journey winding through cloud forests and emerald valleys to Ella.' },
-      { day: 6, title: 'Nine Arches Bridge → Little Adam’s Peak → Ravana Waterfalls', details: 'Photograph trains crossing the colonial Nine Arches Bridge, hike Little Adam\'s Peak for 360-degree panoramas, and refresh at Ravana Falls.' },
-      { day: 7, title: 'Ella → Southern Expressway → Colombo / Airport Drop-off', details: 'Descend the mountains and travel smoothly via the southern expressway to Colombo or direct to CMB airport for departure.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Negombo (Rest & Beach Relaxation)',
+        details: 'Warm welcome by your private chauffeur at CMB airport. Transfer to your Negombo beachside resort to unwind from international flights with ocean breezes and fresh seafood.'
+      },
+      {
+        day: 2,
+        title: 'Negombo → Dambulla Cave Temple → Sigiriya (Check-in)',
+        details: 'Travel smoothly into the Cultural Triangle. Discover the UNESCO-listed Dambulla Golden Rock Cave Temple, then check in to your Sigiriya resort surrounded by nature.'
+      },
+      {
+        day: 3,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Morning Sigiriya Rock Climb → Afternoon Hotel Pool Relax / Minneriya Safari',
+        details: 'Morning ascent of the iconic Sigiriya Rock Fortress with panoramic jungle views. Spend the afternoon cooling off by the hotel pool, or embark on an optional 4x4 elephant gathering safari in Minneriya.'
+      },
+      {
+        day: 4,
+        title: 'Sigiriya → Matale Spice Garden → Kandy (Temple of Tooth & City Tour)',
+        details: 'Scenic drive to Kandy with a pause at a Matale herbal & spice garden. Check in to your Kandy hotel and visit the sacred Temple of the Tooth Relic in the evening.'
+      },
+      {
+        day: 5,
+        title: 'Kandy → Scenic Train Ride to Ella → Check-in',
+        details: 'Board the world-renowned hill country train journey. Glide past mist-shrouded emerald tea estates and mountain waterfalls to the tranquil mountain town of Ella for your 2-night stay.'
+      },
+      {
+        day: 6,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Ella Chill (Nine Arches Bridge, Cafe Hopping & Ravana Falls at a leisurely pace)',
+        details: 'Paced leisurely: photograph trains at the colonial Nine Arches Bridge, relax at mountain-view cafes, and take in the cascades of Ravana Falls without any rush.'
+      },
+      {
+        day: 7,
+        title: 'Ella → Southern Expressway → Colombo / Airport Drop',
+        details: 'Smooth descent from the mountains and rapid expressway transfer to Colombo for city highlights, or direct drop-off at Bandaranaike International Airport.'
+      }
     ]
   },
   {
     id: 'pkg-10d-complete',
     category: 'all-rounder',
-    categoryName: 'All-Rounder',
-    title: '10-Day Complete Island Highlights',
+    categoryName: 'All-Rounder / Island Highlights',
+    title: '10-Day Complete Island Highlights (Slow Island Loop)',
+    keyFeature: 'Multi-night stays in Sigiriya (2 Nights), Ella (2 Nights), and Mirissa (2 Nights)',
     days: 10,
     image: 'assets/images/sigiriya.jpg',
     baseRateSedan: 650,
     fullRate: 1450,
-    route: 'Anuradhapura → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Mirissa → Galle',
-    routePoints: ['Negombo', 'Anuradhapura', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Mirissa', 'Galle', 'Colombo'],
+    route: 'Negombo → Anuradhapura → Sigiriya → Kandy → Nuwara Eliya → Ella → Udawalawe/Yala → Mirissa → Galle → Colombo / Airport',
+    routePoints: ['Negombo', 'Anuradhapura', 'Sigiriya', 'Dambulla', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Mirissa', 'Galle', 'Colombo'],
     highlights: [
-      'Comprehensive loop covering UNESCO heritage, mountains, safari & beaches',
-      'Yala National Park leopard & wildlife safari',
-      'Tea country waterfalls & scenic Ella train',
-      'Galle Dutch Fort UNESCO walk & Mirissa beach relaxation'
+      'Multi-night stays: 2 Nights Sigiriya, 2 Nights Ella, 2 Nights Mirissa',
+      'Anuradhapura Sacred City & Sigiriya Rock Fortress',
+      'Scenic train through tea country & Ella mountain relaxation',
+      'Udawalawe / Yala Safari, Mirissa beach rest & Galle Dutch Fort'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Relaxation', details: 'Welcome to Sri Lanka! Relax at your coastal hotel and enjoy a fresh seafood dinner.' },
-      { day: 2, title: 'Negombo → Anuradhapura Sacred City → Sigiriya', details: 'Explore Sri Lanka\'s oldest ancient capital, home to giant stupas and the sacred Bodhi tree, then drive to Sigiriya.' },
-      { day: 3, title: 'Sigiriya Rock Fortress → Hiriwadunna Village Tour → Minneriya Safari', details: 'Climb Sigiriya at dawn, experience authentic village life with catamaran boat ride, and embark on an afternoon elephant safari.' },
-      { day: 4, title: 'Sigiriya → Dambulla Caves → Matale → Kandy', details: 'Visit Dambulla cave murals, learn about herbal remedies in Matale, and arrive in the hill capital Kandy.' },
-      { day: 5, title: 'Kandy → Nuwara Eliya (Tea Gardens, Ramboda Falls & Gregory Lake)', details: 'Ascend into \'Little England\' through misty tea plantations, visit Ramboda Falls, and stroll around Gregory Lake.' },
-      { day: 6, title: 'Scenic Train Ride to Ella → Nine Arches Bridge', details: 'Experience the world-renowned mountain railway journey. Explore the charming mountain town of Ella and Nine Arches viaduct.' },
-      { day: 7, title: 'Ella Trekking → Udawalawe / Yala Safari', details: 'Hike Little Adam\'s Peak in the morning. Transfer to Yala / Udawalawe for a thrilling late-afternoon wildlife safari.' },
-      { day: 8, title: 'Yala → Mirissa / Weligama Beach Relax', details: 'Morning coastal drive to the southern golden sands of Mirissa and Weligama. Sunset cocktails by the Indian Ocean.' },
-      { day: 9, title: 'Galle Dutch Fort → Turtle Hatchery → Bentota', details: 'Walk the cobblestone streets and bastions of 17th-century Galle Fort. Visit a sea turtle conservation project.' },
-      { day: 10, title: 'Bentota Water Sports → Colombo Sightseeing → Airport Drop-off', details: 'Enjoy Madu River boat safari or water sports in Bentota, brief city tour in Colombo, and timely transfer to the airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Negombo Beach Rest',
+        details: 'Airport greeting and transfer to coastal Negombo for a restful evening after your flight.'
+      },
+      {
+        day: 2,
+        title: 'Negombo → Anuradhapura Sacred City → Sigiriya (Check-in)',
+        details: 'Journey to the ancient kingdom of Anuradhapura to witness monumental stupas and the sacred Jaya Sri Maha Bodhi tree. Evening check-in at your Sigiriya hotel.'
+      },
+      {
+        day: 3,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Morning Sigiriya Rock Climb → Afternoon Minneriya Elephant Safari',
+        details: 'Early morning climb of Sigiriya Lion Rock Fortress. Unwind in the afternoon before a thrilling 4x4 open-top safari observing wild elephant herds at Minneriya.'
+      },
+      {
+        day: 4,
+        title: 'Sigiriya → Dambulla Caves → Kandy (Temple of Tooth)',
+        details: 'Explore the gilded cave temples of Dambulla, then transfer to the cultural capital of Kandy to visit the sacred Temple of the Tooth Relic.'
+      },
+      {
+        day: 5,
+        title: 'Kandy → Tea Plantations → Nuwara Eliya',
+        details: 'Drive through panoramic central highlands and terraced tea plantations. Visit an active tea factory and explore colonial Nuwara Eliya (Little England).'
+      },
+      {
+        day: 6,
+        title: 'Nuwara Eliya → Scenic Train Ride to Ella → Check-in',
+        details: 'Board the iconic scenic mountain train winding through cloud forests and mountain gorges into the bohemian town of Ella for your 2-night stay.'
+      },
+      {
+        day: 7,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Ella Leisure (Nine Arches Bridge & Little Adam’s Peak)',
+        details: 'A leisurely day exploring the Nine Arches viaduct, walking up gentle trails to Little Adam\'s Peak for 360-degree mountain panoramas, and chilling in Ella\'s cafes.'
+      },
+      {
+        day: 8,
+        title: 'Ella → Udawalawe / Yala Evening Safari → Mirissa / Weligama (Check-in)',
+        details: 'Descend from the hills for an exhilarating wildlife safari in Yala or Udawalawe, then cruise to the southern coastline to check in at Mirissa / Weligama for 2 relaxing nights.'
+      },
+      {
+        day: 9,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Full Day Beach Relax / Whale Watching / Pool Chill in Mirissa',
+        details: 'A full restorative beach day. Choose an early morning whale watching catamaran excursion, sunbathe on golden sands, or sip cocktails by the pool.'
+      },
+      {
+        day: 10,
+        title: 'Mirissa → Galle Dutch Fort → Colombo Shopping → Airport Drop',
+        details: 'Stroll through the cobblestone ramparts and boutiques of UNESCO Galle Dutch Fort, continue via expressway for souvenir shopping in Colombo, and timely drop-off at CMB airport.'
+      }
     ]
   },
   {
     id: 'pkg-14d-grand',
     category: 'all-rounder',
-    categoryName: 'All-Rounder',
-    title: '14-Day Grand Sri Lanka Loop',
+    categoryName: 'All-Rounder / Island Highlights',
+    title: '14-Day Grand Sri Lanka Loop (Relaxed Pace)',
+    keyFeature: '2 Nights in Sigiriya, Kandy, Ella, and South Coast',
     days: 14,
     image: 'assets/images/hero.jpg',
     baseRateSedan: 910,
     fullRate: 1980,
-    route: 'Negombo → Wilpattu → Anuradhapura → Sigiriya → Polonnaruwa → Kandy → Ella → Yala → Mirissa → Galle',
-    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Sigiriya', 'Polonnaruwa', 'Kandy', 'Ella', 'Yala', 'Mirissa', 'Galle'],
+    route: 'Negombo → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Mirissa → Bentota → Colombo / Airport Drop-off',
+    routePoints: ['Negombo', 'Dambulla', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Mirissa', 'Galle', 'Bentota', 'Colombo'],
     highlights: [
-      'Wilpattu & Yala dual national parks for maximum wildlife sightings',
-      'Full Cultural Triangle exploration (Anuradhapura, Polonnaruwa, Sigiriya, Dambulla)',
+      'True relaxed pace with 2 Nights each in Sigiriya, Kandy, Ella, and South Coast',
+      'Sigiriya Rock Fortress, Dambulla Caves & Minneriya Elephants',
       'Tea trails, world-famous train journey & hill retreats',
-      'Southern coastal living in Mirissa, Galle Fort, and Bentota'
+      'Yala Leopard Safari, Mirissa beaches & Galle Dutch Fort'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Rest', details: 'Arrival and transfer to Negombo. Leisure day to rest after long flights.' },
-      { day: 2, title: 'Negombo → Wilpattu Safari → Anuradhapura', details: 'Early morning safari in Wilpattu National Park searching for leopards and sloth bears, continuing to Anuradhapura.' },
-      { day: 3, title: 'Anuradhapura Sightseeing → Habarana/Sigiriya', details: 'Full morning touring ancient monasteries and monumental dagobas. Afternoon drive to Habarana.' },
-      { day: 4, title: 'Sigiriya Rock Fortress → Hiriwadunna Village Tour', details: 'Ascend Sigiriya fortress in comfortable morning hours, followed by traditional Sri Lankan village lunch and ox-cart ride.' },
-      { day: 5, title: 'Polonnaruwa Ancient Ruins → Minneriya Elephant Safari', details: 'Marvel at the Gal Vihara stone statues in Polonnaruwa, followed by massive wild elephant gathering in Minneriya.' },
-      { day: 6, title: 'Dambulla Cave Temple → Spice Garden → Kandy', details: 'Discover ancient rock monastery at Dambulla, explore Matale spice trail, arrive in royal Kandy.' },
-      { day: 7, title: 'Kandy City Tour (Temple of Tooth & Botanical Gardens)', details: 'Peradeniya botanical gardens, Temple of the Tooth, and scenic viewpoints over Kandy lake.' },
-      { day: 8, title: 'Kandy → Tea Factory → Nuwara Eliya', details: 'Drive past tumbling waterfalls into the cool highlands. Tour an active tea processing estate.' },
-      { day: 9, title: 'Scenic Train Ride to Ella → Nine Arches Bridge', details: 'Board the picturesque train winding through pine forests and tea estates into relaxed Ella.' },
-      { day: 10, title: 'Little Adam’s Peak → Ravana Falls → Ella', details: 'Morning ridge hike to Little Adam\'s Peak, visit Ravana cave & waterfall.' },
-      { day: 11, title: 'Ella → Yala Evening Safari', details: 'Descend to the dry zone scrub jungles of Yala. Evening 4x4 safari looking for leopards.' },
-      { day: 12, title: 'Yala → Mirissa Beach Relax', details: 'Scenic transfer along the southern coastline to Mirissa. Relax on tropical sands.' },
-      { day: 13, title: 'Mirissa → Galle Dutch Fort → Bentota', details: 'Explore UNESCO heritage Galle Fort, boutique shopping, and transfer to Bentota.' },
-      { day: 14, title: 'Bentota → Colombo City Tour → Airport Drop-off', details: 'River boat excursion, Colombo colonial architecture & shopping, and transfer to CMB airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Negombo (Rest & Beach Relaxation)',
+        details: 'Airport pickup and check-in to your beachfront resort in Negombo to recover from travel.'
+      },
+      {
+        day: 2,
+        title: 'Negombo → Dambulla Cave Temple → Sigiriya (Check-in)',
+        details: 'Scenic drive to the Cultural Triangle, exploring the ancient Dambulla cave murals before arriving at Sigiriya for your 2-night stay.'
+      },
+      {
+        day: 3,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Morning Sigiriya Rock Climb → Afternoon Relax at Hotel / Spa / Village Tour',
+        details: 'Dawn ascent of Sigiriya Rock Fortress. Spend a serene afternoon enjoying Ayurvedic spa treatments, hotel pool relaxation, or an authentic rural village tour.'
+      },
+      {
+        day: 4,
+        title: 'Sigiriya → Minneriya Elephant Safari → Kandy (Check-in)',
+        details: 'Afternoon elephant safari in Minneriya National Park, followed by a scenic drive to your Kandy hotel for a 2-night stay.'
+      },
+      {
+        day: 5,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Kandy City, Temple of Tooth & Botanical Gardens (Paced leisurely)',
+        details: 'Visit the sacred Temple of the Tooth, leisurely wander through the royal botanical gardens at Peradeniya, and enjoy an evening cultural dance show.'
+      },
+      {
+        day: 6,
+        title: 'Kandy → Tea Factory Visit → Nuwara Eliya',
+        details: 'Travel through the mist-shrouded tea hills, tour a premier tea processing factory, and stroll through picturesque Nuwara Eliya.'
+      },
+      {
+        day: 7,
+        title: 'Nuwara Eliya → Scenic Train Ride to Ella (Check-in)',
+        details: 'Experience the world\'s most scenic train journey from the highlands down to the hill town of Ella for a 2-night stay.'
+      },
+      {
+        day: 8,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Ella (Nine Arches Bridge & Cafe Hop at a relaxed pace)',
+        details: 'Spend a slow, unhurried day visiting the Nine Arches viaduct, watching colonial trains, and soaking up the lively cafe atmosphere.'
+      },
+      {
+        day: 9,
+        title: 'Ella → Yala (Evening Safari)',
+        details: 'Descend to the dry zone scrub jungles for a late afternoon 4x4 safari in Yala National Park tracking leopards and elephants.'
+      },
+      {
+        day: 10,
+        title: 'Yala → Mirissa / Weligama Beach (Check-in)',
+        details: 'Short coastal drive to the southern shores of Mirissa / Weligama. Check in to your seaside resort and watch the sunset.'
+      },
+      {
+        day: 11,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Full Day Beach Relax / Pool / Whale Watching',
+        details: 'Unwind completely with a full day of tropical beach living, optional whale watching, and fresh seafood dining.'
+      },
+      {
+        day: 12,
+        title: 'Mirissa → Galle Dutch Fort Exploration → Bentota (Check-in)',
+        details: 'Explore the maritime history, jewelry boutiques, and historic ramparts of UNESCO Galle Dutch Fort, then drive to Bentota.'
+      },
+      {
+        day: 13,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Water Sports or Chill by the Beach in Bentota',
+        details: 'A leisurely coastal day. Enjoy jet skiing and river safaris, or relax beneath the palm trees on Bentota beach.'
+      },
+      {
+        day: 14,
+        title: 'Bentota → Colombo Shopping → Airport Drop-off',
+        details: 'Expressway drive to Colombo for last-minute shopping at Odel / Barefoot, followed by timely transfer to CMB airport.'
+      }
     ]
   },
   {
     id: 'pkg-21d-ultimate',
     category: 'all-rounder',
-    categoryName: 'All-Rounder',
-    title: '21-Day Ultimate Sri Lanka Experience',
+    categoryName: 'All-Rounder / Island Highlights',
+    title: '21-Day Ultimate Sri Lanka Experience (Slow Travel)',
+    keyFeature: '2-3 Nights per location (Jaffna, Trinco, Cultural Triangle, Hill Country, and South Coast)',
     days: 21,
     image: 'assets/images/sigiriya.jpg',
     baseRateSedan: 1365,
     fullRate: 2950,
-    route: 'Full Island: Jaffna → Trincomalee → Sigiriya → Kandy → Knuckles → Ella → Yala → Galle',
-    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Jaffna', 'Trincomalee', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Galle', 'Colombo'],
+    route: 'Jaffna → Trincomalee → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Tangalle → Bentota → Colombo',
+    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Jaffna', 'Trincomalee', 'Sigiriya', 'Polonnaruwa', 'Dambulla', 'Kandy', 'Nuwara Eliya', 'Ella', 'Udawalawe', 'Yala', 'Tangalle', 'Galle', 'Bentota', 'Colombo'],
     highlights: [
-      'Rarely explored Jaffna Peninsula, Delft Island & Nallur Kovil',
-      'Pigeon Island marine snorkeling & east coast white sand beaches',
-      'Knuckles mountain range trekking & Horton Plains World\'s End',
-      'Yala & Wilpattu safaris, tea estates & southern coastal charm'
+      'Unmatched slow travel: 2-3 nights in Jaffna, Trincomalee, Sigiriya & South Coast',
+      'Wilpattu & Yala dual premier safaris',
+      'Pigeon Island coral snorkeling & Nilaveli tranquil beaches',
+      'Full Cultural Triangle, high mountain train, and southern beaches'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo', details: 'Warm welcome and check-in to your beachfront hotel.' },
-      { day: 2, title: 'Negombo → Wilpattu Safari → Anuradhapura', details: 'Safari in Sri Lanka\'s largest park, transfer to the ancient royal capital.' },
-      { day: 3, title: 'Anuradhapura Historical Exploration', details: 'Full day devoted to ancient wonders: Ruwanwelisaya, Jetavanaramaya, and Sri Maha Bodhi.' },
-      { day: 4, title: 'Anuradhapura → Jaffna Drive', details: 'Scenic journey north crossing Elephant Pass into the unique Tamil cultural heartland of Jaffna.' },
-      { day: 5, title: 'Jaffna Sightseeing (Nallur Kovil, Jaffna Fort)', details: 'Golden Nallur Kandaswamy Kovil, Dutch Fort, and tasting authentic Jaffna crab curry.' },
-      { day: 6, title: 'Boat Excursion to Delft Island & Keerimalai', details: 'Ferry to historic Delft Island with wild ponies and baobab trees, healing springs of Keerimalai.' },
-      { day: 7, title: 'Jaffna → Trincomalee (Nilaveli Beach & Koneswaram)', details: 'Drive to the east coast. Visit cliff-top Koneswaram Temple overlooking the deep blue bay.' },
-      { day: 8, title: 'Pigeon Island Snorkeling & Marine Park', details: 'Boat trip to Pigeon Island for world-class coral reef snorkeling with turtles and blacktip reef sharks.' },
-      { day: 9, title: 'Trincomalee → Sigiriya Climb', details: 'Head inland to climb the iconic 5th-century Sigiriya citadel.' },
-      { day: 10, title: 'Polonnaruwa Ruins → Kaudulla Elephant Safari', details: 'Medieval palaces of Polonnaruwa and sunset elephant safari at Kaudulla reservoir.' },
-      { day: 11, title: 'Dambulla Caves → Spice Garden → Kandy', details: 'Visit gold-gilded cave temples and travel south to spiritual Kandy.' },
-      { day: 12, title: 'Kandy Exploration & Local Markets', details: 'Temple of the Tooth, royal arts center, and artisan markets.' },
-      { day: 13, title: 'Knuckles Mountain Range / Riverston Day Trek', details: 'Full-day guided hike through UNESCO Knuckles wilderness, waterfalls, and cloud forests.' },
-      { day: 14, title: 'Kandy → Nuwara Eliya Tea Estates', details: 'Climb into tea-covered peaks, visit tea factory and colonial hill club.' },
-      { day: 15, title: 'Horton Plains Trekking (World’s End)', details: 'Dawn trek through misty plains to the dramatic 880m World\'s End precipice and Baker\'s Falls.' },
-      { day: 16, title: 'Scenic Train Ride to Ella → Nine Arches Bridge', details: 'Iconic train journey with open doorways and breathtaking mountain vistas.' },
-      { day: 17, title: 'Little Adam\'s Peak & Flying Ravana Zipline', details: 'Adventure day in Ella with peaks, waterfalls, and optional zipline thrill.' },
-      { day: 18, title: 'Ella → Udawalawe Transit Home → Yala', details: 'Visit baby elephant rehabilitation at Udawalawe Transit Home, arrive at Yala safari boundary.' },
-      { day: 19, title: 'Full Day Yala Wildlife Safari', details: 'Dawn to dusk deep safari in Yala National Park for leopards, bears, elephants, and crocodiles.' },
-      { day: 20, title: 'Yala → Tangalle Beach → Galle Fort', details: 'Pass coastal Tangalle bays to the UNESCO living fortress of Galle.' },
-      { day: 21, title: 'Galle → Colombo Shopping → Airport Drop-off', details: 'Expressway to Colombo for luxury shopping and farewell dinner before airport departure.' }
+      { day: 1, title: 'Airport Pickup → Negombo Rest', details: 'Warm welcome and check-in to your beachfront hotel.' },
+      { day: 2, title: 'Negombo → Wilpattu Safari → Anuradhapura', details: 'Safari in Sri Lanka\'s largest wilderness national park, transfer to the ancient royal capital.' },
+      { day: 3, title: 'Anuradhapura Sacred City → Jaffna Drive', details: 'Morning exploration of sacred dagobas, followed by scenic northern drive across Elephant Pass into Jaffna.' },
+      { day: 4, tag: 'REST & EXPLORE', title: '[REST & EXPLORE] Jaffna Cultural Highlights (Nallur Kovil, Public Library)', details: 'Golden Nallur Kandaswamy Kovil, historic Jaffna Public Library, Jaffna Fort, and tasting authentic northern cuisine.' },
+      { day: 5, title: 'Jaffna → Trincomalee (Nilaveli Beach Check-in)', details: 'Drive across the northeast to the white powdery sands of Nilaveli Beach in Trincomalee.' },
+      { day: 6, tag: 'BEACH REST DAY', title: '[BEACH REST DAY] Pigeon Island Snorkeling & Nilaveli Beach Relax', details: 'Boat excursion to Pigeon Island Marine National Park for world-class reef snorkeling with turtles and reef fish.' },
+      { day: 7, title: 'Trincomalee → Sigiriya (Check-in)', details: 'Head inland to the Cultural Triangle and check in to your Sigiriya jungle resort.' },
+      { day: 8, tag: 'REST & EXPLORE', title: '[REST & EXPLORE] Morning Sigiriya Climb → Pool Relax / Minneriya Safari', details: 'Climb Sigiriya Rock Fortress at dawn, followed by afternoon pool relaxation or Minneriya elephant gathering safari.' },
+      { day: 9, title: 'Sigiriya → Polonnaruwa Ruins → Return to Sigiriya Hotel', details: 'Explore the medieval palaces and Buddha statues of Polonnaruwa, returning to your same Sigiriya hotel with zero packing hassle.' },
+      { day: 10, title: 'Sigiriya → Dambulla Caves → Kandy', details: 'Explore the cave temples of Dambulla, visit a spice garden, and ascend to the hill capital Kandy.' },
+      { day: 11, tag: 'REST & EXPLORE', title: '[REST & EXPLORE] Kandy City Tour & Local Markets (Relaxed)', details: 'Leisurely visit to Temple of the Tooth, stroll around Kandy lake, and explore artisan handicraft markets.' },
+      { day: 12, title: 'Kandy → Tea Plantations → Nuwara Eliya', details: 'Climb through emerald tea carpets to Nuwara Eliya, touring an active high-grown tea processing factory.' },
+      { day: 13, title: 'Nuwara Eliya → Scenic Train Ride to Ella (Check-in)', details: 'Board the iconic scenic train winding through mountain peaks to the bohemian mountain town of Ella.' },
+      { day: 14, tag: 'REST & EXPLORE', title: '[REST & EXPLORE] Ella Chill (Nine Arches Bridge & Little Adam\'s Peak)', details: 'Visit Nine Arches Bridge, take an easy morning walk up Little Adam\'s Peak, and relax at mountain cafes.' },
+      { day: 15, title: 'Ella → Udawalawe Elephant Transit Home → Yala', details: 'Watch orphan baby elephant feeding at Udawalawe Transit Home, continuing to Yala safari country.' },
+      { day: 16, tag: 'WILDLIFE REST DAY', title: '[WILDLIFE REST DAY] Yala Safari & Evening Hotel Relax', details: 'Thrilling safari tracking leopards and sloth bears, followed by evening relaxation by the resort pool.' },
+      { day: 17, title: 'Yala → Tangalle / Dikwella Beach', details: 'Drive along the secluded southern bays to pristine Tangalle / Dikwella beaches.' },
+      { day: 18, tag: 'BEACH REST DAY', title: '[BEACH REST DAY] Tangalle Beach Chill & Hiriketiya Bay', details: 'Full day of serenity on quiet Tangalle sands and cafe lounging in horseshoe Hiriketiya cove.' },
+      { day: 19, title: 'Tangalle → Galle Dutch Fort → Bentota', details: 'Explore the UNESCO living fortress of Galle, boutique shopping, and transfer to Bentota.' },
+      { day: 20, tag: 'BEACH REST DAY', title: '[BEACH REST DAY] Bentota Coastal Relaxation & Spa', details: 'Enjoy rejuvenating Ayurvedic spa treatments and calm coastal relaxation in Bentota.' },
+      { day: 21, title: 'Bentota → Colombo Quick Tour → Airport Drop-off', details: 'Brief landmark drive in Colombo, souvenir shopping, and timely transfer to CMB airport.' }
     ]
   },
 
+  // =========================================================================
   // CATEGORY 2: WILDLIFE & NATURE EXPLORER
+  // =========================================================================
   {
     id: 'pkg-4d-wildlife',
     category: 'wildlife',
-    categoryName: 'Wildlife & Nature',
-    title: '4-Day Wild Safari Express',
+    categoryName: 'Wildlife & Nature Explorer',
+    title: '4-Day Safari Express',
+    keyFeature: 'Focused on Elephant Transit & Minneriya Safari',
     days: 4,
     image: 'assets/images/wildlife.jpg',
     baseRateSedan: 260,
     fullRate: 620,
-    route: 'Airport → Pinnawala → Habarana → Minneriya → Kandy → Airport',
-    routePoints: ['Negombo', 'Habarana', 'Sigiriya', 'Kandy', 'Colombo'],
+    route: 'Airport → Pinnawala → Sigiriya → Minneriya → Dambulla → Kandy → Colombo / Airport',
+    routePoints: ['Negombo', 'Pinnawala', 'Sigiriya', 'Dambulla', 'Kandy', 'Colombo'],
     highlights: [
-      'Pinnawala elephant herd bathing',
-      'Minneriya / Kaudulla elephant safari',
-      'Sigiriya Lion Rock sunrise climb',
-      'Udawatta Kele birdwatching & rainforest sanctuary'
+      'Pinnawala Elephant Sanctuary river bathing',
+      'Minneriya / Kaudulla wild elephant safari gathering',
+      'Sigiriya Rock Fortress early climb',
+      'Udawatta Kele Forest Reserve birding & Kandy'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Pinnawala Elephant Orphanage → Habarana', details: 'Pickup from CMB and drive directly to Pinnawala to watch herds bathing in the river. Afternoon drive to Habarana eco-lodge.' },
-      { day: 2, title: 'Minneriya / Kaudulla Elephant Safari → Sigiriya Rock Climb', details: 'Early morning climb of Sigiriya Rock Fortress. Afternoon open-top 4x4 safari witnessing massive elephant gatherings.' },
-      { day: 3, title: 'Habarana → Kandy (Udawatta Kele Sanctuary & Temple of Tooth)', details: 'Drive to Kandy. Guided nature trek in Udawatta Kele historic rainforest sanctuary, home to rare endemic birds and primates. Evening Temple of Tooth visit.' },
-      { day: 4, title: 'Kandy → Royal Botanical Gardens → Colombo / Airport Drop-off', details: 'Explore the 147-acre Peradeniya Royal Botanical Gardens featuring orchids and giant palm avenues, followed by airport drop-off.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Pinnawala Elephant Sanctuary → Sigiriya',
+        details: 'Pickup from CMB airport and drive to Pinnawala to watch herds bathing in the river. Afternoon drive to your Sigiriya eco-resort.'
+      },
+      {
+        day: 2,
+        tag: 'EXPLORE & SAFARI',
+        title: '[EXPLORE & SAFARI] Sigiriya Rock Climb → Afternoon Minneriya / Kaudulla Elephant Safari',
+        details: 'Early morning climb of Sigiriya Lion Rock Fortress. In the afternoon, embark on an open-top 4x4 safari witnessing massive elephant gatherings in Minneriya or Kaudulla.'
+      },
+      {
+        day: 3,
+        title: 'Sigiriya → Dambulla Caves → Kandy (Udawatta Kele Forest Reserve)',
+        details: 'Visit Dambulla cave murals, then travel to Kandy for a guided nature trek in the historic Udawatta Kele rainforest sanctuary.'
+      },
+      {
+        day: 4,
+        title: 'Kandy → Giragama Tea Factory → Colombo / Airport Drop',
+        details: 'Tour the historic Giragama tea plantation, followed by highway connection to Colombo or direct drop-off at CMB airport.'
+      }
     ]
   },
   {
     id: 'pkg-7d-wildlife',
     category: 'wildlife',
-    categoryName: 'Wildlife & Nature',
-    title: '7-Day Wild & National Parks Safari',
+    categoryName: 'Wildlife & Nature Explorer',
+    title: '7-Day Wild & National Parks Safari (Leisure Pace)',
+    keyFeature: 'Wilpattu, Minneriya, Horton Plains, and Yala with buffer rest days',
     days: 7,
     image: 'assets/images/wildlife.jpg',
     baseRateSedan: 455,
     fullRate: 1100,
-    route: 'Wilpattu → Minneriya → Kandy → Horton Plains → Udawalawe → Yala → Mirissa',
-    routePoints: ['Negombo', 'Wilpattu', 'Sigiriya', 'Kandy', 'Horton Plains', 'Udawalawe', 'Yala', 'Mirissa'],
+    route: 'Negombo → Wilpattu → Sigiriya → Nuwara Eliya → Horton Plains → Udawalawe → Yala → Airport Drop-off',
+    routePoints: ['Negombo', 'Wilpattu', 'Sigiriya', 'Dambulla', 'Nuwara Eliya', 'Horton Plains', 'Udawalawe', 'Yala', 'Colombo'],
     highlights: [
-      'Wilpattu leopard & sloth bear tracking',
-      'Minneriya large elephant gatherings',
-      'Horton Plains cloud forest & endemic highland wildlife',
-      'Udawalawe & Yala consecutive premier national parks'
+      'Wilpattu, Minneriya, Horton Plains & Yala premier national parks',
+      'Balanced with buffer rest time to prevent safari fatigue',
+      'Horton Plains World\'s End cloud forest trek',
+      'Highest leopard density habitat tracking in Yala'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Wilpattu National Park Safari', details: 'Direct transfer to Wilpattu wilderness. Afternoon game drive among natural water basins (villus) tracking leopards.' },
-      { day: 2, title: 'Wilpattu → Sigiriya → Minneriya Elephant Safari', details: 'Morning drive to Sigiriya citadel, followed by sunset safari at Minneriya National Park.' },
-      { day: 3, title: 'Sigiriya → Dambulla Caves → Kandy', details: 'Dambulla cave exploration and scenic drive into the hill country capital of Kandy.' },
-      { day: 4, title: 'Kandy → Nuwara Eliya → Horton Plains Trekking', details: 'Travel to the central highlands. Trek the UNESCO Horton Plains National Park observing sambar deer and endemic bird species.' },
-      { day: 5, title: 'Nuwara Eliya → Udawalawe Elephant Safari', details: 'Descend to the dry southern plains for a safari in Udawalawe, famous for its unmatched elephant population.' },
-      { day: 6, title: 'Udawalawe → Yala Leopard Safari', details: 'Full afternoon safari in Block 1 of Yala National Park, holding the world\'s highest density of leopards.' },
-      { day: 7, title: 'Yala → Mirissa Coast → Airport Drop-off', details: 'Drive along the southern coast with a brief stop at Mirissa beach, connecting to the southern expressway to CMB airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Negombo Rest',
+        details: 'Direct transfer to Negombo coastal hotel to relax and prepare for your wildlife expedition.'
+      },
+      {
+        day: 2,
+        title: 'Negombo → Wilpattu Safari → Drive to Sigiriya (Check-in)',
+        details: 'Early game drive in Wilpattu National Park tracking leopards and sloth bears around natural water villus, continuing to Sigiriya.'
+      },
+      {
+        day: 3,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Morning Sigiriya Climb → Afternoon Minneriya Elephant Safari',
+        details: 'Dawn ascent of Sigiriya Rock Fortress. Afternoon thrilling 4x4 open-top safari tracking wild elephant herds at Minneriya.'
+      },
+      {
+        day: 4,
+        title: 'Sigiriya → Dambulla Caves → Nuwara Eliya Tea Country',
+        details: 'Explore Dambulla cave temples, then drive into the cool, misty central highlands of Nuwara Eliya.'
+      },
+      {
+        day: 5,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Horton Plains Morning Trek → Nuwara Eliya Gregory Lake Relax',
+        details: 'Morning trek across UNESCO Horton Plains to World\'s End precipice and Baker\'s Falls. Relax in the afternoon around Gregory Lake.'
+      },
+      {
+        day: 6,
+        title: 'Nuwara Eliya → Udawalawe Safari → Yala',
+        details: 'Descend to Udawalawe for a safari among wild elephant herds, then transfer to your safari lodge at Yala.'
+      },
+      {
+        day: 7,
+        title: 'Morning Yala Safari → Highway to Airport Drop-off',
+        details: 'Dawn game drive in Yala Block 1 searching for leopards, then travel smoothly via Southern Expressway to CMB airport.'
+      }
     ]
   },
   {
     id: 'pkg-10d-wildlife',
     category: 'wildlife',
-    categoryName: 'Wildlife & Nature',
+    categoryName: 'Wildlife & Nature Explorer',
     title: '10-Day Ultimate Wildlife Expedition',
+    keyFeature: 'Deep wildlife immersion (Wilpattu, Minneriya, Knuckles, Horton Plains & Yala)',
     days: 10,
     image: 'assets/images/wildlife.jpg',
     baseRateSedan: 650,
     fullRate: 1650,
-    route: 'Wilpattu → Anuradhapura → Minneriya → Horton Plains → Ella → Udawalawe → Yala → Mirissa',
-    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Sigiriya', 'Kandy', 'Horton Plains', 'Ella', 'Udawalawe', 'Yala', 'Mirissa'],
+    route: 'Wilpattu → Sigiriya → Knuckles → Nuwara Eliya → Horton Plains → Udawalawe → Yala → Southern Expressway → Airport',
+    routePoints: ['Negombo', 'Wilpattu', 'Sigiriya', 'Knuckles', 'Nuwara Eliya', 'Horton Plains', 'Udawalawe', 'Yala', 'Colombo'],
     highlights: [
-      '5 top national parks & reserves covered comprehensively',
-      'Knuckles Conservation Forest biodiversity trek',
-      'Horton Plains World\'s End cloud forest walk',
-      'Marine turtle spotting & dolphin/whale options in Mirissa'
+      'Comprehensive coverage: Wilpattu, Minneriya, Knuckles, Horton Plains & Yala',
+      'Knuckles Conservation Forest biodiversity guided trek',
+      'Full Day Yala National Park safari for maximum sightings',
+      'Deep wildlife immersion with professional naturalist guide'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Rest', details: 'Check-in to your hotel, briefing by your wildlife chauffeur guide, and rest.' },
-      { day: 2, title: 'Negombo → Wilpattu Full Day Safari', details: 'Full-day deep jungle game drive in Wilpattu with packed breakfast and picnic lunch by a scenic villu.' },
-      { day: 3, title: 'Wilpattu → Anuradhapura → Habarana', details: 'Cultural transition via Anuradhapura to the wildlife hub of Habarana.' },
-      { day: 4, title: 'Minneriya / Eco Park Safari → Sigiriya Rock', details: 'Sigiriya morning climb followed by afternoon safari tracking elephant herds in Eco Park.' },
-      { day: 5, title: 'Habarana → Knuckles Conservation Trekking → Kandy', details: 'Trek the biodiverse Knuckles mountains discovering endemic lizards, birds, and cascading streams.' },
-      { day: 6, title: 'Kandy → Nuwara Eliya Tea Country', details: 'Ascend into cool misty tea hills with visits to Ramboda and tea estates.' },
-      { day: 7, title: 'Horton Plains Trek → Train to Ella', details: 'Trek Horton Plains to World\'s End, then board the mountain train to Ella.' },
-      { day: 8, title: 'Ella → Udawalawe Safari', details: 'Descend to Udawalawe for an afternoon 4x4 safari with hundreds of wild elephants.' },
-      { day: 9, title: 'Udawalawe → Yala Full Day Safari', details: 'Full-day safari across Yala National Park focusing on leopards, sloth bears, and birdlife.' },
-      { day: 10, title: 'Yala → Mirissa Turtle Spotting → Airport Drop-off', details: 'Visit sea turtle conservation sanctuaries along the coast, then expressway transfer to airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Wilpattu Base',
+        details: 'Pickup from CMB airport and transfer directly to the boundary of Wilpattu National Park to check in to your safari camp.'
+      },
+      {
+        day: 2,
+        title: 'Full Day Wilpattu Safari → Sigiriya (Check-in)',
+        details: 'Deep full-day safari in Sri Lanka\'s largest park searching for leopards and sloth bears, driving to Sigiriya in the evening.'
+      },
+      {
+        day: 3,
+        tag: 'REST & SAFARI',
+        title: '[REST & SAFARI] Sigiriya Rock → Evening Minneriya Elephant Safari',
+        details: 'Morning climb of the historic citadel, with late afternoon jeep safari to witness the wild elephant gathering at Minneriya.'
+      },
+      {
+        day: 4,
+        title: 'Sigiriya → Knuckles Conservation Forest Foot (Check-in)',
+        details: 'Drive into the dramatic Knuckles Mountain Range foothills, surrounded by untouched montane forests.'
+      },
+      {
+        day: 5,
+        tag: 'NATURE TREK',
+        title: '[NATURE TREK] Knuckles Forest Trekking & Waterfalls',
+        details: 'Full-day guided hike through the UNESCO Knuckles wilderness, discovering hidden waterfalls, rare endemic birds, and reptiles.'
+      },
+      {
+        day: 6,
+        title: 'Knuckles → Nuwara Eliya (Tea Country)',
+        details: 'Scenic highland drive through terraced tea plantations to cool Nuwara Eliya.'
+      },
+      {
+        day: 7,
+        title: 'Morning Horton Plains (World\'s End) Trek → Nuwara Eliya Lake Relax',
+        details: 'Trek across misty Horton Plains to World\'s End and Baker\'s Falls, relaxing around Gregory Lake in the afternoon.'
+      },
+      {
+        day: 8,
+        title: 'Nuwara Eliya → Udawalawe Safari → Yala',
+        details: 'Descend south for an afternoon 4x4 safari with hundreds of wild elephants at Udawalawe, continuing to Yala.'
+      },
+      {
+        day: 9,
+        tag: 'WILDLIFE REST DAY',
+        title: '[WILDLIFE REST DAY] Full Day Yala National Park Safari',
+        details: 'Full day safari across Yala tracking leopards, bears, elephants, and crocodiles with packed meals in the jungle.'
+      },
+      {
+        day: 10,
+        title: 'Yala → Southern Expressway → Airport Drop',
+        details: 'Smooth journey along the Southern Expressway directly to Bandaranaike International Airport.'
+      }
     ]
   },
 
+  // =========================================================================
   // CATEGORY 3: BEACH & COASTAL ESCAPE
+  // =========================================================================
   {
     id: 'pkg-4d-beach',
     category: 'beach',
-    categoryName: 'Beach & Coastal',
+    categoryName: 'Beach & Coastal Escape',
     title: '4-Day South Coast Sun & Fun',
+    keyFeature: 'Quick Coastal Getaway | Bentota & Galle',
     days: 4,
     image: 'assets/images/galle.jpg',
     baseRateSedan: 260,
     fullRate: 550,
-    route: 'Bentota → Kosgoda → Galle Fort → Mirissa → Airport',
+    route: 'Airport → Bentota → Galle → Mirissa → Colombo / Airport Drop',
     routePoints: ['Colombo', 'Bentota', 'Galle', 'Mirissa'],
     highlights: [
-      'Bentota water sports & Madu Ganga river boat safari',
-      'Kosgoda Sea Turtle Hatchery & conservation project',
-      'Historic Galle Dutch Fort sunset walk & boutique dining',
-      'Mirissa Coconut Tree Hill & whale watching excursion'
+      'Bentota water sports & Madu River boat safari',
+      'Historic UNESCO Galle Dutch Fort sunset stroll',
+      'Mirissa sunset & coastal dining',
+      'Colombo City walk & seamless expressway transfer'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Bentota Water Sports & River Safari', details: 'Scenic expressway drive to golden Bentota beach. Jet ski, banana boat, or relax on a tranquil mangrove river boat safari.' },
-      { day: 2, title: 'Bentota → Kosgoda Turtle Hatchery → Galle Dutch Fort', details: 'Release baby turtles at Kosgoda, then explore the charming colonial streets, ramparts, and lighthouse of UNESCO Galle Fort.' },
-      { day: 3, title: 'Galle → Mirissa (Coconut Tree Hill & Beach Relax)', details: 'Drive to Mirissa. Photograph the famous Coconut Tree Hill promontory, relax on crescent beaches, and enjoy beachfront dining.' },
-      { day: 4, title: 'Mirissa Whale Watching → Airport Drop-off', details: 'Early morning catamaran cruise to spot blue whales (seasonal). Smooth southern expressway transfer back to CMB airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Bentota Beach (Check-in)',
+        details: 'Expressway transfer from CMB airport to golden Bentota beach. Settle into your beachfront resort.'
+      },
+      {
+        day: 2,
+        tag: 'BEACH REST',
+        title: '[BEACH REST] Bentota Water Sports & Madu River Boat Safari',
+        details: 'Jet ski, tube ride, or banana boat on the lagoon, followed by a tranquil mangrove river boat safari on Madu Ganga.'
+      },
+      {
+        day: 3,
+        title: 'Bentota → Galle Dutch Fort → Mirissa Sunset',
+        details: 'Explore the cobblestone ramparts and lighthouse of UNESCO Galle Dutch Fort, driving to Mirissa for a dramatic ocean sunset.'
+      },
+      {
+        day: 4,
+        title: 'Mirissa → Colombo City Walk → Airport Drop',
+        details: 'Scenic coastal transfer, leisurely landmark walk in Colombo, and direct expressway connection to CMB airport.'
+      }
     ]
   },
   {
     id: 'pkg-7d-beach',
     category: 'beach',
-    categoryName: 'Beach & Coastal',
-    title: '7-Day Complete Coastal Explorer',
+    categoryName: 'Beach & Coastal Escape',
+    title: '7-Day Complete Coastal Explorer (Slow Beach Escape)',
+    keyFeature: '2 Nights in Galle + 2 Nights in Mirissa/Tangalle',
     days: 7,
     image: 'assets/images/beach.jpg',
     baseRateSedan: 455,
     fullRate: 950,
-    route: 'Kalutara → Bentota → Hikkaduwa → Galle → Unawatuna → Mirissa → Hiriketiya → Tangalle',
-    routePoints: ['Colombo', 'Bentota', 'Galle', 'Mirissa', 'Hiriketiya', 'Yala'],
+    route: 'Bentota → Hikkaduwa → Galle → Unawatuna → Mirissa → Hiriketiya → Southern Expressway → Colombo / Airport',
+    routePoints: ['Colombo', 'Bentota', 'Hikkaduwa', 'Galle', 'Mirissa', 'Hiriketiya'],
     highlights: [
-      'Snorkeling the coral reefs of Hikkaduwa',
-      'Surfing lessons in trendy Hiriketiya horseshoe bay',
-      'Secluded luxury beaches of Tangalle',
-      'Galle Fort history & Unawatuna nightlife'
+      '2 Nights in Galle + 2 Nights in Mirissa / Tangalle for slow travel',
+      'Hikkaduwa coral reef snorkeling & turtle encounters',
+      'Galle Fort walks, shopping & Unawatuna beach relax',
+      'Coconut Tree Hill sunset & Hiriketiya surf cove'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Kalutara / Wadduwa Beach Relax', details: 'Arrive in Sri Lanka and settle into your luxury coastal resort with views over the Indian Ocean.' },
-      { day: 2, title: 'Kalutara → Bentota Water Sports & Boat Safari', details: 'Speedboat rides, water skiing on the lagoon, and soothing mangrove boat excursions.' },
-      { day: 3, title: 'Bentota → Hikkaduwa Coral Reef Snorkeling → Galle Fort', details: 'Snorkel among giant sea turtles in Hikkaduwa marine sanctuary, then wander the bastions of Galle Fort.' },
-      { day: 4, title: 'Galle → Unawatuna & Jungle Beach', details: 'Swim in the calm turquoise bay of Unawatuna and take a secluded trail to Jungle Beach.' },
-      { day: 5, title: 'Unawatuna → Mirissa Beach Sunset', details: 'Head to Mirissa for sunset cocktails, beachfront dining, and live acoustic music.' },
-      { day: 6, title: 'Mirissa → Hiriketiya Surfing Bay → Tangalle', details: 'Catch waves or relax at bohemian Hiriketiya bay, then retreat to the quiet paradise of Tangalle.' },
-      { day: 7, title: 'Tangalle → Expressway to Airport Drop-off', details: 'Enjoy a leisurely morning swim before a swift, air-conditioned transfer via expressway to CMB airport.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Bentota Beach Check-in',
+        details: 'Warm greeting at CMB and transfer to Bentota beach resort for a relaxed first night.'
+      },
+      {
+        day: 2,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Bentota Water Sports & River Safari (Relaxed)',
+        details: 'Enjoy relaxed lagoon watersports and a scenic boat safari through the lush mangroves of the Madu River.'
+      },
+      {
+        day: 3,
+        title: 'Bentota → Hikkaduwa Coral Reef → Galle Dutch Fort (Check-in)',
+        details: 'Snorkel among colorful coral reefs and giant sea turtles in Hikkaduwa, continuing to Galle Fort for check-in.'
+      },
+      {
+        day: 4,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Galle Fort Walks, Shopping & Unawatuna Beach Relax',
+        details: 'Stroll cobblestone streets, visit artisan boutiques and the colonial lighthouse, then swim in the turquoise bay of Unawatuna.'
+      },
+      {
+        day: 5,
+        title: 'Galle → Mirissa / Hiriketiya Beach (Check-in)',
+        details: 'Short coastal drive along the southern coast to the trendy surf haven of Mirissa / Hiriketiya for a 2-night stay.'
+      },
+      {
+        day: 6,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Coconut Tree Hill Sunset & Full Day Beach/Pool Chill',
+        details: 'Full day of sun, sea, and relaxation. Photograph the iconic palm promontory of Coconut Tree Hill at golden hour.'
+      },
+      {
+        day: 7,
+        title: 'Mirissa → Southern Expressway → Colombo Shopping → Airport Drop-off',
+        details: 'Swift transfer along the Southern Expressway to Colombo for boutique souvenir shopping, followed by CMB airport drop-off.'
+      }
     ]
   },
   {
     id: 'pkg-10d-beach',
     category: 'beach',
-    categoryName: 'Beach & Coastal',
-    title: '10-Day East-to-South Tropical Beach Loop',
+    categoryName: 'Beach & Coastal Escape',
+    title: '10-Day East-to-South Tropical Loop',
+    keyFeature: 'Trincomalee (Nilaveli), Pasikudah, Arugam Bay, and Galle Fort',
     days: 10,
     image: 'assets/images/galle.jpg',
     baseRateSedan: 650,
     fullRate: 1390,
-    route: 'Trincomalee → Nilaveli → Pasikudah → Arugam Bay → Tangalle → Mirissa → Galle',
-    routePoints: ['Negombo', 'Trincomalee', 'Pasikudah', 'Arugam Bay', 'Yala', 'Mirissa', 'Galle', 'Colombo'],
+    route: 'Trincomalee → Pasikudah → Arugam Bay → Tangalle → Galle → Colombo Expressway → Airport Drop',
+    routePoints: ['Trincomalee', 'Pasikudah', 'Arugam Bay', 'Tangalle', 'Galle', 'Colombo'],
     highlights: [
-      'Both East Coast (Trincomalee, Pasikudah, Arugam Bay) & South Coast beaches',
-      'World-famous surf breaks of Arugam Bay & Hiriketiya',
-      'Pigeon Island marine national park snorkeling',
-      'Calm shallow coral waters of Pasikudah Bay'
+      'Comprehensive east-to-south beach odyssey',
+      'Pigeon Island marine park & calm shallow reef of Pasikudah Bay',
+      'World-famous surfing capital Arugam Bay',
+      'Secluded Tangalle shores & historic Galle Dutch Fort'
     ],
     itinerary: [
-      { day: 1, title: 'Airport Pickup → Negombo Beach Rest', details: 'Rest and recuperate at a relaxing beach resort after your flight.' },
-      { day: 2, title: 'Negombo → Trincomalee (East Coast)', details: 'Cross scenic island landscapes to the pristine northeast coast of Trincomalee.' },
-      { day: 3, title: 'Trincomalee (Nilaveli Beach & Pigeon Island Snorkeling)', details: 'Pristine white sands of Nilaveli and snorkeling with vibrant reef fish at Pigeon Island.' },
-      { day: 4, title: 'Trincomalee → Pasikudah Bay', details: 'Drive south to Pasikudah, famous for one of the longest shallow coral reef coastlines in the world.' },
-      { day: 5, title: 'Pasikudah Beach Relax & Water Activities', details: 'Walk hundreds of meters out into the calm, warm sea; windsurfing and stand-up paddleboarding.' },
-      { day: 6, title: 'Pasikudah → Arugam Bay Surfing Hub', details: 'Arrive at Sri Lanka\'s premier surf capital. Chill at laid-back beach cafes.' },
-      { day: 7, title: 'Arugam Bay Surf & Lagoon Safari', details: 'Morning surf session (beginners to advanced) and tranquil afternoon lagoon safari spotting wild elephants.' },
-      { day: 8, title: 'Arugam Bay → Tangalle & Hiriketiya', details: 'Drive along the southern crescent to the emerald surfing cove of Hiriketiya and Tangalle.' },
-      { day: 9, title: 'Tangalle → Mirissa & Galle Dutch Fort', details: 'Visit Coconut Tree Hill, Mirissa beach, and sunset on the ramparts of Galle Fort.' },
-      { day: 10, title: 'Galle Fort → Colombo Shopping → Airport Drop-off', details: 'Souvenir shopping for Ceylon tea, spices, and gems in Colombo, then direct airport transfer.' }
+      {
+        day: 1,
+        title: 'Airport Pickup → Trincomalee (Nilaveli Beach Check-in)',
+        details: 'Scenic cross-island journey to the powdery white sands of Nilaveli Beach in Trincomalee.'
+      },
+      {
+        day: 2,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Pigeon Island Snorkeling & Nilaveli Beach Chill',
+        details: 'Catamaran boat trip to Pigeon Island for snorkeling among corals, reef sharks, and sea turtles, with afternoon beach chill.'
+      },
+      {
+        day: 3,
+        title: 'Trincomalee → Pasikudah Bay (Check-in)',
+        details: 'Travel south along the east coast to Pasikudah Bay, known for crystal-clear, calm waters.'
+      },
+      {
+        day: 4,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Shallow Water Swimming & Resort Relaxation in Pasikudah',
+        details: 'Wade out hundreds of meters into the warm, waist-deep sea, enjoying tropical resort amenities and serene relaxation.'
+      },
+      {
+        day: 5,
+        title: 'Pasikudah → Arugam Bay (Surfing Capital)',
+        details: 'Drive to Sri Lanka\'s premier surf capital Arugam Bay. Settle in and soak up the lively bohemian surf town vibes.'
+      },
+      {
+        day: 6,
+        tag: 'REST & EXPLORE',
+        title: '[REST & EXPLORE] Arugam Bay Surf Lessons & Cafe Hopping',
+        details: 'Take morning surf lessons or watch world-class surfers at Main Point, with afternoon cafe hopping and chilled beach bars.'
+      },
+      {
+        day: 7,
+        title: 'Arugam Bay → Tangalle Beach (Check-in)',
+        details: 'Drive along the southern curve to the secluded, palm-fringed coast of Tangalle for your coastal stay.'
+      },
+      {
+        day: 8,
+        tag: 'BEACH REST DAY',
+        title: '[BEACH REST DAY] Tangalle Beach Relaxation & Hiriketiya Bay',
+        details: 'Unwind on uncrowded golden sands, swim in sheltered coves, and visit picturesque Hiriketiya Bay.'
+      },
+      {
+        day: 9,
+        title: 'Tangalle → Galle Dutch Fort Exploration',
+        details: 'Scenic coastal drive to UNESCO Galle Dutch Fort. Explore 17th-century ramparts, boutique dining, and sunset views.'
+      },
+      {
+        day: 10,
+        title: 'Galle Fort → Colombo Expressway → Airport Drop',
+        details: 'Convenient transfer via the Southern Expressway to Colombo for last-minute shopping, followed by CMB airport drop-off.'
+      }
     ]
   }
 ];
@@ -414,6 +773,7 @@ function renderPackages() {
       const q = searchKeyword.toLowerCase();
       matchSearch = pkg.title.toLowerCase().includes(q) || 
                     pkg.route.toLowerCase().includes(q) ||
+                    (pkg.keyFeature && pkg.keyFeature.toLowerCase().includes(q)) ||
                     pkg.highlights.some(h => h.toLowerCase().includes(q));
     }
 
@@ -455,6 +815,9 @@ function renderPackages() {
         </div>
         <div class="package-body">
           <h3>${pkg.title}</h3>
+          <div class="package-key-feature">
+            <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> ${pkg.keyFeature}</span>
+          </div>
           <div class="package-route-preview">
             <strong>Route:</strong> ${pkg.route}
           </div>
@@ -518,45 +881,45 @@ function initDurationFilters() {
  * Vehicle Selection on Packages Matrix
  */
 function initVehicleSelection() {
-  const pills = document.querySelectorAll('.veh-pill-btn[data-vehicle]');
-  pills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      pills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      currentVehicle = pill.getAttribute('data-vehicle');
+  const btns = document.querySelectorAll('.veh-pill-btn[data-vehicle]');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentVehicle = btn.getAttribute('data-vehicle');
       renderPackages();
     });
   });
 }
 
 /**
- * Live Search Input
+ * Search Input Filter
  */
 function initSearchInput() {
-  const searchInput = document.getElementById('package-search-input');
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      searchKeyword = e.target.value;
-      renderPackages();
-    });
-  }
+  const searchInput = document.getElementById('pkg-search-input');
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', (e) => {
+    searchKeyword = e.target.value;
+    renderPackages();
+  });
 }
 
 /**
- * Base Rate vs Full Package Pricing Switcher
+ * Pricing Toggle (Chauffeur-Only vs Full Package)
  */
 function initPricingToggle() {
-  const toggle = document.getElementById('pricing-mode-toggle-checkbox');
-  if (toggle) {
-    toggle.addEventListener('change', (e) => {
-      isFullPackagePricing = e.target.checked;
-      renderPackages();
-    });
-  }
+  const toggle = document.getElementById('pricing-mode-toggle');
+  if (!toggle) return;
+
+  toggle.addEventListener('change', (e) => {
+    isFullPackagePricing = e.target.checked;
+    renderPackages();
+  });
 }
 
 /**
- * Leaflet.js Interactive Map Initialization
+ * Leaflet Interactive Map Initialization
  */
 function initLeafletMap() {
   const mapElem = document.getElementById('ceylon-route-map');
@@ -654,21 +1017,55 @@ function openItineraryModal(packageId) {
 
   if (bodyElem) {
     bodyElem.innerHTML = `
-      <div style="margin-bottom: 24px; padding: 16px; background: var(--bg-sand); border-radius: var(--radius-sm); border-left: 4px solid var(--accent-gold);">
-        <p style="font-size: 0.95rem; margin-bottom: 6px;"><strong>Complete Route:</strong> ${pkg.route}</p>
-        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
-          All Ceylon Chauffeur tours strictly include fuel, expressway tolls, parking fees, and driver lodging & food. Zero hidden costs.
+      <div class="modal-itinerary-header-callout">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; color: var(--primary-emerald); font-size: 0.95rem;">
+          <i class="fas fa-bed text-gold"></i> Key Feature: ${pkg.keyFeature}
+        </div>
+        <p style="font-size: 0.92rem; margin-bottom: 6px; line-height: 1.5;"><strong>Complete Route:</strong> ${pkg.route}</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+          All Ceylon Chauffeur tours strictly include fuel, expressway tolls, parking fees, and chauffeur lodging & meals. Zero hidden costs.
         </p>
       </div>
 
       <div class="itinerary-timeline">
-        ${pkg.itinerary.map(item => `
-          <div class="timeline-step">
-            <div class="timeline-dot">${item.day}</div>
-            <div class="timeline-title">Day ${item.day}: ${item.title}</div>
-            <div class="timeline-desc">${item.details}</div>
-          </div>
-        `).join('')}
+        ${pkg.itinerary.map(item => {
+          let tagHtml = '';
+          const tagToUse = item.tag || (item.title.match(/^\[(.*?)\]/) ? item.title.match(/^\[(.*?)\]/)[1] : null);
+          
+          if (tagToUse) {
+            let tagClass = 'tag-rest-explore';
+            let iconClass = 'fas fa-compass';
+            const upper = tagToUse.toUpperCase();
+            if (upper.includes('BEACH')) {
+              tagClass = 'tag-beach-rest';
+              iconClass = 'fas fa-umbrella-beach';
+            } else if (upper.includes('WILDLIFE') || upper.includes('SAFARI')) {
+              tagClass = 'tag-wildlife-rest';
+              iconClass = 'fas fa-paw';
+            } else if (upper.includes('TREK')) {
+              tagClass = 'tag-nature-trek';
+              iconClass = 'fas fa-hiking';
+            } else if (upper.includes('EXPLORE & RELAX')) {
+              tagClass = 'tag-explore-relax';
+              iconClass = 'fas fa-mountain';
+            }
+            tagHtml = `<span class="itinerary-tag ${tagClass}"><i class="${iconClass}"></i> ${tagToUse}</span>`;
+          }
+
+          // Clean title by removing bracketed tag prefix for clean display
+          const cleanTitle = item.title.replace(/^\[.*?\]\s*/, '');
+
+          return `
+            <div class="timeline-step">
+              <div class="timeline-dot">${item.day}</div>
+              <div class="timeline-title">
+                ${tagHtml}
+                Day ${item.day}: ${cleanTitle}
+              </div>
+              <div class="timeline-desc">${item.details}</div>
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
   }

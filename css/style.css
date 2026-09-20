@@ -2886,4 +2886,76 @@ input:checked + .slider:before {
   }
 }
 
+/* ==========================================================================
+   MASTER TOUR ITINERARIES: KEY FEATURES & DAY-BY-DAY REST/EXPLORE BADGES
+   ========================================================================== */
+
+.package-key-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--primary-emerald);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.modal-itinerary-header-callout {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: var(--bg-sand);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--accent-gold);
+}
+
+.itinerary-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.itinerary-tag.tag-explore-relax {
+  background: rgba(9, 44, 35, 0.1);
+  color: #092c23;
+  border: 1px solid rgba(9, 44, 35, 0.3);
+}
+
+.itinerary-tag.tag-rest-explore {
+  background: rgba(212, 175, 55, 0.15);
+  color: #927218;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.itinerary-tag.tag-beach-rest {
+  background: rgba(6, 182, 212, 0.12);
+  color: #0891b2;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+}
+
+.itinerary-tag.tag-wildlife-rest {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.itinerary-tag.tag-nature-trek {
+  background: rgba(34, 197, 94, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+
 
