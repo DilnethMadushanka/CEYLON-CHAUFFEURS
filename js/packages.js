@@ -1,22 +1,53 @@
 /**
  * Ceylon Chauffeur - Master Tour Packages Dataset & Logic
  * All 11 Packages across 3 Categories: All-Rounder, Wildlife & Nature, Beach & Coastal
+ * Enhanced with Leaflet interactive mapping, multi-currency display, vehicle selection, and duration/search filtering.
  */
 
+const DESTINATION_COORDS = {
+  'Negombo': [7.2083, 79.8358],
+  'Colombo': [6.9271, 79.8612],
+  'Sigiriya': [7.9570, 80.7603],
+  'Dambulla': [7.8742, 80.6511],
+  'Anuradhapura': [8.3114, 80.4037],
+  'Polonnaruwa': [7.9403, 81.0188],
+  'Kandy': [7.2906, 80.6337],
+  'Nuwara Eliya': [6.9497, 80.7891],
+  'Ella': [6.8667, 81.0466],
+  'Yala': [6.3685, 81.5204],
+  'Udawalawe': [6.4746, 80.8987],
+  'Mirissa': [5.9482, 80.4578],
+  'Galle': [6.0535, 80.2210],
+  'Bentota': [6.4259, 79.9958],
+  'Wilpattu': [8.4489, 80.0094],
+  'Trincomalee': [8.5874, 81.2152],
+  'Pasikudah': [7.9250, 81.5642],
+  'Arugam Bay': [6.8415, 81.8347],
+  'Jaffna': [9.6615, 80.0255],
+  'Hiriketiya': [5.9628, 80.6974],
+  'Horton Plains': [6.8028, 80.8044],
+  'Habarana': [8.0336, 80.7513]
+};
+
+const VEHICLE_RATES = {
+  sedan: { name: 'Executive Sedan', rate: 65 },
+  suv: { name: 'Crossover SUV', rate: 80 },
+  van: { name: 'Luxury Van', rate: 105 }
+};
+
 const MASTER_PACKAGES = [
-  // =========================================================================
   // CATEGORY 1: ALL-ROUNDER / ISLAND HIGHLIGHTS
-  // =========================================================================
   {
     id: 'pkg-4d-cultural',
     category: 'all-rounder',
     categoryName: 'All-Rounder',
     title: '4-Day Cultural Highlights Tour',
     days: 4,
-    image: 'assets/images/sigiriya.jpg',
-    baseRate: 260, // $65/day x 4
+    image: 'assets/images/kandy.jpg',
+    baseRateSedan: 260,
     fullRate: 580,
     route: 'Negombo → Sigiriya → Dambulla → Kandy → Colombo',
+    routePoints: ['Negombo', 'Sigiriya', 'Dambulla', 'Kandy', 'Colombo'],
     highlights: [
       'Sigiriya Lion Rock Fortress climb at sunrise',
       'Golden Temple of Dambulla cave murals',
@@ -36,10 +67,11 @@ const MASTER_PACKAGES = [
     categoryName: 'All-Rounder',
     title: '7-Day Heritage & Hill Country Classic',
     days: 7,
-    image: 'assets/images/hero.jpg',
-    baseRate: 455, // $65/day x 7
+    image: 'assets/images/ella.jpg',
+    baseRateSedan: 455,
     fullRate: 980,
     route: 'Negombo → Dambulla → Sigiriya → Polonnaruwa → Kandy → Ella → Colombo',
+    routePoints: ['Negombo', 'Dambulla', 'Sigiriya', 'Polonnaruwa', 'Kandy', 'Ella', 'Colombo'],
     highlights: [
       'Sigiriya Rock Fortress & Polonnaruwa ancient kingdom',
       'Minneriya elephant gathering 4x4 safari',
@@ -62,10 +94,11 @@ const MASTER_PACKAGES = [
     categoryName: 'All-Rounder',
     title: '10-Day Complete Island Highlights',
     days: 10,
-    image: 'assets/images/beach.jpg',
-    baseRate: 650, // $65/day x 10
+    image: 'assets/images/sigiriya.jpg',
+    baseRateSedan: 650,
     fullRate: 1450,
     route: 'Anuradhapura → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Mirissa → Galle',
+    routePoints: ['Negombo', 'Anuradhapura', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Mirissa', 'Galle', 'Colombo'],
     highlights: [
       'Comprehensive loop covering UNESCO heritage, mountains, safari & beaches',
       'Yala National Park leopard & wildlife safari',
@@ -91,10 +124,11 @@ const MASTER_PACKAGES = [
     categoryName: 'All-Rounder',
     title: '14-Day Grand Sri Lanka Loop',
     days: 14,
-    image: 'assets/images/sigiriya.jpg',
-    baseRate: 910, // $65/day x 14
+    image: 'assets/images/hero.jpg',
+    baseRateSedan: 910,
     fullRate: 1980,
     route: 'Negombo → Wilpattu → Anuradhapura → Sigiriya → Polonnaruwa → Kandy → Ella → Yala → Mirissa → Galle',
+    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Sigiriya', 'Polonnaruwa', 'Kandy', 'Ella', 'Yala', 'Mirissa', 'Galle'],
     highlights: [
       'Wilpattu & Yala dual national parks for maximum wildlife sightings',
       'Full Cultural Triangle exploration (Anuradhapura, Polonnaruwa, Sigiriya, Dambulla)',
@@ -124,10 +158,11 @@ const MASTER_PACKAGES = [
     categoryName: 'All-Rounder',
     title: '21-Day Ultimate Sri Lanka Experience',
     days: 21,
-    image: 'assets/images/hero.jpg',
-    baseRate: 1365, // $65/day x 21
+    image: 'assets/images/sigiriya.jpg',
+    baseRateSedan: 1365,
     fullRate: 2950,
-    route: 'Full Island: North (Jaffna), East (Trinco), Cultural Triangle, Central Highlands, Deep South & West Coast',
+    route: 'Full Island: Jaffna → Trincomalee → Sigiriya → Kandy → Knuckles → Ella → Yala → Galle',
+    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Jaffna', 'Trincomalee', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Galle', 'Colombo'],
     highlights: [
       'Rarely explored Jaffna Peninsula, Delft Island & Nallur Kovil',
       'Pigeon Island marine snorkeling & east coast white sand beaches',
@@ -159,9 +194,7 @@ const MASTER_PACKAGES = [
     ]
   },
 
-  // =========================================================================
   // CATEGORY 2: WILDLIFE & NATURE EXPLORER
-  // =========================================================================
   {
     id: 'pkg-4d-wildlife',
     category: 'wildlife',
@@ -169,9 +202,10 @@ const MASTER_PACKAGES = [
     title: '4-Day Wild Safari Express',
     days: 4,
     image: 'assets/images/wildlife.jpg',
-    baseRate: 260,
+    baseRateSedan: 260,
     fullRate: 620,
-    route: 'Airport → Pinnawala → Habarana → Minneriya/Kaudulla → Kandy → Airport',
+    route: 'Airport → Pinnawala → Habarana → Minneriya → Kandy → Airport',
+    routePoints: ['Negombo', 'Habarana', 'Sigiriya', 'Kandy', 'Colombo'],
     highlights: [
       'Pinnawala elephant herd bathing',
       'Minneriya / Kaudulla elephant safari',
@@ -192,9 +226,10 @@ const MASTER_PACKAGES = [
     title: '7-Day Wild & National Parks Safari',
     days: 7,
     image: 'assets/images/wildlife.jpg',
-    baseRate: 455,
+    baseRateSedan: 455,
     fullRate: 1100,
     route: 'Wilpattu → Minneriya → Kandy → Horton Plains → Udawalawe → Yala → Mirissa',
+    routePoints: ['Negombo', 'Wilpattu', 'Sigiriya', 'Kandy', 'Horton Plains', 'Udawalawe', 'Yala', 'Mirissa'],
     highlights: [
       'Wilpattu leopard & sloth bear tracking',
       'Minneriya large elephant gatherings',
@@ -218,9 +253,10 @@ const MASTER_PACKAGES = [
     title: '10-Day Ultimate Wildlife Expedition',
     days: 10,
     image: 'assets/images/wildlife.jpg',
-    baseRate: 650,
+    baseRateSedan: 650,
     fullRate: 1650,
-    route: 'Wilpattu → Anuradhapura → Minneriya → Knuckles → Nuwara Eliya → Ella → Udawalawe → Yala → Mirissa',
+    route: 'Wilpattu → Anuradhapura → Minneriya → Horton Plains → Ella → Udawalawe → Yala → Mirissa',
+    routePoints: ['Negombo', 'Wilpattu', 'Anuradhapura', 'Sigiriya', 'Kandy', 'Horton Plains', 'Ella', 'Udawalawe', 'Yala', 'Mirissa'],
     highlights: [
       '5 top national parks & reserves covered comprehensively',
       'Knuckles Conservation Forest biodiversity trek',
@@ -241,19 +277,18 @@ const MASTER_PACKAGES = [
     ]
   },
 
-  // =========================================================================
   // CATEGORY 3: BEACH & COASTAL ESCAPE
-  // =========================================================================
   {
     id: 'pkg-4d-beach',
     category: 'beach',
     categoryName: 'Beach & Coastal',
     title: '4-Day South Coast Sun & Fun',
     days: 4,
-    image: 'assets/images/beach.jpg',
-    baseRate: 260,
+    image: 'assets/images/galle.jpg',
+    baseRateSedan: 260,
     fullRate: 550,
     route: 'Bentota → Kosgoda → Galle Fort → Mirissa → Airport',
+    routePoints: ['Colombo', 'Bentota', 'Galle', 'Mirissa'],
     highlights: [
       'Bentota water sports & Madu Ganga river boat safari',
       'Kosgoda Sea Turtle Hatchery & conservation project',
@@ -274,9 +309,10 @@ const MASTER_PACKAGES = [
     title: '7-Day Complete Coastal Explorer',
     days: 7,
     image: 'assets/images/beach.jpg',
-    baseRate: 455,
+    baseRateSedan: 455,
     fullRate: 950,
     route: 'Kalutara → Bentota → Hikkaduwa → Galle → Unawatuna → Mirissa → Hiriketiya → Tangalle',
+    routePoints: ['Colombo', 'Bentota', 'Galle', 'Mirissa', 'Hiriketiya', 'Yala'],
     highlights: [
       'Snorkeling the coral reefs of Hikkaduwa',
       'Surfing lessons in trendy Hiriketiya horseshoe bay',
@@ -299,10 +335,11 @@ const MASTER_PACKAGES = [
     categoryName: 'Beach & Coastal',
     title: '10-Day East-to-South Tropical Beach Loop',
     days: 10,
-    image: 'assets/images/beach.jpg',
-    baseRate: 650,
+    image: 'assets/images/galle.jpg',
+    baseRateSedan: 650,
     fullRate: 1390,
     route: 'Trincomalee → Nilaveli → Pasikudah → Arugam Bay → Tangalle → Mirissa → Galle',
+    routePoints: ['Negombo', 'Trincomalee', 'Pasikudah', 'Arugam Bay', 'Yala', 'Mirissa', 'Galle', 'Colombo'],
     highlights: [
       'Both East Coast (Trincomalee, Pasikudah, Arugam Bay) & South Coast beaches',
       'World-famous surf breaks of Arugam Bay & Hiriketiya',
@@ -324,34 +361,91 @@ const MASTER_PACKAGES = [
   }
 ];
 
-// State
+// Interactive Filter State
 let currentCategory = 'all';
+let currentDuration = 'all';
+let searchKeyword = '';
 let isFullPackagePricing = false;
+let currentVehicle = 'sedan';
+
+// Leaflet Map Globals
+let leafletMap = null;
+let activeRoutePolyline = null;
+let mapMarkers = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   renderPackages();
   initCategoryFilters();
+  initDurationFilters();
+  initVehicleSelection();
+  initSearchInput();
   initPricingToggle();
   initModalListeners();
+  initLeafletMap();
+
+  // Listen for global currency changes
+  window.addEventListener('ceylon_currency_changed', () => {
+    renderPackages();
+  });
 });
 
 /**
- * Render packages according to current category and pricing mode
+ * Render packages according to all active filters, vehicle choice, pricing mode & currency
  */
 function renderPackages() {
   const container = document.getElementById('packages-grid-container');
   if (!container) return;
 
-  const filtered = currentCategory === 'all' 
-    ? MASTER_PACKAGES 
-    : MASTER_PACKAGES.filter(p => p.category === currentCategory);
+  const vehicleConf = VEHICLE_RATES[currentVehicle] || VEHICLE_RATES.sedan;
+
+  let filtered = MASTER_PACKAGES.filter(pkg => {
+    // Category match
+    const matchCat = currentCategory === 'all' || pkg.category === currentCategory;
+
+    // Duration match
+    let matchDur = true;
+    if (currentDuration === 'short') matchDur = pkg.days <= 7;
+    else if (currentDuration === 'medium') matchDur = pkg.days >= 8 && pkg.days <= 14;
+    else if (currentDuration === 'long') matchDur = pkg.days >= 15;
+
+    // Search match
+    let matchSearch = true;
+    if (searchKeyword.trim().length > 0) {
+      const q = searchKeyword.toLowerCase();
+      matchSearch = pkg.title.toLowerCase().includes(q) || 
+                    pkg.route.toLowerCase().includes(q) ||
+                    pkg.highlights.some(h => h.toLowerCase().includes(q));
+    }
+
+    return matchCat && matchDur && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--accent-gold);">
+        <i class="fas fa-search-location text-gold" style="font-size: 2.8rem; margin-bottom: 16px;"></i>
+        <h3 style="color: var(--primary-emerald); margin-bottom: 8px;">No Tour Packages Matched Your Search</h3>
+        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px;">
+          Try adjusting your search terms or duration filters, or request a custom itinerary tailored to your exact route.
+        </p>
+        <a href="booking.html" class="btn btn-primary btn-sm">Request Custom Itinerary</a>
+      </div>
+    `;
+    return;
+  }
 
   container.innerHTML = filtered.map(pkg => {
-    const displayPrice = isFullPackagePricing ? `$${pkg.fullRate}` : `$${pkg.baseRate}`;
-    const priceNote = isFullPackagePricing ? 'Full All-Inclusive' : `Base Rate ($65/day × ${pkg.days}d)`;
+    // Calculate rate based on chosen vehicle
+    const baseRateUSD = pkg.days * vehicleConf.rate;
+    const rateToUse = isFullPackagePricing ? pkg.fullRate : baseRateUSD;
+
+    const convertedRate = window.convertUSD ? window.convertUSD(rateToUse) : { formatted: `$${rateToUse}`, code: 'USD' };
+    const priceNote = isFullPackagePricing 
+      ? 'Full All-Inclusive Estimate' 
+      : `${vehicleConf.name.split('(')[0].trim()} Rate (${pkg.days} Days)`;
 
     return `
-      <div class="package-card" data-category="${pkg.category}">
+      <div class="package-card" data-category="${pkg.category}" onmouseenter="highlightPackageRoute('${pkg.id}')">
         <div class="package-img-box">
           <img src="${pkg.image}" alt="${pkg.title}" loading="lazy">
           <div class="package-duration-pill">
@@ -370,7 +464,7 @@ function renderPackages() {
           <div class="package-price-box">
             <div>
               <div class="price-label">Starting From</div>
-              <div class="price-amount">${displayPrice} <span>USD</span></div>
+              <div class="price-amount">${convertedRate.formatted} <span>${convertedRate.code}</span></div>
             </div>
             <div style="text-align: right;">
               <span style="font-size: 0.78rem; color: var(--text-muted);">${priceNote}</span>
@@ -391,7 +485,7 @@ function renderPackages() {
 }
 
 /**
- * Category filter tabs
+ * Category Filter Tabs
  */
 function initCategoryFilters() {
   const tabs = document.querySelectorAll('.tab-btn[data-category]');
@@ -406,7 +500,50 @@ function initCategoryFilters() {
 }
 
 /**
- * Base Rate vs Full Package pricing toggle
+ * Duration Filter Pills
+ */
+function initDurationFilters() {
+  const pills = document.querySelectorAll('.pill-btn[data-duration]');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentDuration = pill.getAttribute('data-duration');
+      renderPackages();
+    });
+  });
+}
+
+/**
+ * Vehicle Selection on Packages Matrix
+ */
+function initVehicleSelection() {
+  const pills = document.querySelectorAll('.veh-pill-btn[data-vehicle]');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      currentVehicle = pill.getAttribute('data-vehicle');
+      renderPackages();
+    });
+  });
+}
+
+/**
+ * Live Search Input
+ */
+function initSearchInput() {
+  const searchInput = document.getElementById('package-search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchKeyword = e.target.value;
+      renderPackages();
+    });
+  }
+}
+
+/**
+ * Base Rate vs Full Package Pricing Switcher
  */
 function initPricingToggle() {
   const toggle = document.getElementById('pricing-mode-toggle-checkbox');
@@ -419,11 +556,93 @@ function initPricingToggle() {
 }
 
 /**
+ * Leaflet.js Interactive Map Initialization
+ */
+function initLeafletMap() {
+  const mapElem = document.getElementById('ceylon-route-map');
+  if (!mapElem || typeof L === 'undefined') return;
+
+  try {
+    leafletMap = L.map('ceylon-route-map', {
+      center: [7.8731, 80.7718],
+      zoom: 7,
+      scrollWheelZoom: false
+    });
+
+    // Elegant CartoDB Voyager / OSM map tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 18
+    }).addTo(leafletMap);
+
+    // Add destination markers
+    Object.keys(DESTINATION_COORDS).forEach(place => {
+      const coord = DESTINATION_COORDS[place];
+      const marker = L.circleMarker(coord, {
+        radius: 6,
+        fillColor: '#092c23',
+        color: '#d4af37',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.9
+      }).addTo(leafletMap);
+
+      marker.bindPopup(`<strong>${place}</strong><br><span style="font-size:0.8rem;color:#666;">Chauffeur Waypoint</span>`);
+      mapMarkers.push({ name: place, marker: marker });
+    });
+  } catch (err) {
+    console.warn('Map initialization note:', err);
+  }
+}
+
+/**
+ * Highlight a tour route on the interactive map
+ */
+function highlightPackageRoute(packageId) {
+  if (!leafletMap || typeof L === 'undefined') return;
+
+  const pkg = MASTER_PACKAGES.find(p => p.id === packageId);
+  if (!pkg || !pkg.routePoints) return;
+
+  const tagElem = document.getElementById('map-active-package-tag');
+  if (tagElem) {
+    tagElem.innerHTML = `<i class="fas fa-route text-gold"></i> Route: ${pkg.title}`;
+  }
+
+  // Remove previous polyline
+  if (activeRoutePolyline) {
+    leafletMap.removeLayer(activeRoutePolyline);
+  }
+
+  // Gather lat-lngs
+  const latlngs = [];
+  pkg.routePoints.forEach(pt => {
+    if (DESTINATION_COORDS[pt]) {
+      latlngs.push(DESTINATION_COORDS[pt]);
+    }
+  });
+
+  if (latlngs.length > 1) {
+    activeRoutePolyline = L.polyline(latlngs, {
+      color: '#d4af37',
+      weight: 4,
+      dashArray: '8, 8',
+      opacity: 0.95
+    }).addTo(leafletMap);
+
+    leafletMap.fitBounds(activeRoutePolyline.getBounds(), { padding: [30, 30] });
+  }
+}
+
+/**
  * Open Day-by-Day Itinerary Modal
  */
 function openItineraryModal(packageId) {
   const pkg = MASTER_PACKAGES.find(p => p.id === packageId);
   if (!pkg) return;
+
+  // Highlight on map as well
+  highlightPackageRoute(packageId);
 
   const modal = document.getElementById('itinerary-modal');
   const titleElem = document.getElementById('modal-pkg-title');
@@ -431,13 +650,15 @@ function openItineraryModal(packageId) {
   const ctaBtn = document.getElementById('modal-pkg-quote-btn');
   const waBtn = document.getElementById('modal-pkg-whatsapp-btn');
 
-  if (titleElem) titleElem.textContent = `${pkg.title} (${pkg.days} Days)`;
+  if (titleElem) titleElem.textContent = `${pkg.title} (${pkg.days} Days / ${pkg.days - 1} Nights)`;
 
   if (bodyElem) {
     bodyElem.innerHTML = `
       <div style="margin-bottom: 24px; padding: 16px; background: var(--bg-sand); border-radius: var(--radius-sm); border-left: 4px solid var(--accent-gold);">
         <p style="font-size: 0.95rem; margin-bottom: 6px;"><strong>Complete Route:</strong> ${pkg.route}</p>
-        <p style="font-size: 0.88rem; color: var(--text-muted);">Fuel, Highway Tolls, Parking Fees, and Driver Lodging/Meals are 100% included in all our bookings.</p>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+          All Ceylon Chauffeur tours strictly include fuel, expressway tolls, parking fees, and driver lodging & food. Zero hidden costs.
+        </p>
       </div>
 
       <div class="itinerary-timeline">
@@ -454,7 +675,7 @@ function openItineraryModal(packageId) {
 
   if (ctaBtn) {
     ctaBtn.onclick = () => {
-      window.location.href = `booking.html?package=${pkg.id}&duration=${pkg.days}`;
+      window.location.href = `booking.html?package=${pkg.id}&duration=${pkg.days}&vehicle=${currentVehicle}`;
     };
   }
 
@@ -470,14 +691,27 @@ function openItineraryModal(packageId) {
   }
 }
 
-/**
- * Close modal
- */
 function closeItineraryModal() {
   const modal = document.getElementById('itinerary-modal');
   if (modal) {
     modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+  }
+}
+
+function openFullPackageInfoModal() {
+  const modal = document.getElementById('full-package-info-modal');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeFullPackageInfoModal() {
+  const modal = document.getElementById('full-package-info-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
   }
 }
 
@@ -491,9 +725,13 @@ function initModalListeners() {
     });
   }
 
-  const closeBtn = document.querySelector('.modal-close-btn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeItineraryModal);
+  const fullModal = document.getElementById('full-package-info-modal');
+  if (fullModal) {
+    fullModal.addEventListener('click', (e) => {
+      if (e.target === fullModal) {
+        closeFullPackageInfoModal();
+      }
+    });
   }
 }
 
@@ -504,7 +742,8 @@ function bookPackageWhatsApp(packageId) {
   const pkg = MASTER_PACKAGES.find(p => p.id === packageId);
   if (!pkg) return;
 
-  const msg = `Hi Ceylon Chauffeur, I would like to inquire about booking the "${pkg.title}" (${pkg.days} Days). Please provide details and availability.`;
+  const vehicleName = VEHICLE_RATES[currentVehicle]?.name || 'Executive Sedan';
+  const msg = `Hi Ceylon Chauffeur, I would like to inquire about booking the "${pkg.title}" (${pkg.days} Days) with an ${vehicleName}. Please share availability and exact itinerary details.`;
   window.openWhatsApp(msg);
 }
 
@@ -512,4 +751,7 @@ function bookPackageWhatsApp(packageId) {
 window.MASTER_PACKAGES = MASTER_PACKAGES;
 window.openItineraryModal = openItineraryModal;
 window.closeItineraryModal = closeItineraryModal;
+window.openFullPackageInfoModal = openFullPackageInfoModal;
+window.closeFullPackageInfoModal = closeFullPackageInfoModal;
 window.bookPackageWhatsApp = bookPackageWhatsApp;
+window.highlightPackageRoute = highlightPackageRoute;

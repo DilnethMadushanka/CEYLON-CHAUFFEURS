@@ -3,11 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Itinerary & Instant Booking | Ceylon Chauffeur</title>
+  <title>Custom Itinerary & Instant Booking | Ceylon Chauffeur Sri Lanka</title>
   <meta name="description" content="Request a customized quote or book your private chauffeur in Sri Lanka. Instant rate calculation, automated confirmation email from bookings@ceylonchauffeur.com, and 24/7 WhatsApp assistance.">
+  
+  <!-- OpenGraph Social Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Custom Itinerary & Instant Booking | Ceylon Chauffeur Sri Lanka">
+  <meta property="og:description" content="Book your private chauffeur in Sri Lanka. 100% all-inclusive daily rates covering fuel, tolls, and driver lodging. Instant proposal & WhatsApp concierge.">
+  <meta property="og:image" content="assets/images/hero.jpg">
+  <meta property="og:url" content="https://ceylonchauffeur.com/booking.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Custom Itinerary & Instant Booking | Ceylon Chauffeur">
+  <meta name="twitter:description" content="Transparent daily rates for luxury private chauffeurs in Sri Lanka. Get an instant quote now.">
+  <meta name="twitter:image" content="assets/images/hero.jpg">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- JSON-LD Structured Data for TravelAgency / Reservation -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Ceylon Chauffeurs",
+    "image": "https://ceylonchauffeur.com/assets/images/logo.png",
+    "telephone": "+94771234567",
+    "email": "bookings@ceylonchauffeur.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Katunayake / Colombo",
+      "addressCountry": "Sri Lanka"
+    },
+    "priceRange": "$65 - $105 USD per day",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.98",
+      "reviewCount": "1450"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -64,8 +101,13 @@
           <form id="custom-itinerary-form">
 
             <!-- Section 1: Lead Traveler Information -->
-            <div class="form-section-title">
-              <i class="fas fa-user-circle text-gold"></i> 1. Lead Traveler Details
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <div class="form-section-title" style="margin-bottom: 0;">
+                <i class="fas fa-user-circle text-gold"></i> 1. Lead Traveler Details
+              </div>
+              <span id="draft-status-pill" class="draft-badge" style="display:none;">
+                <i class="fas fa-save"></i> Draft Saved
+              </span>
             </div>
 
             <div class="form-grid-2">
@@ -106,6 +148,12 @@
               </div>
             </div>
 
+            <!-- Date warning message box if departure is before arrival -->
+            <div id="date-warning" class="capacity-warning-box" style="display: none; margin-bottom: 18px;">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span id="date-warning-text">Departure date must be after arrival date.</span>
+            </div>
+
             <div class="form-grid-2">
               <div class="form-group">
                 <label for="pax-adults">Adult Passengers (12+ yrs)</label>
@@ -136,37 +184,46 @@
               <i class="fas fa-car-side text-gold"></i> 3. Select Vehicle Class
             </div>
 
+            <!-- Capacity Alert Box -->
+            <div id="capacity-warning" class="capacity-warning-box" style="display: none;">
+              <i class="fas fa-user-friends"></i>
+              <div id="capacity-warning-content">
+                <strong>Capacity Recommendation:</strong>
+                <span id="capacity-warning-text"></span>
+              </div>
+            </div>
+
             <div class="vehicle-selector-grid">
               <!-- Sedan Radio -->
-              <label class="vehicle-radio-option">
+              <label class="vehicle-radio-option" id="vehicle-option-sedan">
                 <input type="radio" name="vehicle" value="sedan" checked>
                 <div class="vehicle-card-select">
                   <i class="fas fa-car" style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;"></i>
                   <h5>Executive Sedan</h5>
                   <p>1–3 Pax • 2–3 Bags</p>
-                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;">$65 / Day</div>
+                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;" data-usd-amount="65" data-usd-period="day">$65 / Day</div>
                 </div>
               </label>
 
               <!-- SUV Radio -->
-              <label class="vehicle-radio-option">
+              <label class="vehicle-radio-option" id="vehicle-option-suv">
                 <input type="radio" name="vehicle" value="suv">
                 <div class="vehicle-card-select">
                   <i class="fas fa-truck-monster" style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;"></i>
                   <h5>Crossover SUV</h5>
                   <p>1–4 Pax • 3–4 Bags</p>
-                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;">$80 / Day</div>
+                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;" data-usd-amount="80" data-usd-period="day">$80 / Day</div>
                 </div>
               </label>
 
               <!-- Van Radio -->
-              <label class="vehicle-radio-option">
+              <label class="vehicle-radio-option" id="vehicle-option-van">
                 <input type="radio" name="vehicle" value="van">
                 <div class="vehicle-card-select">
                   <i class="fas fa-shuttle-van" style="font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 8px;"></i>
                   <h5>Luxury Van</h5>
                   <p>4–8 Pax • 6–8 Large Bags</p>
-                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;">$105 / Day</div>
+                  <div style="font-weight: 800; color: var(--primary-emerald); margin-top: 6px;" data-usd-amount="105" data-usd-period="day">$105 / Day</div>
                 </div>
               </label>
             </div>
@@ -179,23 +236,23 @@
             <div class="form-group">
               <label for="preferred-package">Select Master Tour Package or Custom Route</label>
               <select id="preferred-package" class="form-control">
-                <option value="Custom Route (Described Below)">-- Custom Route (Tailored to your preferences) --</option>
+                <option value="custom">-- Custom Route (Tailored to your preferences) --</option>
                 <optgroup label="All-Rounder / Island Highlights">
-                  <option value="4-Day Cultural Highlights Tour">4-Day Cultural Highlights Tour</option>
-                  <option value="7-Day Heritage & Hill Country Classic">7-Day Heritage & Hill Country Classic</option>
-                  <option value="10-Day Complete Island Highlights">10-Day Complete Island Highlights</option>
-                  <option value="14-Day Grand Sri Lanka Loop">14-Day Grand Sri Lanka Loop</option>
-                  <option value="21-Day Ultimate Sri Lanka Experience">21-Day Ultimate Sri Lanka Experience</option>
+                  <option value="pkg-4d-cultural">4-Day Cultural Highlights Tour (4 Days)</option>
+                  <option value="pkg-7d-heritage">7-Day Heritage & Hill Country Classic (7 Days)</option>
+                  <option value="pkg-10d-complete">10-Day Complete Island Highlights (10 Days)</option>
+                  <option value="pkg-14d-grand">14-Day Grand Sri Lanka Loop (14 Days)</option>
+                  <option value="pkg-21d-ultimate">21-Day Ultimate Sri Lanka Experience (21 Days)</option>
                 </optgroup>
                 <optgroup label="Wildlife & Nature Explorer">
-                  <option value="4-Day Wild Safari Express">4-Day Wild Safari Express</option>
-                  <option value="7-Day Wild & National Parks Safari">7-Day Wild & National Parks Safari</option>
-                  <option value="10-Day Ultimate Wildlife Expedition">10-Day Ultimate Wildlife Expedition</option>
+                  <option value="pkg-4d-wildlife">4-Day Wild Safari Express (4 Days)</option>
+                  <option value="pkg-7d-wildlife">7-Day Wild & National Parks Safari (7 Days)</option>
+                  <option value="pkg-10d-wildlife">10-Day Ultimate Wildlife Expedition (10 Days)</option>
                 </optgroup>
                 <optgroup label="Beach & Coastal Escape">
-                  <option value="4-Day South Coast Sun & Fun">4-Day South Coast Sun & Fun</option>
-                  <option value="7-Day Complete Coastal Explorer">7-Day Complete Coastal Explorer</option>
-                  <option value="10-Day East-to-South Tropical Beach Loop">10-Day East-to-South Tropical Beach Loop</option>
+                  <option value="pkg-4d-beach">4-Day South Coast Sun & Fun (4 Days)</option>
+                  <option value="pkg-7d-beach">7-Day Complete Coastal Explorer (7 Days)</option>
+                  <option value="pkg-10d-beach">10-Day East-to-South Tropical Beach Loop (10 Days)</option>
                 </optgroup>
               </select>
             </div>
@@ -210,7 +267,7 @@
             </button>
 
             <p style="font-size: 0.8rem; text-align: center; color: var(--text-muted); margin-top: 14px;">
-              <i class="fas fa-lock text-gold"></i> Your inquiry will be dispatched to <strong>bookings@ceylonchauffeur.com</strong>. An automated instant confirmation will be sent to your email with a one-click WhatsApp transition.
+              <i class="fas fa-lock text-gold"></i> Your inquiry will be logged and dispatched to <strong>bookings@ceylonchauffeur.com</strong>. You will receive an instant on-screen booking receipt and a 1-click WhatsApp concierge transition.
             </p>
 
           </form>
@@ -240,14 +297,14 @@
           <div class="summary-total-box">
             <div class="summary-total-label">Estimated Total Chauffeur Rate</div>
             <div class="summary-total-price" id="summary-total-price">$455</div>
-            <div class="summary-total-note">USD • 100% All-Inclusive</div>
+            <div class="summary-total-note" id="summary-total-note">USD • 100% All-Inclusive</div>
           </div>
 
           <div style="font-size: 0.88rem; line-height: 1.6; border-top: 1px solid rgba(212, 175, 55, 0.25); padding-top: 18px; margin-bottom: 24px;">
             <p style="font-weight: 700; color: var(--accent-gold-light); margin-bottom: 8px;">
               <i class="fas fa-check-circle"></i> Always 100% Included:
             </p>
-            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85);">
+            <ul style="list-style: none; padding-left: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.85); display: flex; flex-direction: column; gap: 4px;">
               <li>✓ All fuel & unlimited tour mileage</li>
               <li>✓ Highway tolls & airport parking charges</li>
               <li>✓ Driver accommodation & meals</li>
@@ -270,7 +327,7 @@
     </div>
   </section>
 
-  <!-- Automated Customer Email Workflow Simulation Modal (Crucial Requirement) -->
+  <!-- Automated Customer Email Workflow Simulation & Official Receipt Modal -->
   <div id="auto-responder-modal" class="modal-overlay">
     <div id="email-modal-content">
       <!-- Injected dynamically by js/booking.js -->
@@ -301,7 +358,7 @@
           <p>
             Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
           </p>
-          <div style="display: flex; gap: 12px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
               <i class="fab fa-whatsapp"></i> WhatsApp Concierge
             </button>
@@ -312,25 +369,20 @@
         <div class="footer-col">
           <h4>Master Tours</h4>
           <ul class="footer-links">
-            <li><a href="packages.html">4-Day Cultural Highlights</a></li>
-            <li><a href="packages.html">7-Day Heritage Classic</a></li>
-            <li><a href="packages.html">10-Day Complete Island</a></li>
-            <li><a href="packages.html">14-Day Grand Loop</a></li>
-            <li><a href="packages.html">21-Day Ultimate Ceylon</a></li>
-            <li><a href="packages.html">Wildlife & Safari Tours</a></li>
-            <li><a href="packages.html">Tropical Coastal Escapes</a></li>
+            <li><a href="packages.html?category=all-rounder">All-Rounder Classic Loops</a></li>
+            <li><a href="packages.html?category=wildlife">Wildlife & Safari Tours</a></li>
+            <li><a href="packages.html?category=beach">Tropical Coastal Escapes</a></li>
+            <li><a href="packages.html">11 Handcrafted Itineraries</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Our Fleet</h4>
           <ul class="footer-links">
-            <li><a href="fleet.html">Toyota Premio Sedan (1-3 Pax)</a></li>
-            <li><a href="fleet.html">Toyota Axio / Prius Hybrid</a></li>
-            <li><a href="fleet.html">Honda Vezel Crossover (1-4 Pax)</a></li>
-            <li><a href="fleet.html">Mitsubishi Outlander SUV</a></li>
-            <li><a href="fleet.html">Toyota KDH Luxury Van (4-8 Pax)</a></li>
-            <li><a href="fleet.html">100% Inclusions Guarantee</a></li>
+            <li><a href="fleet.html#sedan">Toyota Premio Sedan (1-3 Pax)</a></li>
+            <li><a href="fleet.html#suv">Honda Vezel Crossover (1-4 Pax)</a></li>
+            <li><a href="fleet.html#van">Toyota KDH Luxury Van (4-8 Pax)</a></li>
+            <li><a href="javascript:void(0)" onclick="openPolicyModal('terms')">100% Inclusions Guarantee</a></li>
           </ul>
         </div>
 
@@ -363,9 +415,9 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
         <div style="display: flex; gap: 20px;">
-          <a href="reviews.html">Trust Guarantee</a>
-          <a href="booking.html">Booking Terms</a>
-          <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
+          <a href="mailto:bookings@ceylonchauffeur.com">Email Concierge</a>
         </div>
       </div>
     </div>

@@ -3,11 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Executive Fleet | Ceylon Chauffeur Sri Lanka</title>
+  <title>Our Executive Fleet | Ceylon Chauffeurs Sri Lanka</title>
   <meta name="description" content="Explore our luxury fleet of private vehicles in Sri Lanka: Executive Sedans, Crossover SUVs, and Luxury Passenger Vans with transparent all-inclusive daily rates.">
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Executive Fleet & Specifications | Ceylon Chauffeurs">
+  <meta property="og:description" content="Sedans, Crossover SUVs & Luxury Passenger Vans. 100% all-inclusive daily rates covering fuel, tolls, parking, and driver lodging.">
+  <meta property="og:image" content="assets/images/sedan.jpg">
+  <meta property="og:url" content="https://ceylonchauffeur.com/fleet.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Executive Fleet | Ceylon Chauffeurs Sri Lanka">
+  <meta name="twitter:description" content="Explore late-model luxury Japanese vehicles with professional English-speaking driver guides.">
+  <meta name="twitter:image" content="assets/images/sedan.jpg">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoRental",
+    "name": "Ceylon Chauffeurs Luxury Fleet",
+    "image": "https://ceylonchauffeur.com/assets/images/sedan.jpg",
+    "telephone": "+94771234567",
+    "priceRange": "$65 - $105 USD per day",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Katunayake / Colombo",
+      "addressCountry": "Sri Lanka"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -67,11 +98,11 @@
     <div class="container">
 
       <!-- Vehicle 1: Sedan -->
-      <div class="fleet-card fleet-detailed-card">
+      <div class="fleet-card fleet-detailed-card" id="sedan">
         <div class="fleet-image-wrap">
           <img src="assets/images/sedan.jpg" alt="Toyota Premio Sedan Executive Chauffeur" style="width: 100%; height: 100%; object-fit: cover;">
           <span class="fleet-category-badge">Executive Sedan</span>
-          <span class="fleet-rate-badge">$65 / Day All-Inclusive</span>
+          <span class="fleet-rate-badge" data-usd-amount="65" data-usd-period="day">$65 / Day All-Inclusive</span>
         </div>
         <div class="fleet-content" style="padding: 40px;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
@@ -109,11 +140,11 @@
       </div>
 
       <!-- Vehicle 2: SUV / Crossover -->
-      <div class="fleet-card fleet-detailed-card">
+      <div class="fleet-card fleet-detailed-card" id="suv">
         <div class="fleet-image-wrap">
           <img src="assets/images/suv.jpg" alt="Honda Vezel Luxury Crossover SUV" style="width: 100%; height: 100%; object-fit: cover;">
           <span class="fleet-category-badge">SUV / Crossover</span>
-          <span class="fleet-rate-badge">$80 / Day All-Inclusive</span>
+          <span class="fleet-rate-badge" data-usd-amount="80" data-usd-period="day">$80 / Day All-Inclusive</span>
         </div>
         <div class="fleet-content" style="padding: 40px;">
           <div>
@@ -149,11 +180,11 @@
       </div>
 
       <!-- Vehicle 3: Luxury Van -->
-      <div class="fleet-card fleet-detailed-card">
+      <div class="fleet-card fleet-detailed-card" id="van">
         <div class="fleet-image-wrap">
           <img src="assets/images/van.jpg" alt="Toyota KDH HiAce Super GL Luxury Van" style="width: 100%; height: 100%; object-fit: cover;">
           <span class="fleet-category-badge">Luxury Passenger Van</span>
-          <span class="fleet-rate-badge">$105 / Day All-Inclusive</span>
+          <span class="fleet-rate-badge" data-usd-amount="105" data-usd-period="day">$105 / Day All-Inclusive</span>
         </div>
         <div class="fleet-content" style="padding: 40px;">
           <div>
@@ -199,7 +230,7 @@
       <p class="section-subtitle" style="margin: 0 auto;">Select the perfect vehicle for your party size and journey requirements.</p>
     </div>
 
-    <div style="background: #ffffff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle); overflow-x: auto;">
+    <div class="table-responsive-wrapper" style="background: #ffffff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle); overflow-x: auto;">
       <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 650px;">
         <thead>
           <tr style="background: var(--primary-emerald); color: #ffffff;">
@@ -215,21 +246,21 @@
             <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);">Executive Sedan (Toyota Premio / Axio / Prius)</td>
             <td style="padding: 18px 20px;">1–3 Passengers</td>
             <td style="padding: 18px 20px;">2–3 Standard Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);">$65 USD / Day</td>
+            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="65" data-usd-period="day">$65 USD / Day</td>
             <td style="padding: 18px 20px;">Couples, Solo Travelers, City Transfers</td>
           </tr>
           <tr style="border-bottom: 1px solid var(--border-subtle); background-color: var(--bg-sand);">
             <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);">Crossover SUV (Honda Vezel / Outlander)</td>
             <td style="padding: 18px 20px;">1–4 Passengers</td>
             <td style="padding: 18px 20px;">3–4 Standard Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);">$80 USD / Day</td>
+            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="80" data-usd-period="day">$80 USD / Day</td>
             <td style="padding: 18px 20px;">Small Families, Mountain & Scenic Routes</td>
           </tr>
           <tr>
             <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);">Luxury Van (Toyota KDH / HiAce Super GL)</td>
             <td style="padding: 18px 20px;">4–8 Passengers</td>
             <td style="padding: 18px 20px;">6–8 Large Suitcases</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);">$105 USD / Day</td>
+            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="105" data-usd-period="day">$105 USD / Day</td>
             <td style="padding: 18px 20px;">Families with Kids, Groups, Extended Tours</td>
           </tr>
         </tbody>
@@ -249,8 +280,8 @@
       <div class="inclusions-grid">
         <div class="inclusion-card">
           <div class="inclusion-icon"><i class="fas fa-gas-pump"></i></div>
-          <h4>Fuel & Mileage</h4>
-          <p>Unlimited mileage for your itinerary with all fuel costs 100% included.</p>
+          <h4>Fuel & Mileage Included</h4>
+          <p>Unlimited mileage for your entire itinerary. Petrol and diesel completely covered.</p>
         </div>
         <div class="inclusion-card">
           <div class="inclusion-icon"><i class="fas fa-road"></i></div>
@@ -259,13 +290,13 @@
         </div>
         <div class="inclusion-card">
           <div class="inclusion-icon"><i class="fas fa-hotel"></i></div>
-          <h4>Driver Food & Lodging</h4>
-          <p>Handled 100% by Ceylon Chauffeur with no extra fees or arrangements needed.</p>
+          <h4>Driver Meals & Lodging</h4>
+          <p>You never need to arrange accommodation or meals for your driver. Handled 100% by us.</p>
         </div>
         <div class="inclusion-card">
           <div class="inclusion-icon"><i class="fas fa-user-shield"></i></div>
-          <h4>Passenger Insurance</h4>
-          <p>Full comprehensive passenger liability insurance on every vehicle.</p>
+          <h4>Licensed Driver-Guide</h4>
+          <p>Government certified, English-speaking, police verified, with comprehensive passenger insurance.</p>
         </div>
       </div>
     </div>
@@ -293,9 +324,9 @@
             </div>
           </div>
           <p>
-            Ceylon Chauffeurs provides international tourists with transparent daily rates, modern vehicles, and accredited English-speaking driver-guides.
+            Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
           </p>
-          <div style="display: flex; gap: 12px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
               <i class="fab fa-whatsapp"></i> WhatsApp Concierge
             </button>
@@ -306,25 +337,25 @@
         <div class="footer-col">
           <h4>Master Tours</h4>
           <ul class="footer-links">
-            <li><a href="packages.html">4-Day Cultural Highlights</a></li>
-            <li><a href="packages.html">7-Day Heritage Classic</a></li>
-            <li><a href="packages.html">10-Day Complete Island</a></li>
-            <li><a href="packages.html">14-Day Grand Loop</a></li>
-            <li><a href="packages.html">21-Day Ultimate Ceylon</a></li>
-            <li><a href="packages.html">Wildlife & Safari Tours</a></li>
-            <li><a href="packages.html">Tropical Coastal Escapes</a></li>
+            <li><a href="packages.html?category=all-rounder">4-Day Cultural Highlights</a></li>
+            <li><a href="packages.html?category=all-rounder">7-Day Heritage Classic</a></li>
+            <li><a href="packages.html?category=all-rounder">10-Day Complete Island</a></li>
+            <li><a href="packages.html?category=all-rounder">14-Day Grand Loop</a></li>
+            <li><a href="packages.html?category=all-rounder">21-Day Ultimate Ceylon</a></li>
+            <li><a href="packages.html?category=wildlife">Wildlife & Safari Tours</a></li>
+            <li><a href="packages.html?category=beach">Tropical Coastal Escapes</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Our Fleet</h4>
           <ul class="footer-links">
-            <li><a href="fleet.html">Toyota Premio Sedan (1-3 Pax)</a></li>
-            <li><a href="fleet.html">Toyota Axio / Prius Hybrid</a></li>
-            <li><a href="fleet.html">Honda Vezel Crossover (1-4 Pax)</a></li>
-            <li><a href="fleet.html">Mitsubishi Outlander SUV</a></li>
-            <li><a href="fleet.html">Toyota KDH Luxury Van (4-8 Pax)</a></li>
-            <li><a href="fleet.html">100% Inclusions Guarantee</a></li>
+            <li><a href="fleet.html#sedan">Toyota Premio Sedan (1-3 Pax)</a></li>
+            <li><a href="fleet.html#sedan">Toyota Axio / Prius Hybrid</a></li>
+            <li><a href="fleet.html#suv">Honda Vezel Crossover (1-4 Pax)</a></li>
+            <li><a href="fleet.html#suv">Mitsubishi Outlander SUV</a></li>
+            <li><a href="fleet.html#van">Toyota KDH Luxury Van (4-8 Pax)</a></li>
+            <li><a href="javascript:void(0)" onclick="openPolicyModal('terms')">100% Inclusions Guarantee</a></li>
           </ul>
         </div>
 
@@ -357,8 +388,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
         <div style="display: flex; gap: 20px;">
-          <a href="reviews.html">Trust Guarantee</a>
-          <a href="booking.html">Booking Terms</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
           <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
         </div>
       </div>

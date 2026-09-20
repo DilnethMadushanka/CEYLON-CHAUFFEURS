@@ -5,9 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tour Packages Matrix & Day-by-Day Itineraries | Ceylon Chauffeur</title>
   <meta name="description" content="Browse our 11 master Sri Lanka tour itineraries across Cultural Highlights, Wildlife Safari, and Tropical Beaches. Available as private daily chauffeur service or full package.">
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="11 Master Tour Packages & Day-by-Day Itineraries | Ceylon Chauffeur">
+  <meta property="og:description" content="Handcrafted Sri Lanka routes across Culture, Safari Wildlife, and Beaches with licensed private chauffeur-guides.">
+  <meta property="og:image" content="assets/images/sigiriya.jpg">
+  <meta property="og:url" content="https://ceylonchauffeur.com/packages.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="11 Master Sri Lanka Tour Packages | Ceylon Chauffeur">
+  <meta name="twitter:description" content="Explore ancient kingdoms, wild elephant safaris, and tropical beaches with an accredited chauffeur.">
+  <meta name="twitter:image" content="assets/images/sigiriya.jpg">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Leaflet.js Interactive Mapping Stylesheet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Ceylon Chauffeurs Master Sri Lanka Tour Packages",
+    "description": "11 Master Itineraries covering Cultural Triangle, Highlands, Safari Parks and Tropical Coastlines.",
+    "numberOfItems": 11,
+    "itemListElement": [
+      {
+        "@type": "TouristTrip",
+        "name": "4-Day Cultural Highlights Tour",
+        "touristType": "Cultural Travelers",
+        "itinerary": "Negombo, Sigiriya, Dambulla, Kandy, Colombo"
+      },
+      {
+        "@type": "TouristTrip",
+        "name": "7-Day Heritage & Hill Country Classic",
+        "touristType": "Nature & Heritage",
+        "itinerary": "Negombo, Sigiriya, Polonnaruwa, Kandy, Ella, Colombo"
+      },
+      {
+        "@type": "TouristTrip",
+        "name": "7-Day Wild & National Parks Safari",
+        "touristType": "Wildlife Enthusiasts",
+        "itinerary": "Wilpattu, Sigiriya, Minneriya, Horton Plains, Udawalawe, Yala"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -66,8 +114,28 @@
   <section class="packages-section">
     <div class="container">
 
-      <!-- Filter Controls & Pricing Switcher -->
+      <!-- Interactive Route Explorer Map Banner -->
+      <div class="route-map-wrapper" style="margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h3 style="font-size: 1.3rem; color: var(--primary-emerald); margin-bottom: 2px;">
+              <i class="fas fa-map-marked-alt text-gold"></i> Interactive Island Route Explorer
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
+              Click any package card below to preview its route stops and waypoints across Sri Lanka.
+            </p>
+          </div>
+          <div id="map-active-package-tag" style="font-size: 0.82rem; background: var(--bg-sand); border: 1px solid var(--border-gold); padding: 4px 12px; border-radius: 20px; color: var(--primary-emerald); font-weight: 700;">
+            Showing: Full Island Tourist Network
+          </div>
+        </div>
+        <div id="ceylon-route-map" class="interactive-map-box"></div>
+      </div>
+
+      <!-- Advanced Filter Controls & Pricing Switcher -->
       <div class="packages-filter-bar">
+        
+        <!-- Category Tabs -->
         <div class="category-tabs">
           <button class="tab-btn active" data-category="all">All Packages (11)</button>
           <button class="tab-btn" data-category="all-rounder">All-Rounder / Island Highlights (5)</button>
@@ -75,14 +143,58 @@
           <button class="tab-btn" data-category="beach">Beach & Coastal Escape (3)</button>
         </div>
 
-        <div class="pricing-mode-toggle">
-          <span>Base Chauffeur Rate</span>
-          <label class="switch">
-            <input type="checkbox" id="pricing-mode-toggle-checkbox">
-            <span class="slider"></span>
-          </label>
-          <span style="color: var(--primary-emerald); font-weight: 700;">Full Package Estimate</span>
+        <!-- Duration Filter Pills -->
+        <div class="duration-filter-pills">
+          <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-emerald); display: flex; align-items: center; gap: 4px;">
+            <i class="far fa-clock text-gold"></i> Duration:
+          </span>
+          <button class="pill-btn active" data-duration="all">All Durations</button>
+          <button class="pill-btn" data-duration="short">4–7 Days</button>
+          <button class="pill-btn" data-duration="medium">8–14 Days</button>
+          <button class="pill-btn" data-duration="long">15+ Days</button>
         </div>
+
+        <!-- Vehicle Selection Bar for Package Rates -->
+        <div class="package-vehicle-bar">
+          <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-emerald); display: flex; align-items: center; gap: 4px;">
+            <i class="fas fa-car text-gold"></i> Calculate For Vehicle:
+          </span>
+          <div class="vehicle-pill-group">
+            <button class="veh-pill-btn active" data-vehicle="sedan">
+              Sedan (1-3 Pax) • <span data-usd-amount="65" data-usd-period="day">$65/d</span>
+            </button>
+            <button class="veh-pill-btn" data-vehicle="suv">
+              SUV (1-4 Pax) • <span data-usd-amount="80" data-usd-period="day">$80/d</span>
+            </button>
+            <button class="veh-pill-btn" data-vehicle="van">
+              Luxury Van (4-8 Pax) • <span data-usd-amount="105" data-usd-period="day">$105/d</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search Bar and Pricing Mode Toggle -->
+        <div class="filter-bottom-row">
+          <div class="package-search-box">
+            <i class="fas fa-search text-gold"></i>
+            <input type="text" id="package-search-input" placeholder="Search destinations (e.g. Ella, Sigiriya, Yala, Galle, Jaffna)..." aria-label="Search Packages">
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div class="pricing-mode-toggle">
+              <span>Base Chauffeur Rate</span>
+              <label class="switch">
+                <input type="checkbox" id="pricing-mode-toggle-checkbox">
+                <span class="slider"></span>
+              </label>
+              <span style="color: var(--primary-emerald); font-weight: 700;">Full Package Estimate</span>
+            </div>
+
+            <button type="button" class="btn btn-outline-emerald btn-sm" onclick="openFullPackageInfoModal()" title="See what is included in Full Package">
+              <i class="fas fa-info-circle text-gold"></i> What's Included?
+            </button>
+          </div>
+        </div>
+
       </div>
 
       <!-- Packages Grid Container (Populated dynamically by packages.js) -->
@@ -132,7 +244,7 @@
     <div class="modal-card">
       <div class="modal-header">
         <h3 id="modal-pkg-title">Tour Itinerary</h3>
-        <button class="modal-close-btn">&times;</button>
+        <button class="modal-close-btn" onclick="closeItineraryModal()">&times;</button>
       </div>
       <div id="modal-pkg-body" class="modal-content">
         <!-- Timeline injected via packages.js -->
@@ -144,6 +256,44 @@
         <button id="modal-pkg-quote-btn" class="btn btn-primary btn-sm">
           <i class="fas fa-edit"></i> Customize & Get Quote
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- "What's Included in Full Package" Explanatory Modal -->
+  <div id="full-package-info-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3 style="color: var(--primary-emerald);"><i class="fas fa-award text-gold"></i> Full All-Inclusive Package Details</h3>
+        <button class="modal-close-btn" onclick="closeFullPackageInfoModal()">&times;</button>
+      </div>
+      <div class="modal-content" style="padding: 24px; line-height: 1.7; font-size: 0.92rem;">
+        <p style="margin-bottom: 16px;">
+          When you toggle to <strong>Full Package Estimate</strong>, your tour becomes a completely hands-off VIP vacation. We curate every logistical detail so you never need to purchase tickets in line or arrange hotels.
+        </p>
+
+        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🏨 1. 4-Star & Boutique Heritage Hotels</h4>
+        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
+          Handpicked top-rated resorts and colonial boutique properties with daily breakfast & dinner included (Half-Board basis).
+        </p>
+
+        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🎟️ 2. All Official Monument & Heritage Entrance Fees</h4>
+        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
+          Direct VIP access to Sigiriya Lion Rock citadel, Polonnaruwa ruins, Dambulla Cave Temple, Kandy Temple of the Tooth, and Horton Plains World's End.
+        </p>
+
+        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🚙 3. Dedicated 4x4 Safari Jeeps & Park Ranger Permits</h4>
+        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
+          Exclusive open-top 4x4 safari vehicles with certified wildlife spotters for Yala, Minneriya, and Wilpattu national parks.
+        </p>
+
+        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🚂 4. Scenic Mountain Train Observation Tickets</h4>
+        <p style="font-size: 0.88rem; color: var(--text-dark);">
+          Reserved 1st or 2nd class observation window seats for the iconic blue mountain train from Kandy/Nanu Oya to Ella.
+        </p>
+      </div>
+      <div class="modal-footer" style="text-align: right;">
+        <button class="btn btn-primary btn-sm" onclick="closeFullPackageInfoModal()">Got It</button>
       </div>
     </div>
   </div>
@@ -172,7 +322,7 @@
           <p>
             Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
           </p>
-          <div style="display: flex; gap: 12px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
               <i class="fab fa-whatsapp"></i> WhatsApp Concierge
             </button>
@@ -183,25 +333,25 @@
         <div class="footer-col">
           <h4>Master Tours</h4>
           <ul class="footer-links">
-            <li><a href="packages.html">4-Day Cultural Highlights</a></li>
-            <li><a href="packages.html">7-Day Heritage Classic</a></li>
-            <li><a href="packages.html">10-Day Complete Island</a></li>
-            <li><a href="packages.html">14-Day Grand Loop</a></li>
-            <li><a href="packages.html">21-Day Ultimate Ceylon</a></li>
-            <li><a href="packages.html">Wildlife & Safari Tours</a></li>
-            <li><a href="packages.html">Tropical Coastal Escapes</a></li>
+            <li><a href="packages.html?category=all-rounder">4-Day Cultural Highlights</a></li>
+            <li><a href="packages.html?category=all-rounder">7-Day Heritage Classic</a></li>
+            <li><a href="packages.html?category=all-rounder">10-Day Complete Island</a></li>
+            <li><a href="packages.html?category=all-rounder">14-Day Grand Loop</a></li>
+            <li><a href="packages.html?category=all-rounder">21-Day Ultimate Ceylon</a></li>
+            <li><a href="packages.html?category=wildlife">Wildlife & Safari Tours</a></li>
+            <li><a href="packages.html?category=beach">Tropical Coastal Escapes</a></li>
           </ul>
         </div>
 
         <div class="footer-col">
           <h4>Our Fleet</h4>
           <ul class="footer-links">
-            <li><a href="fleet.html">Toyota Premio Sedan (1-3 Pax)</a></li>
-            <li><a href="fleet.html">Toyota Axio / Prius Hybrid</a></li>
-            <li><a href="fleet.html">Honda Vezel Crossover (1-4 Pax)</a></li>
-            <li><a href="fleet.html">Mitsubishi Outlander SUV</a></li>
-            <li><a href="fleet.html">Toyota KDH Luxury Van (4-8 Pax)</a></li>
-            <li><a href="fleet.html">100% Inclusions Guarantee</a></li>
+            <li><a href="fleet.html#sedan">Toyota Premio Sedan (1-3 Pax)</a></li>
+            <li><a href="fleet.html#sedan">Toyota Axio / Prius Hybrid</a></li>
+            <li><a href="fleet.html#suv">Honda Vezel Crossover (1-4 Pax)</a></li>
+            <li><a href="fleet.html#suv">Mitsubishi Outlander SUV</a></li>
+            <li><a href="fleet.html#van">Toyota KDH Luxury Van (4-8 Pax)</a></li>
+            <li><a href="javascript:void(0)" onclick="openPolicyModal('terms')">100% Inclusions Guarantee</a></li>
           </ul>
         </div>
 
@@ -234,8 +384,8 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
         <div style="display: flex; gap: 20px;">
-          <a href="reviews.html">Trust Guarantee</a>
-          <a href="booking.html">Booking Terms</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
+          <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
           <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
         </div>
       </div>
@@ -243,6 +393,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="js/main.js"></script>
   <script src="js/packages.js"></script>
 </body>
