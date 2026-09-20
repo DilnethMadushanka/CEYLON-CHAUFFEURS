@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initClock();
   loadInquiries();
   initAdminToolbar();
-  initSeedDemoButton();
   initExportCsvButton();
 });
 
@@ -636,20 +635,6 @@ function initExportCsvButton() {
   });
 }
 
-/**
- * Seed demonstration inquiries button
- */
-function initSeedDemoButton() {
-  const btn = document.getElementById('btn-seed-demo');
-  btn?.addEventListener('click', () => {
-    if (confirm('Load demonstration booking inquiries into your dashboard?')) {
-      allInquiries = [...DEMO_SEED_INQUIRIES, ...allInquiries];
-      saveInquiries();
-      updateKpis();
-      renderInquiriesTable();
-    }
-  });
-}
 
 // Window globals
 window.openDossierModal = openDossierModal;
