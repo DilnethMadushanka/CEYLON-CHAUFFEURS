@@ -729,6 +729,74 @@ h1, h2, h3, h4, .font-serif {
   color: var(--accent-gold);
 }
 
+/* Fleet Card Features Dropdown Toggle (Home Page) */
+.fleet-details-dropdown-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--bg-sand);
+  border: 1px solid var(--border-subtle);
+  color: var(--primary-emerald);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.fleet-details-dropdown-btn:hover {
+  background: rgba(197, 160, 89, 0.12);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold-hover);
+}
+
+.fleet-details-dropdown-btn .dropdown-icon {
+  font-size: 0.8rem;
+  color: var(--accent-gold-hover);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fleet-details-dropdown-btn.active {
+  background: rgba(4, 23, 18, 0.05);
+  border-color: var(--primary-emerald);
+  color: var(--primary-emerald);
+}
+
+.fleet-details-dropdown-btn.active .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.fleet-details-collapse {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+  margin-bottom: 0;
+}
+
+.fleet-details-collapse.active {
+  max-height: 400px;
+  opacity: 1;
+  margin-bottom: 16px;
+}
+
+.fleet-details-collapse .fleet-features-list {
+  margin-bottom: 0;
+  padding: 12px 14px;
+  background: rgba(249, 246, 240, 0.7);
+  border-radius: 8px;
+  border: 1px dashed var(--border-subtle);
+}
+
+.fleet-details-collapse .fleet-features-list li:last-child {
+  margin-bottom: 0;
+}
+
 .fleet-actions {
   display: flex;
   gap: 12px;
@@ -2537,6 +2605,16 @@ input:checked + .slider:before {
   .fleet-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .fleet-details-dropdown-btn {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+
+  .fleet-details-collapse .fleet-features-list {
+    padding: 10px 12px;
   }
 
   /* Tour Packages Matrix */

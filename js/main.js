@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalFAQAccordion();
   initPolicyModals();
   initFleetTabs();
+  initFleetDropdowns();
   updateAllCurrencyDisplays();
 });
 
@@ -291,6 +292,48 @@ function initFleetTabs() {
 
   // Expose globally
   window.switchFleetVehicle = activateVehicle;
+}
+
+/**
+ * Initialize Collapsible Feature Dropdowns on Fleet Cards (Home Page)
+ */
+function initFleetDropdowns() {
+  const dropdownBtns = document.querySelectorAll('.fleet-details-dropdown-btn');
+  if (!dropdownBtns.length) return;
+
+  dropdownBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = btn.closest('.fleet-card');
+      if (!card) return;
+      const collapse = card.querySelector('.fleet-details-collapse');
+      const textSpan = btn.querySelector('.dropdown-btn-text');
+
+      const isCurrentlyActive = btn.classList.contains('active');
+      const nextActive = !isCurrentlyActive;
+
+      btn.classList.toggle('active', nextActive);
+      btn.setAttribute('aria-expanded', nextActive ? 'true' : 'false');
+
+      if (collapse) {
+        collapse.classList.toggle('active', nextActive);
+      }
+
+      // Update toggle button text according to active language
+      const lang = window.currentLanguage || localStorage.getItem('ceylon_lang') || 'en';
+      const translations = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+
+      if (textSpan) {
+        if (nextActive) {
+          textSpan.setAttribute('data-i18n', 'fleet.hide_features');
+          textSpan.textContent = (translations && translations['fleet.hide_features']) || 'Hide Features & Inclusions';
+        } else {
+          textSpan.setAttribute('data-i18n', 'fleet.view_features');
+          textSpan.textContent = (translations && translations['fleet.view_features']) || 'View Features & Inclusions';
+        }
+      }
+    });
+  });
 }
 
 /**
