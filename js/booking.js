@@ -562,7 +562,7 @@ function closeAutoResponderModal() {
 }
 
 function continueToWhatsApp(encodedMessage) {
-  const phone = window.CEYLON_CHAUFFEUR_CONFIG ? window.CEYLON_CHAUFFEUR_CONFIG.phone : '94771234567';
+  const phone = window.CEYLON_CHAUFFEUR_CONFIG ? window.CEYLON_CHAUFFEUR_CONFIG.phone : '94760542557';
   const url = `https://wa.me/${phone}?text=${encodedMessage}`;
   window.open(url, '_blank');
   closeAutoResponderModal();

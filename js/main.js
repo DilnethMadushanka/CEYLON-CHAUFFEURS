@@ -5,8 +5,8 @@
 
 // Global Business Configuration
 const CEYLON_CHAUFFEUR_CONFIG = {
-  phone: '94771234567', // Sri Lanka WhatsApp format
-  displayPhone: '+94 77 123 4567',
+  phone: '94760542557', // Sri Lanka WhatsApp format
+  displayPhone: '+94 76 054 2557',
   email: 'bookings@ceylonchauffeur.com',
   officeAddress: 'Colombo & Katunayake Airport Hub, Sri Lanka',
   defaultWhatsAppMessage: 'Hi Ceylon Chauffeur, I would like to inquire about a private chauffeur service for my trip to Sri Lanka.'
@@ -321,16 +321,31 @@ function initFleetDropdowns() {
 
       // Update toggle button text according to active language
       const lang = window.currentLanguage || localStorage.getItem('ceylon_lang') || 'en';
-      const translations = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+      const key = nextActive ? 'fleet.hide_features' : 'fleet.view_features';
 
       if (textSpan) {
-        if (nextActive) {
-          textSpan.setAttribute('data-i18n', 'fleet.hide_features');
-          textSpan.textContent = (translations && translations['fleet.hide_features']) || 'Hide Features & Inclusions';
+        textSpan.setAttribute('data-i18n', key);
+        if (typeof window.t === 'function') {
+          textSpan.textContent = window.t(key, lang);
         } else {
-          textSpan.setAttribute('data-i18n', 'fleet.view_features');
-          textSpan.textContent = (translations && translations['fleet.view_features']) || 'View Features & Inclusions';
+          const trans = window.TRANSLATIONS && window.TRANSLATIONS[lang];
+          textSpan.textContent = (trans && trans[key]) || (nextActive ? 'Hide Features & Inclusions' : 'View Features & Inclusions');
         }
+      }
+    });
+  });
+
+  // Re-translate dropdown labels immediately whenever user changes language
+  window.addEventListener('ceylon_language_changed', (e) => {
+    const activeLang = (e.detail && e.detail.language) || window.currentLanguage || localStorage.getItem('ceylon_lang') || 'en';
+    dropdownBtns.forEach(btn => {
+      const textSpan = btn.querySelector('.dropdown-btn-text');
+      if (!textSpan) return;
+      const isOpen = btn.classList.contains('active');
+      const key = isOpen ? 'fleet.hide_features' : 'fleet.view_features';
+      textSpan.setAttribute('data-i18n', key);
+      if (typeof window.t === 'function') {
+        textSpan.textContent = window.t(key, activeLang);
       }
     });
   });
