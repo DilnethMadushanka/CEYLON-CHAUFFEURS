@@ -1927,7 +1927,7 @@ input:checked + .slider:before {
     display: none !important;
   }
 
-  .currency-picker-wrap {
+  .nav-cta .nav-selectors-group {
     display: none !important;
   }
 
@@ -2905,19 +2905,40 @@ input:checked + .slider:before {
    Enhancements: Currency Switcher, Interactive Map, Filter Pills & Alerts
    ========================================================================== */
 
-/* Multi-Currency Header Picker */
-.currency-picker-wrap {
-  display: flex;
+/* Multi-Currency & Language Header Pickers */
+.nav-selectors-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+}
+
+.nav-select-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   background: var(--bg-sand-dark);
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-gold);
-  margin-right: 6px;
+  transition: all 0.25s ease;
 }
 
-.currency-select-box {
+.nav-select-pill:hover,
+.nav-select-pill:focus-within {
+  border-color: var(--accent-gold);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+  background: #ffffff;
+}
+
+.select-icon {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.currency-select-box,
+.language-select-box {
   border: none;
   background: transparent;
   font-size: 0.82rem;
@@ -2925,6 +2946,15 @@ input:checked + .slider:before {
   color: var(--primary-emerald);
   cursor: pointer;
   outline: none;
+  font-family: inherit;
+}
+
+.currency-select-box option,
+.language-select-box option {
+  background: #ffffff;
+  color: #1a202c;
+  font-weight: 500;
+  padding: 6px;
 }
 
 .currency-code-tag {
@@ -2932,6 +2962,50 @@ input:checked + .slider:before {
   color: var(--text-muted);
   font-weight: 600;
   text-transform: uppercase;
+}
+
+/* Mobile Nav Preferences Bar in Drawer */
+.mobile-nav-prefs {
+  list-style: none;
+  padding: 12px 14px;
+  background: var(--bg-sand);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-gold);
+  margin-bottom: 14px;
+}
+
+.mobile-prefs-header {
+  margin-bottom: 8px;
+}
+
+.mobile-prefs-title {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary-emerald);
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobile-prefs-controls {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.mobile-prefs-controls .nav-select-pill {
+  flex: 1;
+  display: flex !important;
+  justify-content: flex-start;
+  padding: 8px 10px;
+  background: #ffffff;
+}
+
+.mobile-prefs-controls select {
+  width: 100%;
+  font-size: 0.85rem;
 }
 
 /* Mobile Drawer Backdrop */

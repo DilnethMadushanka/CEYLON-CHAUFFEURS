@@ -18,6 +18,8 @@ const CURRENCIES = {
   EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)', code: 'EUR', position: 'before' },
   GBP: { symbol: '£', rate: 0.79, label: 'GBP (£)', code: 'GBP', position: 'before' },
   AUD: { symbol: 'A$', rate: 1.52, label: 'AUD (A$)', code: 'AUD', position: 'before' },
+  RUB: { symbol: '₽', rate: 92.50, label: 'RUB (₽)', code: 'RUB', position: 'after' },
+  CNY: { symbol: '¥', rate: 7.24, label: 'CNY (¥)', code: 'CNY', position: 'before' },
   LKR: { symbol: 'Rs. ', rate: 305.00, label: 'LKR (Rs)', code: 'LKR', position: 'before' }
 };
 
@@ -69,31 +71,58 @@ function updateAllCurrencyDisplays() {
     }
   });
 
-  // Sync all currency select dropdowns
+  // Sync all currency select dropdowns across desktop and mobile
   document.querySelectorAll('.currency-select-box').forEach(select => {
     select.value = currentCurrency;
   });
 }
 
+function getOrCreateNavSelectorsGroup() {
+  let group = document.querySelector('.nav-cta .nav-selectors-group');
+  if (!group) {
+    const navCta = document.querySelector('.nav-cta');
+    if (navCta) {
+      group = document.createElement('div');
+      group.className = 'nav-selectors-group';
+      const ctaBtn = navCta.querySelector('.btn');
+      if (ctaBtn) {
+        navCta.insertBefore(group, ctaBtn);
+      } else {
+        navCta.insertBefore(group, navCta.firstChild);
+      }
+    }
+  }
+  return group;
+}
+
 function initCurrencySwitcher() {
-  const navCta = document.querySelector('.nav-cta');
-  if (navCta && !document.querySelector('.currency-select-box')) {
+  const selectorsGroup = getOrCreateNavSelectorsGroup();
+  if (selectorsGroup && !selectorsGroup.querySelector('.currency-select-box')) {
     const switcherWrap = document.createElement('div');
-    switcherWrap.className = 'currency-picker-wrap';
+    switcherWrap.className = 'nav-select-pill currency-picker-wrap';
+    switcherWrap.title = 'Select Currency';
     switcherWrap.innerHTML = `
-      <i class="fas fa-globe text-gold" style="font-size: 0.88rem;"></i>
+      <i class="fas fa-coins select-icon text-gold"></i>
       <select class="currency-select-box" aria-label="Select Currency">
         ${Object.keys(CURRENCIES).map(key => `
           <option value="${key}" ${key === currentCurrency ? 'selected' : ''}>${CURRENCIES[key].label}</option>
         `).join('')}
       </select>
     `;
-    navCta.insertBefore(switcherWrap, navCta.firstChild);
+    selectorsGroup.insertBefore(switcherWrap, selectorsGroup.firstChild);
 
     switcherWrap.querySelector('.currency-select-box').addEventListener('change', (e) => {
       setCurrency(e.target.value);
     });
   }
+
+  // Also sync any mobile currency dropdown if already in DOM
+  document.querySelectorAll('.mobile-nav-prefs .currency-select-box').forEach(select => {
+    select.value = currentCurrency;
+    select.addEventListener('change', (e) => {
+      setCurrency(e.target.value);
+    });
+  });
 }
 
 /**

@@ -746,6 +746,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('ceylon_currency_changed', () => {
     renderPackages();
   });
+
+  // Listen for global language changes
+  window.addEventListener('ceylon_language_changed', () => {
+    renderPackages();
+  });
 });
 
 /**
@@ -773,7 +778,6 @@ function renderPackages() {
       const q = searchKeyword.toLowerCase();
       matchSearch = pkg.title.toLowerCase().includes(q) || 
                     pkg.route.toLowerCase().includes(q) ||
-                    (pkg.keyFeature && pkg.keyFeature.toLowerCase().includes(q)) ||
                     pkg.highlights.some(h => h.toLowerCase().includes(q));
     }
 
@@ -782,17 +786,23 @@ function renderPackages() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--accent-gold);">
-        <i class="fas fa-search-location text-gold" style="font-size: 2.8rem; margin-bottom: 16px;"></i>
-        <h3 style="color: var(--primary-emerald); margin-bottom: 8px;">No Tour Packages Matched Your Search</h3>
-        <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 20px;">
-          Try adjusting your search terms or duration filters, or request a custom itinerary tailored to your exact route.
+      <div class="no-results-msg" style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+        <i class="fas fa-search" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 16px;"></i>
+        <h3 style="color: var(--primary-emerald);">No Tour Packages Found</h3>
+        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 20px;">
+          We couldn't find an itinerary matching your current filter criteria. Try clearing some filters or build a custom route.
         </p>
         <a href="booking.html" class="btn btn-primary btn-sm">Request Custom Itinerary</a>
       </div>
     `;
     return;
   }
+
+  const lblDays = window.t ? window.t('pkg.days') : 'Days';
+  const lblRoute = window.t ? window.t('pkg.route') : 'Route:';
+  const lblStartingFrom = window.t ? window.t('pkg.price.label') : 'Starting From';
+  const lblItinerary = window.t ? window.t('pkg.btn.itinerary') : 'View Itinerary';
+  const lblBook = window.t ? window.t('pkg.btn.book') : 'Book Tour';
 
   container.innerHTML = filtered.map(pkg => {
     // Calculate rate based on chosen vehicle
@@ -802,14 +812,14 @@ function renderPackages() {
     const convertedRate = window.convertUSD ? window.convertUSD(rateToUse) : { formatted: `$${rateToUse}`, code: 'USD' };
     const priceNote = isFullPackagePricing 
       ? 'Full All-Inclusive Estimate' 
-      : `${vehicleConf.name.split('(')[0].trim()} Rate (${pkg.days} Days)`;
+      : `${vehicleConf.name.split('(')[0].trim()} Rate (${pkg.days} ${lblDays})`;
 
     return `
       <div class="package-card" data-category="${pkg.category}" onmouseenter="highlightPackageRoute('${pkg.id}')">
         <div class="package-img-box">
           <img src="${pkg.image}" alt="${pkg.title}" loading="lazy">
           <div class="package-duration-pill">
-            <i class="far fa-clock"></i> ${pkg.days} Days / ${pkg.days - 1} Nights
+            <i class="far fa-clock"></i> ${pkg.days} ${lblDays} / ${pkg.days - 1} Nights
           </div>
           <div class="package-badge-cat">${pkg.categoryName}</div>
         </div>
@@ -819,14 +829,14 @@ function renderPackages() {
             <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> ${pkg.keyFeature}</span>
           </div>
           <div class="package-route-preview">
-            <strong>Route:</strong> ${pkg.route}
+            <strong>${lblRoute}</strong> ${pkg.route}
           </div>
           <ul class="package-highlights-list">
             ${pkg.highlights.map(h => `<li><i class="fas fa-check-circle"></i> ${h}</li>`).join('')}
           </ul>
           <div class="package-price-box">
             <div>
-              <div class="price-label">Starting From</div>
+              <div class="price-label">${lblStartingFrom}</div>
               <div class="price-amount">${convertedRate.formatted} <span>${convertedRate.code}</span></div>
             </div>
             <div style="text-align: right;">
@@ -835,10 +845,10 @@ function renderPackages() {
           </div>
           <div class="package-card-actions">
             <button class="btn btn-outline-emerald btn-sm" onclick="openItineraryModal('${pkg.id}')">
-              <i class="fas fa-list-ul"></i> View Itinerary
+              <i class="fas fa-list-ul"></i> ${lblItinerary}
             </button>
             <button class="btn btn-whatsapp btn-sm action-pkg-whatsapp" onclick="bookPackageWhatsApp('${pkg.id}')">
-              <i class="fab fa-whatsapp"></i> Book Tour
+              <i class="fab fa-whatsapp"></i> ${lblBook}
             </button>
           </div>
         </div>

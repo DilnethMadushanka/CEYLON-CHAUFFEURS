@@ -35,6 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('ceylon_currency_changed', () => {
     calculateQuote();
   });
+
+  // Listen for global language changes
+  window.addEventListener('ceylon_language_changed', () => {
+    calculateQuote();
+  });
 });
 
 /**
