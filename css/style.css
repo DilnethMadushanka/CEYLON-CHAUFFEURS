@@ -245,12 +245,15 @@ h1, h2, h3, h4, .font-serif {
   align-items: center;
   justify-content: space-between;
   padding: 16px 0;
+  gap: 8px;
 }
 
 .brand-logo {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0; /* Allow flex shrinking so hamburger is never pushed off */
+  flex: 1;
 }
 
 .brand-crest {
@@ -2640,11 +2643,10 @@ input:checked + .slider:before {
   }
 
   .brand-text h2 {
-    font-size: 0.92rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 140px;
+    font-size: 0.82rem;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+    white-space: normal;
   }
 
   .brand-text span {
