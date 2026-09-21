@@ -1172,29 +1172,41 @@ function initLanguageSwitcher() {
   if (navMenu && !navMenu.querySelector('.mobile-nav-prefs')) {
     const mobilePrefs = document.createElement('li');
     mobilePrefs.className = 'mobile-nav-prefs';
+    const activeCur = window.currentCurrency || localStorage.getItem('ceylon_currency') || 'USD';
+    const activeLang = window.currentLanguage || localStorage.getItem('ceylon_lang') || 'en';
+
     mobilePrefs.innerHTML = `
       <div class="mobile-prefs-header">
-        <span class="mobile-prefs-title"><i class="fas fa-sliders-h text-gold"></i> <span data-i18n="nav.prefs">Preferences</span></span>
+        <span class="mobile-prefs-title">
+          <i class="fas fa-sliders-h text-gold"></i>
+          <span data-i18n="nav.prefs">${t('nav.prefs', activeLang)}</span>
+        </span>
       </div>
       <div class="mobile-prefs-controls">
-        <div class="nav-select-pill currency-picker-wrap">
-          <i class="fas fa-coins select-icon text-gold"></i>
+        <div class="mobile-pref-row">
+          <span class="mobile-pref-label">
+            <i class="fas fa-coins text-gold"></i>
+            <span data-i18n="nav.currency">${t('nav.currency', activeLang)}</span>
+          </span>
           <select class="currency-select-box" aria-label="Select Currency">
-            <option value="USD">USD ($)</option>
-            <option value="EUR">EUR (€)</option>
-            <option value="GBP">GBP (£)</option>
-            <option value="AUD">AUD (A$)</option>
-            <option value="RUB">RUB (₽)</option>
-            <option value="CNY">CNY (¥)</option>
-            <option value="LKR">LKR (Rs)</option>
+            <option value="USD" ${activeCur === 'USD' ? 'selected' : ''}>USD ($)</option>
+            <option value="EUR" ${activeCur === 'EUR' ? 'selected' : ''}>EUR (€)</option>
+            <option value="GBP" ${activeCur === 'GBP' ? 'selected' : ''}>GBP (£)</option>
+            <option value="AUD" ${activeCur === 'AUD' ? 'selected' : ''}>AUD (A$)</option>
+            <option value="RUB" ${activeCur === 'RUB' ? 'selected' : ''}>RUB (₽)</option>
+            <option value="CNY" ${activeCur === 'CNY' ? 'selected' : ''}>CNY (¥)</option>
+            <option value="LKR" ${activeCur === 'LKR' ? 'selected' : ''}>LKR (Rs)</option>
           </select>
         </div>
-        <div class="nav-select-pill language-picker-wrap">
-          <i class="fas fa-globe select-icon text-gold"></i>
+        <div class="mobile-pref-row">
+          <span class="mobile-pref-label">
+            <i class="fas fa-globe text-gold"></i>
+            <span data-i18n="nav.language">${t('nav.language', activeLang)}</span>
+          </span>
           <select class="language-select-box" aria-label="Select Language">
             ${Object.keys(LANGUAGES).map(code => `
-              <option value="${code}" ${code === currentLanguage ? 'selected' : ''}>
-                ${LANGUAGES[code].flag} ${LANGUAGES[code].label}
+              <option value="${code}" ${code === activeLang ? 'selected' : ''}>
+                ${LANGUAGES[code].flag} ${LANGUAGES[code].label} - ${LANGUAGES[code].name}
               </option>
             `).join('')}
           </select>
