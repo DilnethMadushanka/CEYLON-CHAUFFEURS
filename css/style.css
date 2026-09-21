@@ -1894,14 +1894,139 @@ input:checked + .slider:before {
 }
 
 /* ==========================================================================
-   Fleet Detailed Card Layout (Used in fleet.html)
+   Fleet Detailed Card Layout & Interactive Tabs (Used in fleet.html)
    ========================================================================== */
-.fleet-detailed-card {
-  margin-bottom: 50px;
+.fleet-selector-tabs {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.fleet-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 2px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  font-family: inherit;
+}
+
+.fleet-tab-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.18);
+}
+
+.fleet-tab-btn.active {
+  background: linear-gradient(135deg, rgba(248, 245, 240, 0.95) 0%, #ffffff 100%);
+  border-color: var(--primary-emerald);
+  box-shadow: 0 8px 30px rgba(10, 61, 49, 0.15);
+  outline: none;
+}
+
+.fleet-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: var(--accent-gold);
+  border-radius: 2px;
+}
+
+.fleet-tab-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--bg-sand);
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-emerald);
+  font-size: 1.35rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.fleet-tab-btn.active .fleet-tab-icon {
+  background: var(--primary-emerald);
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.fleet-tab-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fleet-tab-name {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-emerald);
+  margin-bottom: 2px;
+  font-family: var(--font-serif);
+}
+
+.fleet-tab-meta {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fleet-tab-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--bg-sand);
+  color: var(--primary-emerald);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.fleet-tab-btn.active .fleet-tab-badge {
+  background: var(--accent-gold);
+  color: var(--primary-emerald-dark);
+  font-weight: 800;
+}
+
+/* Detailed card: only active is shown */
+.fleet-detailed-card {
+  display: none !important;
+  margin-bottom: 50px;
   border-radius: var(--radius-lg);
   overflow: hidden;
+}
+
+.fleet-detailed-card.active {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr;
+  animation: fleetCardFadeIn 0.35s ease-out;
+}
+
+@keyframes fleetCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fleet-detailed-card .fleet-image-wrap {
@@ -1911,10 +2036,6 @@ input:checked + .slider:before {
 
 .fleet-detailed-card .fleet-content {
   padding: 40px;
-}
-
-.fleet-detailed-content {
-  /* Overridable by media queries even when inline padding is set */
 }
 
 /* ==========================================================================
@@ -2074,8 +2195,18 @@ input:checked + .slider:before {
     margin-bottom: 36px;
   }
 
+  .fleet-selector-tabs {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .fleet-detailed-card.active {
+    display: flex !important;
+    flex-direction: column;
+  }
+
   .fleet-detailed-card .fleet-image-wrap {
-    height: 280px;
+    height: 100%;
     min-height: 280px;
     width: 100%;
   }

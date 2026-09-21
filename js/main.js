@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalModalAccessibility();
   initGlobalFAQAccordion();
   initPolicyModals();
+  initFleetTabs();
   updateAllCurrencyDisplays();
 });
 
@@ -227,6 +228,69 @@ function initGlobalFAQAccordion() {
       btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
     });
   });
+}
+
+/**
+ * Interactive Fleet Vehicle Selector Tabs
+ */
+function initFleetTabs() {
+  const tabs = document.querySelectorAll('.fleet-tab-btn');
+  const cards = document.querySelectorAll('.fleet-detailed-card');
+  if (tabs.length === 0 || cards.length === 0) return;
+
+  function activateVehicle(vehicleId, shouldScroll = false) {
+    if (!vehicleId) vehicleId = 'sedan';
+
+    // Update tab buttons
+    tabs.forEach(tab => {
+      const isTarget = tab.getAttribute('data-vehicle') === vehicleId;
+      tab.classList.toggle('active', isTarget);
+      tab.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+    });
+
+    // Update detailed vehicle cards
+    cards.forEach(card => {
+      const isTarget = card.id === vehicleId;
+      card.classList.toggle('active', isTarget);
+    });
+
+    if (shouldScroll) {
+      const tabsWrap = document.getElementById('fleet-vehicle-tabs');
+      if (tabsWrap) {
+        tabsWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
+  // Bind tab buttons
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const vId = tab.getAttribute('data-vehicle');
+      activateVehicle(vId);
+      if (history.replaceState) {
+        history.replaceState(null, null, `#${vId}`);
+      }
+    });
+  });
+
+  // Check URL hash on page load (e.g. fleet.html#van or fleet.html#bus)
+  const hash = window.location.hash.replace('#', '');
+  if (hash && (hash === 'sedan' || hash === 'van' || hash === 'bus')) {
+    activateVehicle(hash);
+  } else {
+    activateVehicle('sedan');
+  }
+
+  // Handle hash changes (e.g. from footer links)
+  window.addEventListener('hashchange', () => {
+    const h = window.location.hash.replace('#', '');
+    if (h && (h === 'sedan' || h === 'van' || h === 'bus')) {
+      activateVehicle(h, true);
+    }
+  });
+
+  // Expose globally
+  window.switchFleetVehicle = activateVehicle;
 }
 
 /**
