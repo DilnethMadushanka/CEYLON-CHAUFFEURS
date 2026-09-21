@@ -252,8 +252,8 @@ h1, h2, h3, h4, .font-serif {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 0; /* Allow flex shrinking so hamburger is never pushed off */
-  flex: 1;
+  flex-shrink: 0;
+  text-decoration: none;
 }
 
 .brand-crest {
@@ -1921,14 +1921,22 @@ input:checked + .slider:before {
    Full Mobile Responsive UI Design System
    ========================================================================== */
 
-/* Tablet & Smaller Laptops (<= 992px) */
 @media (max-width: 992px) {
+  .brand-logo {
+    min-width: 0;
+    flex: 1;
+  }
+
   .nav-cta .btn {
     display: none !important;
   }
 
   .nav-cta .nav-selectors-group {
     display: none !important;
+  }
+
+  .mobile-nav-prefs {
+    display: block !important;
   }
 
   .nav-menu {
@@ -2964,14 +2972,9 @@ input:checked + .slider:before {
   text-transform: uppercase;
 }
 
-/* Mobile Nav Preferences Bar in Drawer */
+/* Mobile Nav Preferences Bar in Drawer (Strictly Hidden on Desktop) */
 .mobile-nav-prefs {
-  list-style: none;
-  padding: 12px 14px;
-  background: var(--bg-sand);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-gold);
-  margin-bottom: 14px;
+  display: none !important;
 }
 
 .mobile-prefs-header {
