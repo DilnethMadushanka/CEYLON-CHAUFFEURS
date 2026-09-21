@@ -11,7 +11,7 @@ Explore Sri Lanka in comfort and style with transparent daily rates, luxury priv
 - **5 Dedicated Pages**:
   - `index.html` – Homepage with hero slideshow, quick booking estimator, 100% inclusions promise, fleet preview, and client testimonials.
   - `packages.html` – Tour Packages Matrix featuring all **11 Master Tour Itineraries** across 3 categories (*All-Rounder*, *Wildlife & Nature*, *Beach & Coastal*), category filter tabs, Base Rate vs. Full Package pricing switcher, and interactive **Day-by-Day Itinerary Modals**.
-  - `fleet.html` – Executive Fleet Showcase detailing Sedan (Toyota Prius / Axio), Luxury Van (Toyota KDH Flat/High Roof, Nissan E25), and Luxury Coach / Bus (Toyota Coaster, King Long / Yutong) with luggage/passenger specs and comparison table.
+  - `fleet.html` – Executive Fleet Showcase detailing Sedan (Toyota Premio / Prius / Axio), Luxury Van (Toyota KDH Flat/High Roof, Nissan E25), and Luxury Coach / Bus (Toyota Coaster, King Long / Yutong) with luggage/passenger specs and comparison table.
   - `booking.html` – Dynamic Custom Itinerary & Booking Form with live quote calculation, automated customer confirmation email modal from `bookings@ceylonchauffeur.com`, and a pre-filled **"Continue to WhatsApp"** button.
   - `reviews.html` – Trust Factors & Customer Reviews with the 100% Inclusions Guarantee (*Fuel, Highway Tolls, Parking Fees, Driver Accommodations & Meals*), verified TripAdvisor & Google review cards, and interactive FAQ accordion.
 
@@ -45,7 +45,7 @@ Explore Sri Lanka in comfort and style with transparent daily rates, luxury priv
     └── images/
         ├── logo.png            # Official Ceylon Chauffeurs Logo
         ├── hero.jpg            # Luxury vehicle on scenic tea country road
-        ├── sedan.jpg           # Executive Toyota Prius / Axio sedan & chauffeur
+        ├── sedan.jpg           # Executive Toyota Premio / Prius / Axio sedan & chauffeur
         ├── van.jpg             # Toyota KDH HiAce luxury van at tropical resort
         ├── bus.jpg             # Luxury tourist coach Toyota Coaster in tea country
         ├── sigiriya.jpg        # Sigiriya Lion Rock fortress sunrise

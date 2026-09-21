@@ -5,7 +5,7 @@
  */
 
 const DAILY_RATES = {
-  sedan: { name: 'Executive Sedan (Toyota Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
+  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
   van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 9, luggage: '6-8 Large Bags' },
   bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long / Yutong)', rate: 160, maxPax: 25, luggage: '15-25 Large Bags' }
 };

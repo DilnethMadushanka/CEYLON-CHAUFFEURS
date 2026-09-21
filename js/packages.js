@@ -38,7 +38,7 @@ const DESTINATION_COORDS = {
 };
 
 const VEHICLE_RATES = {
-  sedan: { name: 'Executive Sedan (Prius / Axio)', rate: 65 },
+  sedan: { name: 'Executive Sedan (Premio / Prius / Axio)', rate: 65 },
   van: { name: 'Luxury Van (KDH Flat/High Roof / E25)', rate: 105 },
   bus: { name: 'Luxury Coach / Bus (Coaster / King Long / Yutong)', rate: 160 }
 };
