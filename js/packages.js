@@ -38,9 +38,9 @@ const DESTINATION_COORDS = {
 };
 
 const VEHICLE_RATES = {
-  sedan: { name: 'Executive Sedan', rate: 65 },
-  suv: { name: 'Crossover SUV', rate: 80 },
-  van: { name: 'Luxury Van', rate: 105 }
+  sedan: { name: 'Executive Sedan (Prius / Axio)', rate: 65 },
+  van: { name: 'Luxury Van (KDH Flat/High Roof / E25)', rate: 105 },
+  bus: { name: 'Luxury Coach / Bus (Coaster / King Long / Yutong)', rate: 160 }
 };
 
 const MASTER_PACKAGES = [

@@ -5,9 +5,9 @@
  */
 
 const DAILY_RATES = {
-  sedan: { name: 'Executive Sedan (Toyota Premio/Axio/Prius)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
-  suv: { name: 'Crossover SUV (Honda Vezel/Outlander)', rate: 80, maxPax: 4, luggage: '3-4 Bags' },
-  van: { name: 'Luxury Van (Toyota KDH/HiAce Super GL)', rate: 105, maxPax: 8, luggage: '6-8 Large Bags' }
+  sedan: { name: 'Executive Sedan (Toyota Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
+  van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 9, luggage: '6-8 Large Bags' },
+  bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long / Yutong)', rate: 160, maxPax: 25, luggage: '15-25 Large Bags' }
 };
 
 const PACKAGE_DURATIONS = {
@@ -191,12 +191,12 @@ function validateCapacity() {
 
   if (totalPax > vehicleData.maxPax) {
     let recommendation = '';
-    if (totalPax <= 4) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Crossover SUV (1-4 Pax)</strong>.`;
-    } else if (totalPax <= 8) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Luxury Van (Toyota KDH, 4-8 Pax)</strong>.`;
+    if (totalPax <= 9) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Luxury Van (Toyota KDH Flat/High Roof, Nissan E25 - 4-9 Pax)</strong>.`;
+    } else if (totalPax <= 25) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Luxury Tourist Bus / Coach (Toyota Coaster / King Long, 10-25+ Pax)</strong>.`;
     } else {
-      recommendation = `You have ${totalPax} passengers. For groups of 9+ travelers, we will coordinate two luxury vans or an executive mini-coach. Please continue your booking and our concierge will tailor the fleet for your group.`;
+      recommendation = `You have ${totalPax} passengers. For large delegations of 25+ travelers, we coordinate multiple luxury coaches or full-size Yutong coaches. Please continue your booking and our concierge will tailor the fleet for your group.`;
     }
 
     warningText.innerHTML = recommendation;
