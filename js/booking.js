@@ -506,7 +506,7 @@ function renderAutoResponderModal(data) {
 
           <!-- Itinerary Summary Card -->
           <div class="email-callout-box" style="margin: 16px 0;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 0.88rem;">
+            <div class="email-receipt-grid">
               <div><strong>Travel Dates:</strong><br>${data.travelDates}</div>
               <div><strong>Party Size:</strong><br>${data.passengers}</div>
               <div><strong>Vehicle Class:</strong><br>${data.vehicleName.split('(')[0]}</div>
@@ -528,11 +528,11 @@ function renderAutoResponderModal(data) {
 
         <!-- Modal Action Footer with WhatsApp Transition & Print Option -->
         <div class="email-footer-actions">
-          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-whatsapp btn-lg" style="flex: 1; min-width: 250px;" onclick="continueToWhatsApp('${encodeURIComponent(data.whatsAppText)}')">
+          <div class="email-modal-actions">
+            <button class="btn btn-whatsapp btn-lg email-btn-whatsapp" onclick="continueToWhatsApp('${encodeURIComponent(data.whatsAppText)}')">
               <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Continue to WhatsApp with Ref #${data.bookingRef}
             </button>
-            <button class="btn btn-outline-emerald btn-sm" onclick="window.print()">
+            <button class="btn btn-outline-emerald btn-sm email-btn-print" onclick="window.print()">
               <i class="fas fa-print"></i> Print Receipt
             </button>
           </div>
