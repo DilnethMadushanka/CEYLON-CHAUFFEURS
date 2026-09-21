@@ -5,9 +5,9 @@
  */
 
 const DAILY_RATES = {
-  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
-  van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 9, luggage: '6-8 Large Bags' },
-  bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long / Yutong)', rate: 160, maxPax: 25, luggage: '15-25 Large Bags' }
+  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2–3 Bags' },
+  van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 10, luggage: '4–8 Large Bags' },
+  bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long)', rate: 160, maxPax: 35, luggage: '12–25 Large Bags' }
 };
 
 const PACKAGE_DURATIONS = {
@@ -191,12 +191,16 @@ function validateCapacity() {
 
   if (totalPax > vehicleData.maxPax) {
     let recommendation = '';
-    if (totalPax <= 9) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Luxury Van (Toyota KDH Flat/High Roof, Nissan E25 - 4-9 Pax)</strong>.`;
-    } else if (totalPax <= 25) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Luxury Tourist Bus / Coach (Toyota Coaster / King Long, 10-25+ Pax)</strong>.`;
+    if (totalPax <= 6) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH Flat Roof (4–6 Pax • 4–5 Bags)</strong>.`;
+    } else if (totalPax <= 10) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH High Roof (8–10 Pax • 6–8 Bags)</strong>.`;
+    } else if (totalPax <= 20) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota Coaster Mini-Coach (18–20 Pax • 12–15 Bags)</strong>.`;
+    } else if (totalPax <= 35) {
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>King Long Luxury Coach (20–35 Pax • 18–25 Bags)</strong>.`;
     } else {
-      recommendation = `You have ${totalPax} passengers. For large delegations of 25+ travelers, we coordinate multiple luxury coaches or full-size Yutong coaches. Please continue your booking and our concierge will tailor the fleet for your group.`;
+      recommendation = `You have ${totalPax} passengers. For groups of 35+ travelers, we coordinate multiple luxury coaches. Please continue your booking and our concierge will tailor the fleet for your group.`;
     }
 
     warningText.innerHTML = recommendation;
