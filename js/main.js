@@ -8,6 +8,7 @@ const CEYLON_CHAUFFEUR_CONFIG = {
   phone: '94760542557', // Sri Lanka WhatsApp format
   displayPhone: '+94 76 054 2557',
   email: 'bookings@ceylonchauffeur.com',
+  infoEmail: 'info@ceylonchauffeur.com',
   officeAddress: 'Colombo & Katunayake Airport Hub, Sri Lanka',
   defaultWhatsAppMessage: 'Hi Ceylon Chauffeur, I would like to inquire about a private chauffeur service for my trip to Sri Lanka.'
 };
