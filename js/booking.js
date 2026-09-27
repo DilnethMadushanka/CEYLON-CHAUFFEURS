@@ -1,8 +1,30 @@
 /**
  * Ceylon Chauffeur - Custom Itinerary & Dynamic Booking Engine
  * Handles live quote calculation, passenger capacity validation, date constraints,
- * inquiry persistence (localStorage), draft recovery, simulated auto-responder, and WhatsApp prefill.
+ * inquiry persistence (localStorage), draft recovery, auto-responder, and WhatsApp prefill.
+ *
+ * ============================================================
+ *  EMAIL CONFIGURATION — EmailJS Setup
+ * ============================================================
+ *  1. Go to https://www.emailjs.com and create a free account.
+ *  2. Add your email service (Gmail / Outlook) → copy the Service ID.
+ *  3. Create TWO Email Templates:
+ *       a) Customer confirmation template → copy its Template ID.
+ *       b) Internal/admin notification template → copy its Template ID.
+ *  4. Go to Account → API Keys → copy your Public Key.
+ *  5. Replace the placeholder values below with your real credentials.
+ * ============================================================
  */
+
+// ─── EMAILJS CREDENTIALS (Replace with your real values) ───────────────────
+const EMAILJS_CONFIG = {
+  publicKey:             'YOUR_EMAILJS_PUBLIC_KEY',   // e.g. 'aBcDeFgHiJkL12345'
+  serviceId:             'YOUR_SERVICE_ID',            // e.g. 'service_abc123'
+  customerTemplateId:    'YOUR_CUSTOMER_TEMPLATE_ID', // e.g. 'template_cust001'
+  adminTemplateId:       'YOUR_ADMIN_TEMPLATE_ID',    // e.g. 'template_admin001'
+  adminEmail:            'bookings@ceylonchauffeur.com'
+};
+// ────────────────────────────────────────────────────────────────────────────
 
 const DAILY_RATES = {
   sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2–3 Bags' },
@@ -384,6 +406,9 @@ function handleBookingSubmit(e) {
 
   // Generate Unique Booking Reference
   const bookingRef = 'CC-2026-' + Math.floor(1000 + Math.random() * 9000);
+  const submittedAt = new Date().toLocaleString('en-GB', {
+    dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Colombo'
+  }) + ' (Sri Lanka Time)';
 
   // Inquiry payload
   const inquiryRecord = {
@@ -415,23 +440,59 @@ function handleBookingSubmit(e) {
     console.warn('Inquiry storage note:', err);
   }
 
-  // Pre-filled WhatsApp message with Reference Number
-  const whatsAppText = `Hi Ceylon Chauffeur Concierge,
-I just submitted a tour inquiry on your website!
+  // Professional WhatsApp inquiry template
+  const whatsAppText = `🌴 *NEW TOUR INQUIRY - CEYLON CHAUFFEURS* 🌴
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌 *Booking Reference:* ${bookingRef}
+👤 *Lead Traveler:* ${name}
+📧 *Email:* ${email}
+📱 *Phone/WhatsApp:* ${phone || 'Not provided'}
+🌍 *Country:* ${country || 'Not specified'}
 
-*Booking Ref:* ${bookingRef}
-*Name:* ${name}
-*Country:* ${country || 'Not specified'}
-*Dates:* ${travelDatesFormatted}
-*Passengers:* ${adults} Adults, ${kids} Children
-*Vehicle:* ${vehicleData.name}
-*Tour Preference:* ${preferredPackage}
-*Estimated Rate:* ${convertedTotal.formatted} (${convertedTotal.code} All-inclusive)
-*Route Notes:* ${routeNotes}
+🗓️ *Travel Dates:* ${travelDatesFormatted}
+👥 *Party Size:* ${adults} Adults, ${kids} Children
+🚗 *Vehicle Class:* ${vehicleData.name.split('(')[0].trim()}
+🗺️ *Tour Package / Route:* ${preferredPackage}
+💵 *Estimated Rate:* ${convertedTotal.formatted} (${convertedTotal.code} All-Inclusive)
 
-Please confirm availability and share my customized proposal!`;
+📝 *Special Requests / Route Notes:*
+${routeNotes}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏱️ *Submitted at:* ${submittedAt}
+_Please check availability and send my customized itinerary!_`;
 
-  // Render Confirmation Modal
+  // ─── EmailJS: Shared template variables ────────────────────
+  const emailParams = {
+    // Customer details
+    to_name:          name,
+    to_email:         email,
+    customer_country: country || 'Not specified',
+    customer_phone:   phone || 'Not provided',
+    // Booking summary
+    booking_ref:      bookingRef,
+    travel_dates:     travelDatesFormatted,
+    passengers:       `${adults} Adults, ${kids} Children`,
+    vehicle_name:     vehicleData.name.split('(')[0].trim(),
+    tour_package:     preferredPackage,
+    route_notes:      routeNotes,
+    estimated_total:  convertedTotal.formatted,
+    submitted_at:     submittedAt,
+    // Admin-specific
+    admin_email:      EMAILJS_CONFIG.adminEmail,
+    reply_to:         email
+  };
+
+  // ─── Send both emails via EmailJS (runs in background) ─────
+  sendEmailsViaEmailJS(emailParams, email, bookingRef);
+
+  // ─── Automatically open WhatsApp with pre-filled template ──
+  const chauffeurPhone = window.CEYLON_CHAUFFEUR_CONFIG ? window.CEYLON_CHAUFFEUR_CONFIG.phone : '94760542557';
+  const whatsappUrl = `https://wa.me/${chauffeurPhone}?text=${encodeURIComponent(whatsAppText)}`;
+  
+  // Open WhatsApp in a new tab/window immediately
+  const waWindow = window.open(whatsappUrl, '_blank');
+
+  // Render Confirmation Modal with receipt and WhatsApp button
   renderAutoResponderModal({
     bookingRef: bookingRef,
     customerName: name,
@@ -444,6 +505,112 @@ Please confirm availability and share my customized proposal!`;
     estimatedTotalFormatted: convertedTotal.formatted,
     whatsAppText: whatsAppText
   });
+}
+
+/**
+ * Send automated emails using EmailJS:
+ *  1. Customer confirmation email (to the traveler)
+ *  2. Admin notification email (to bookings@ceylonchauffeur.com)
+ *
+ * EMAILJS TEMPLATE VARIABLES to use in your templates:
+ *  {{to_name}}          – Customer full name
+ *  {{to_email}}         – Customer email
+ *  {{customer_country}} – Country of residence
+ *  {{customer_phone}}   – WhatsApp/phone number
+ *  {{booking_ref}}      – Booking reference (e.g. CC-2026-4523)
+ *  {{travel_dates}}     – Travel date range and duration
+ *  {{passengers}}       – Adults & children count
+ *  {{vehicle_name}}     – Vehicle class selected
+ *  {{tour_package}}     – Package / route name
+ *  {{route_notes}}      – Customer's special requests / notes
+ *  {{estimated_total}}  – Total estimated price
+ *  {{submitted_at}}     – Submission timestamp (Sri Lanka time)
+ *  {{admin_email}}      – bookings@ceylonchauffeur.com
+ *  {{reply_to}}         – Customer email (for admin to reply)
+ */
+function sendEmailsViaEmailJS(params, customerEmail, bookingRef) {
+  // Check if EmailJS is loaded and credentials are configured
+  if (typeof emailjs === 'undefined') {
+    console.warn('[EmailJS] EmailJS SDK not loaded. Emails not sent.');
+    return;
+  }
+
+  const isConfigured = (
+    EMAILJS_CONFIG.publicKey    !== 'YOUR_EMAILJS_PUBLIC_KEY' &&
+    EMAILJS_CONFIG.serviceId    !== 'YOUR_SERVICE_ID' &&
+    EMAILJS_CONFIG.customerTemplateId !== 'YOUR_CUSTOMER_TEMPLATE_ID' &&
+    EMAILJS_CONFIG.adminTemplateId    !== 'YOUR_ADMIN_TEMPLATE_ID'
+  );
+
+  if (!isConfigured) {
+    console.warn('[EmailJS] Credentials not configured. Please update EMAILJS_CONFIG in booking.js.');
+    showEmailStatusBanner('config-missing');
+    return;
+  }
+
+  // Initialize EmailJS (safe to call multiple times)
+  emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
+
+  // 1. Customer confirmation email
+  emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.customerTemplateId, {
+    ...params,
+    to_email: customerEmail
+  })
+  .then(() => {
+    console.log(`[EmailJS] ✅ Customer confirmation sent to ${customerEmail} (Ref: ${bookingRef})`);
+    showEmailStatusBanner('customer-sent');
+  })
+  .catch((err) => {
+    console.error('[EmailJS] ❌ Customer email failed:', err);
+    showEmailStatusBanner('error');
+  });
+
+  // 2. Admin / internal notification email
+  emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.adminTemplateId, {
+    ...params,
+    to_email: EMAILJS_CONFIG.adminEmail
+  })
+  .then(() => {
+    console.log(`[EmailJS] ✅ Admin notification sent to ${EMAILJS_CONFIG.adminEmail} (Ref: ${bookingRef})`);
+  })
+  .catch((err) => {
+    console.error('[EmailJS] ❌ Admin email failed:', err);
+  });
+}
+
+/**
+ * Show a subtle in-modal email status indicator after sending
+ */
+function showEmailStatusBanner(status) {
+  // Wait for modal to render, then inject banner
+  setTimeout(() => {
+    const modalContent = document.getElementById('email-modal-content');
+    if (!modalContent) return;
+
+    // Remove any existing banner
+    const existing = modalContent.querySelector('.email-send-status-banner');
+    if (existing) existing.remove();
+
+    const banner = document.createElement('div');
+    banner.className = 'email-send-status-banner';
+
+    if (status === 'customer-sent') {
+      banner.style.cssText = 'background:#dcfce7;border-left:4px solid #16a34a;color:#14532d;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
+      banner.innerHTML = '<i class="fas fa-envelope-circle-check" style="color:#16a34a;"></i> <span><strong>Confirmation emails sent!</strong> Check your inbox (and spam folder) for your booking receipt from <strong>bookings@ceylonchauffeur.com</strong>.</span>';
+    } else if (status === 'config-missing') {
+      banner.style.cssText = 'background:#fef9c3;border-left:4px solid #ca8a04;color:#713f12;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
+      banner.innerHTML = '<i class="fas fa-triangle-exclamation" style="color:#ca8a04;"></i> <span><strong>Email sending not configured yet.</strong> Your inquiry is saved locally. Our team will be in touch via WhatsApp.</span>';
+    } else if (status === 'error') {
+      banner.style.cssText = 'background:#fee2e2;border-left:4px solid #dc2626;color:#7f1d1d;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
+      banner.innerHTML = '<i class="fas fa-circle-exclamation" style="color:#dc2626;"></i> <span><strong>Email delivery issue.</strong> Your inquiry is saved. Please follow up via WhatsApp to confirm receipt.</span>';
+    }
+
+    // Insert banner just below the email header fields section
+    const emailBody = modalContent.querySelector('.email-body-rendered');
+    if (emailBody) {
+      emailBody.insertBefore(banner, emailBody.firstChild);
+    }
+  }, 600);
 }
 
 /**
