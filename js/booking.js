@@ -440,26 +440,53 @@ function handleBookingSubmit(e) {
     console.warn('Inquiry storage note:', err);
   }
 
-  // Professional WhatsApp inquiry template
-  const whatsAppText = `🌴 *NEW TOUR INQUIRY - CEYLON CHAUFFEURS* 🌴
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📌 *Booking Reference:* ${bookingRef}
-👤 *Lead Traveler:* ${name}
-📧 *Email:* ${email}
-📱 *Phone/WhatsApp:* ${phone || 'Not provided'}
-🌍 *Country:* ${country || 'Not specified'}
+  // ── Formal Client Proposal / Inquiry Template ──────────────
+  const whatsAppText = `╔══════════════════════════════╗
+🌴  *CEYLON CHAUFFEURS*
+     *CLIENT TOUR PROPOSAL REQUEST*
+╚══════════════════════════════╝
 
-🗓️ *Travel Dates:* ${travelDatesFormatted}
-👥 *Party Size:* ${adults} Adults, ${kids} Children
-🚗 *Vehicle Class:* ${vehicleData.name.split('(')[0].trim()}
-🗺️ *Tour Package / Route:* ${preferredPackage}
-💵 *Estimated Rate:* ${convertedTotal.formatted} (${convertedTotal.code} All-Inclusive)
+Hello Ceylon Chauffeurs Team,
 
-📝 *Special Requests / Route Notes:*
+A new tour inquiry has been received through the website. Please review the client details and prepare a personalised itinerary proposal.
+
+─────────────────────────────
+🧾 *INQUIRY REFERENCE*
+─────────────────────────────
+📌 Ref No     : *${bookingRef}*
+📅 Received   : ${submittedAt}
+
+─────────────────────────────
+👤 *CLIENT DETAILS*
+─────────────────────────────
+🙍 Full Name  : *${name}*
+🌍 Country    : ${country || 'Not specified'}
+📧 Email      : ${email}
+📱 WhatsApp   : ${phone || 'Not provided'}
+
+─────────────────────────────
+🗓️ *TOUR REQUIREMENTS*
+─────────────────────────────
+📆 Dates      : ${travelDatesFormatted}
+👥 Group Size : ${adults} Adults${parseInt(kids) > 0 ? `, ${kids} Children` : ''}
+🚗 Vehicle    : ${vehicleData.name.split('(')[0].trim()}
+🗺️ Package    : ${preferredPackage}
+
+─────────────────────────────
+💰 *RATE ESTIMATE*
+─────────────────────────────
+💵 Est. Total : *${convertedTotal.formatted}* (${convertedTotal.code})
+✅ Includes   : Fuel • Tolls • Driver Lodging • Insurance
+
+─────────────────────────────
+📝 *CLIENT NOTES & SPECIAL REQUESTS*
+─────────────────────────────
 ${routeNotes}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-⏱️ *Submitted at:* ${submittedAt}
-_Please check availability and send my customized itinerary!_`;
+
+─────────────────────────────
+⚡ *NEXT STEP:* Please reply to this client within 2–4 hours with a customised PDF proposal and confirm vehicle availability.
+─────────────────────────────
+_Automated inquiry via ceylonchauffeur.com_`;
 
   // ─── EmailJS: Shared template variables ────────────────────
   const emailParams = {
