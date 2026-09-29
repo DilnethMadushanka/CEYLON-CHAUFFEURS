@@ -25,9 +25,9 @@ const TRANSLATIONS = {
     'nav.language': 'Language',
 
     'hero.badge': 'Sri Lanka Tourist Board Approved & Verified',
-    'hero.title1': 'Explore Sri Lanka in Comfort & Style –',
+    'hero.title1': 'Explore Sri Lanka in Comfort & Style',
     'hero.title2': 'Premium Private Chauffeur Services',
-    'hero.subtitle': 'Transparent daily rates, professional English-speaking driver-guides, and customized itineraries. Discover ancient kingdoms, lush tea estates, and wild safaris in total relaxation.',
+    'hero.subtitle': "Transparent daily rates, English-speaking driver-guides and itineraries shaped around you, from ancient kingdoms to tea country and safaris.",
     'hero.btn.whatsapp': 'Book via WhatsApp',
     'hero.btn.packages': 'Explore Tour Packages',
     'hero.feat.fuel': 'Fuel & Highway Tolls Included',
@@ -58,16 +58,16 @@ const TRANSLATIONS = {
     'fleet.subtitle': 'Our immaculate private fleet is maintained to executive standards with full air conditioning, complimentary onboard Wi-Fi, and generous luggage capacity.',
     'fleet.sedan.name': 'Toyota Premio / Prius / Axio',
     'fleet.sedan.subtitle': 'Perfect for couples and solo adventurers seeking whisper-quiet comfort.',
-    'fleet.sedan.pax': '1–3 Passengers',
-    'fleet.sedan.bags': '2–3 Bags',
+    'fleet.sedan.pax': '1-3 Passengers',
+    'fleet.sedan.bags': '2-3 Bags',
     'fleet.van.name': 'Toyota KDH & Nissan E25 Van',
     'fleet.van.subtitle': 'Flat Roof & High Roof configurations for families and group expeditions.',
-    'fleet.van.pax': '4–10 Pax (Flat Roof: 4-6 | High Roof: 8-10)',
-    'fleet.van.bags': '4–8 Large Bags',
+    'fleet.van.pax': '4-10 Pax (Flat Roof: 4-6 | High Roof: 8-10)',
+    'fleet.van.bags': '4-8 Large Bags',
     'fleet.bus.name': 'Toyota Coaster & King Long Coaches',
     'fleet.bus.subtitle': 'Full-size panoramic comfort for large travel parties and delegations.',
-    'fleet.bus.pax': '18–35 Pax (Coaster: 18-20 | King Long: 20-35)',
-    'fleet.bus.bags': '12–25 Large Bags',
+    'fleet.bus.pax': '18-35 Pax (Coaster: 18-20 | King Long: 20-35)',
+    'fleet.bus.bags': '12-25 Large Bags',
     'fleet.viewall': 'View Complete Fleet Specifications & Capacities',
     'fleet.btn.quote': 'Get Custom Quote',
     'fleet.btn.whatsapp': 'WhatsApp',
@@ -124,8 +124,8 @@ const TRANSLATIONS = {
     'pkg.filter.beach': 'Coastal & Beach',
     'pkg.filter.scenic': 'Scenic Hill Country',
     'pkg.dur.all': 'All Durations',
-    'pkg.dur.short': '1–7 Days',
-    'pkg.dur.medium': '8–14 Days',
+    'pkg.dur.short': '1-7 Days',
+    'pkg.dur.medium': '8-14 Days',
     'pkg.dur.long': '15+ Days',
     'pkg.day': 'Day',
     'pkg.days': 'Days',
@@ -159,7 +159,7 @@ const TRANSLATIONS = {
     'booking.arrival.label': 'Arrival Date in Sri Lanka',
     'booking.departure.label': 'Departure Date',
     'booking.adults.label': 'Adult Passengers (12+ yrs)',
-    'booking.kids.label': 'Children (0–11 yrs)',
+    'booking.kids.label': 'Children (0-11 yrs)',
     'booking.s3': '3. Select Vehicle Class',
     'booking.s4': '4. Preferred Package or Custom Route',
     'booking.pkg.label': 'Select Master Tour Package or Custom Route',
@@ -170,13 +170,13 @@ const TRANSLATIONS = {
     'booking.nav.whatsapp': 'WhatsApp Concierge',
 
     'veh.sedan.name': 'Executive Sedan',
-    'veh.sedan.cap': '1–3 Pax, 2–3 Bags',
+    'veh.sedan.cap': '1-3 Pax, 2-3 Bags',
     'veh.sedan.models': 'Premio, Prius, Axio',
     'veh.van.name': 'Luxury Van',
-    'veh.van.cap': '4–10 Pax, 4–8 Bags',
+    'veh.van.cap': '4-10 Pax, 4-8 Bags',
     'veh.van.models': 'Flat Roof (4-6), High Roof (8-10)',
     'veh.bus.name': 'Luxury Bus / Coach',
-    'veh.bus.cap': '18–35 Pax, 12–25 Bags',
+    'veh.bus.cap': '18-35 Pax, 12-25 Bags',
     'veh.bus.models': 'Coaster (18-20), King Long (20-35)',
 
     'summary.title': 'Live Rate Estimate',
@@ -218,9 +218,9 @@ const TRANSLATIONS = {
     'nav.language': 'Langue',
 
     'hero.badge': "Agréé & Vérifié par l'Office du Tourisme du Sri Lanka",
-    'hero.title1': 'Explorez le Sri Lanka en Confort & Style –',
+    'hero.title1': 'Explorez le Sri Lanka en Confort & Style',
     'hero.title2': 'Services Privés de Chauffeur Premium',
-    'hero.subtitle': 'Tarifs journaliers transparents, guides-chauffeurs professionnels anglophones et itinéraires personnalisés. Découvrez des royaumes anciens, des plantations de thé et des safaris sauvages.',
+    'hero.subtitle': "Tarifs journaliers transparents, chauffeurs-guides anglophones et itinéraires sur mesure, des royaumes anciens aux plantations de thé et aux safaris.",
     'hero.btn.whatsapp': 'Réserver via WhatsApp',
     'hero.btn.packages': 'Explorer les Forfaits',
     'hero.feat.fuel': 'Carburant & Péages Autoroutiers Inclus',
@@ -251,16 +251,16 @@ const TRANSLATIONS = {
     'fleet.subtitle': 'Notre flotte privée est maintenue aux normes exécutives avec climatisation, Wi-Fi gratuit et généreuse capacité bagages.',
     'fleet.sedan.name': 'Toyota Premio / Prius / Axio',
     'fleet.sedan.subtitle': 'Parfait pour les couples et voyageurs solo en quête de confort absolu.',
-    'fleet.sedan.pax': '1–3 Passagers',
-    'fleet.sedan.bags': '2–3 Bagages',
+    'fleet.sedan.pax': '1-3 Passagers',
+    'fleet.sedan.bags': '2-3 Bagages',
     'fleet.van.name': 'Toyota KDH & Nissan E25 Van',
     'fleet.van.subtitle': 'Configurations toit plat et toit haut pour les familles et groupes.',
-    'fleet.van.pax': '4–10 Pax (Toit Plat: 4-6 | Toit Haut: 8-10)',
-    'fleet.van.bags': '4–8 Grands Bagages',
+    'fleet.van.pax': '4-10 Pax (Toit Plat: 4-6 | Toit Haut: 8-10)',
+    'fleet.van.bags': '4-8 Grands Bagages',
     'fleet.bus.name': 'Toyota Coaster & King Long Coaches',
     'fleet.bus.subtitle': 'Grand confort panoramique pour les grands groupes et délégations.',
-    'fleet.bus.pax': '18–35 Pax (Coaster: 18-20 | King Long: 20-35)',
-    'fleet.bus.bags': '12–25 Grands Bagages',
+    'fleet.bus.pax': '18-35 Pax (Coaster: 18-20 | King Long: 20-35)',
+    'fleet.bus.bags': '12-25 Grands Bagages',
     'fleet.viewall': 'Voir les Spécifications Complètes de la Flotte',
     'fleet.btn.quote': 'Demander un Devis',
     'fleet.btn.whatsapp': 'WhatsApp',
@@ -317,8 +317,8 @@ const TRANSLATIONS = {
     'pkg.filter.beach': 'Plages & Côtes',
     'pkg.filter.scenic': 'Montagnes & Plantations',
     'pkg.dur.all': 'Toutes les Durées',
-    'pkg.dur.short': '1–7 Jours',
-    'pkg.dur.medium': '8–14 Jours',
+    'pkg.dur.short': '1-7 Jours',
+    'pkg.dur.medium': '8-14 Jours',
     'pkg.dur.long': '15+ Jours',
     'pkg.day': 'Jour',
     'pkg.days': 'Jours',
@@ -352,7 +352,7 @@ const TRANSLATIONS = {
     'booking.arrival.label': "Date d'Arrivée au Sri Lanka",
     'booking.departure.label': 'Date de Départ',
     'booking.adults.label': 'Passagers Adultes (12+ ans)',
-    'booking.kids.label': 'Enfants (0–11 ans)',
+    'booking.kids.label': 'Enfants (0-11 ans)',
     'booking.s3': '3. Sélectionner la Classe de Véhicule',
     'booking.s4': '4. Forfait Préféré ou Circuit Sur Mesure',
     'booking.pkg.label': 'Sélectionner un Forfait ou un Circuit Personnalisé',
@@ -363,13 +363,13 @@ const TRANSLATIONS = {
     'booking.nav.whatsapp': 'Conciergerie WhatsApp',
 
     'veh.sedan.name': 'Berline Exécutive',
-    'veh.sedan.cap': '1–3 Pers, 2–3 Bagages',
+    'veh.sedan.cap': '1-3 Pers, 2-3 Bagages',
     'veh.sedan.models': 'Premio, Prius, Axio',
     'veh.van.name': 'Van de Luxe',
-    'veh.van.cap': '4–10 Pers, 4–8 Bagages',
+    'veh.van.cap': '4-10 Pers, 4-8 Bagages',
     'veh.van.models': 'Toit Plat (4-6), Toit Haut (8-10)',
     'veh.bus.name': 'Bus / Minibus de Luxe',
-    'veh.bus.cap': '18–35 Pers, 12–25 Bagages',
+    'veh.bus.cap': '18-35 Pers, 12-25 Bagages',
     'veh.bus.models': 'Coaster (18-20), King Long (20-35)',
 
     'summary.title': 'Estimation du Tarif en Direct',
@@ -411,9 +411,9 @@ const TRANSLATIONS = {
     'nav.language': 'Язык',
 
     'hero.badge': 'Одобрено и Сертифицировано Управлением по Туризму Шри-Ланки',
-    'hero.title1': 'Исследуйте Шри-Ланку с Комфортом и Стилем –',
+    'hero.title1': 'Исследуйте Шри-Ланку с Комфортом и Стилем',
     'hero.title2': 'Премиум Услуги Персонального Водителя',
-    'hero.subtitle': 'Прозрачные посуточные тарифы, профессиональные англоговорящие гиды-водители и индивидуальные маршруты. Откройте древние храмы, чайные плантации и дикие сафари в абсолютном комфорте.',
+    'hero.subtitle': "Прозрачные дневные тарифы, англоговорящие водители-гиды и маршруты под вас: от древних царств до чайных плантаций и сафари.",
     'hero.btn.whatsapp': 'Забронировать в WhatsApp',
     'hero.btn.packages': 'Смотреть Все Туры',
     'hero.feat.fuel': 'Топливо и Платные Дороги Включены',
@@ -444,16 +444,16 @@ const TRANSLATIONS = {
     'fleet.subtitle': 'Все автомобили поддерживаются по стандартам премиум-класса с климат-контролем, Wi-Fi и вместительным багажником.',
     'fleet.sedan.name': 'Toyota Premio / Prius / Axio',
     'fleet.sedan.subtitle': 'Идеально для пар и соло-путешественников, ценящих тишину и плавность хода.',
-    'fleet.sedan.pax': '1–3 Пассажира',
-    'fleet.sedan.bags': '2–3 Чемодана',
+    'fleet.sedan.pax': '1-3 Пассажира',
+    'fleet.sedan.bags': '2-3 Чемодана',
     'fleet.van.name': 'Минивэн Toyota KDH и Nissan E25',
     'fleet.van.subtitle': 'Стандартная и высокая крыша для семей и дружеских компаний.',
-    'fleet.van.pax': '4–10 Человек (Стандарт: 4-6 | Высокая: 8-10)',
-    'fleet.van.bags': '4–8 Больших Чемоданов',
+    'fleet.van.pax': '4-10 Человек (Стандарт: 4-6 | Высокая: 8-10)',
+    'fleet.van.bags': '4-8 Больших Чемоданов',
     'fleet.bus.name': 'Автобусы Toyota Coaster и King Long',
     'fleet.bus.subtitle': 'Панорамный комфорт для больших туристических групп и корпоративных делегаций.',
-    'fleet.bus.pax': '18–35 Человек (Coaster: 18-20 | King Long: 20-35)',
-    'fleet.bus.bags': '12–25 Больших Чемоданов',
+    'fleet.bus.pax': '18-35 Человек (Coaster: 18-20 | King Long: 20-35)',
+    'fleet.bus.bags': '12-25 Больших Чемоданов',
     'fleet.viewall': 'Посмотреть Характеристики Всех Автомобилей',
     'fleet.btn.quote': 'Запросить Расчет',
     'fleet.btn.whatsapp': 'WhatsApp',
@@ -510,8 +510,8 @@ const TRANSLATIONS = {
     'pkg.filter.beach': 'Пляжи и Океан',
     'pkg.filter.scenic': 'Горы и Чайные Плантации',
     'pkg.dur.all': 'Любая Длительность',
-    'pkg.dur.short': '1–7 Дней',
-    'pkg.dur.medium': '8–14 Дней',
+    'pkg.dur.short': '1-7 Дней',
+    'pkg.dur.medium': '8-14 Дней',
     'pkg.dur.long': '15+ Дней',
     'pkg.day': 'День',
     'pkg.days': 'Дней',
@@ -545,7 +545,7 @@ const TRANSLATIONS = {
     'booking.arrival.label': 'Дата Прибытия в Шри-Ланку',
     'booking.departure.label': 'Дата Вылета',
     'booking.adults.label': 'Взрослые Пассажиры (12+ лет)',
-    'booking.kids.label': 'Дети (0–11 лет)',
+    'booking.kids.label': 'Дети (0-11 лет)',
     'booking.s3': '3. Выбор Класса Автомобиля',
     'booking.s4': '4. Выбор Тура или Индивидуальный Маршрут',
     'booking.pkg.label': 'Выберите Турпакет или Собственный Маршрут',
@@ -556,13 +556,13 @@ const TRANSLATIONS = {
     'booking.nav.whatsapp': 'WhatsApp Консьерж',
 
     'veh.sedan.name': 'Премиум Седан',
-    'veh.sedan.cap': '1–3 Чел, 2–3 Чемодана',
+    'veh.sedan.cap': '1-3 Чел, 2-3 Чемодана',
     'veh.sedan.models': 'Premio, Prius, Axio',
     'veh.van.name': 'Люкс Минивэн',
-    'veh.van.cap': '4–10 Чел, 4–8 Чемоданов',
+    'veh.van.cap': '4-10 Чел, 4-8 Чемоданов',
     'veh.van.models': 'Стандарт (4-6), Высокая крыша (8-10)',
     'veh.bus.name': 'Туристический Автобус',
-    'veh.bus.cap': '18–35 Чел, 12–25 Чемоданов',
+    'veh.bus.cap': '18-35 Чел, 12-25 Чемоданов',
     'veh.bus.models': 'Coaster (18-20), King Long (20-35)',
 
     'summary.title': 'Расчет Стоимости Онлайн',
@@ -574,7 +574,7 @@ const TRANSLATIONS = {
     'summary.cta.text': 'Нужна мгновенная консультация?',
     'summary.cta.btn': 'Написать в WhatsApp Сейчас',
 
-    'footer.about.p': 'Ceylon Chauffeurs – ведущий туроператор с личными водителями на Шри-Ланке. Прозрачные цены, современные автомобили и сертифицированные гиды.',
+    'footer.about.p': 'Ceylon Chauffeurs - ведущий туроператор с личными водителями на Шри-Ланке. Прозрачные цены, современные автомобили и сертифицированные гиды.',
     'footer.whatsapp.btn': 'WhatsApp Консьерж',
     'footer.quote.btn': 'Запросить Расчет',
     'footer.col.tours': 'Популярные Туры',
@@ -604,9 +604,9 @@ const TRANSLATIONS = {
     'nav.language': '语言',
 
     'hero.badge': '斯里兰卡国家旅游局官方认证旅行社',
-    'hero.title1': '尊享舒适优雅斯里兰卡之旅 –',
+    'hero.title1': '尊享舒适优雅斯里兰卡之旅',
     'hero.title2': '高端私人包车与专属司导服务',
-    'hero.subtitle': '透明全包日价，专业持证英文司机向导，量身定制专属行程。在彻底放松的私密旅途中探索千年古国、高山茶园与狂野野生动物猎游。',
+    'hero.subtitle': "透明的每日价格、英语司机导游与为您定制的行程，从古老王城到茶园与野生动物之旅。",
     'hero.btn.whatsapp': '通过 WhatsApp 预约',
     'hero.btn.packages': '浏览精品线路',
     'hero.feat.fuel': '全包全程燃油与高速过路费',
@@ -637,16 +637,16 @@ const TRANSLATIONS = {
     'fleet.subtitle': '我们的私人车队均达到严格的行政标准，配备全冷气空调、免费高速车载 Wi-Fi 和宽敞行李空间。',
     'fleet.sedan.name': '丰田 Premio / Prius / Axio',
     'fleet.sedan.subtitle': '静谧舒适、平稳省油，情侣与独行探索者的理想座驾。',
-    'fleet.sedan.pax': '1–3 位乘客',
-    'fleet.sedan.bags': '2–3 件大行李',
+    'fleet.sedan.pax': '1-3 位乘客',
+    'fleet.sedan.bags': '2-3 件大行李',
     'fleet.van.name': '丰田 KDH / 日产 E25 豪华面包车',
     'fleet.van.subtitle': '平顶与高顶豪华商务车，适合家庭出行与朋友小包团。',
-    'fleet.van.pax': '4–10 位乘客 (平顶: 4-6 | 高顶: 8-10)',
-    'fleet.van.bags': '4–8 件大行李',
+    'fleet.van.pax': '4-10 位乘客 (平顶: 4-6 | 高顶: 8-10)',
+    'fleet.van.bags': '4-8 件大行李',
     'fleet.bus.name': '丰田 Coaster / 金龙豪华旅游大巴',
     'fleet.bus.subtitle': '全景超大车窗与豪华舒适座椅，适合中大型团队和商务考察。',
-    'fleet.bus.pax': '18–35 位乘客 (考斯特: 18-20 | 金龙: 20-35)',
-    'fleet.bus.bags': '12–25 件大行李',
+    'fleet.bus.pax': '18-35 位乘客 (考斯特: 18-20 | 金龙: 20-35)',
+    'fleet.bus.bags': '12-25 件大行李',
     'fleet.viewall': '查看车队全部详细规格与承载参数',
     'fleet.btn.quote': '获取定制报价',
     'fleet.btn.whatsapp': 'WhatsApp 联系',
@@ -703,8 +703,8 @@ const TRANSLATIONS = {
     'pkg.filter.beach': '热带海滩度假',
     'pkg.filter.scenic': '高山茶园与风光',
     'pkg.dur.all': '全部天数',
-    'pkg.dur.short': '1–7 天',
-    'pkg.dur.medium': '8–14 天',
+    'pkg.dur.short': '1-7 天',
+    'pkg.dur.medium': '8-14 天',
     'pkg.dur.long': '15 天以上',
     'pkg.day': '天',
     'pkg.days': '天',
@@ -738,7 +738,7 @@ const TRANSLATIONS = {
     'booking.arrival.label': '抵达斯里兰卡日期',
     'booking.departure.label': '返程离开日期',
     'booking.adults.label': '成人人数 (12岁以上)',
-    'booking.kids.label': '儿童人数 (0–11岁)',
+    'booking.kids.label': '儿童人数 (0-11岁)',
     'booking.s3': '3. 选择车型配置',
     'booking.s4': '4. 选择推荐线路或定制行程',
     'booking.pkg.label': '选择经典线路或完全自主定制',
@@ -749,13 +749,13 @@ const TRANSLATIONS = {
     'booking.nav.whatsapp': 'WhatsApp 客服',
 
     'veh.sedan.name': '行政级轿车',
-    'veh.sedan.cap': '1–3 人，2–3 件行李',
+    'veh.sedan.cap': '1-3 人，2-3 件行李',
     'veh.sedan.models': 'Premio, Prius, Axio',
     'veh.van.name': '豪华商务面包车',
-    'veh.van.cap': '4–10 人，4–8 件行李',
+    'veh.van.cap': '4-10 人，4-8 件行李',
     'veh.van.models': '平顶商务 (4-6), 高顶豪华 (8-10)',
     'veh.bus.name': '豪华旅游大巴',
-    'veh.bus.cap': '18–35 人，12–25 件行李',
+    'veh.bus.cap': '18-35 人，12-25 件行李',
     'veh.bus.models': '丰田考斯特 (18-20), 金龙大巴 (20-35)',
 
     'summary.title': '实时包车费用估算',
@@ -797,9 +797,9 @@ const TRANSLATIONS = {
     'nav.language': 'Sprache',
 
     'hero.badge': 'Zugelassen & Verifiziert von der Tourismusbehörde Sri Lanka',
-    'hero.title1': 'Erkunden Sie Sri Lanka mit Komfort & Stil –',
+    'hero.title1': 'Erkunden Sie Sri Lanka mit Komfort & Stil',
     'hero.title2': 'Erstklassige Private Chauffeurdienste',
-    'hero.subtitle': 'Transparente Tagessätze, professionelle englischsprachige Fahrer-Guides und maßgeschneiderte Reiserouten. Entdecken Sie antike Königreiche, Teegärten und Safaris in völliger Entspannung.',
+    'hero.subtitle': "Transparente Tagespreise, englischsprachige Fahrer-Guides und Reiserouten nach Ihren Wünschen, von antiken Königreichen bis zu Teeplantagen und Safaris.",
     'hero.btn.whatsapp': 'Über WhatsApp Buchen',
     'hero.btn.packages': 'Reisepakete Entdecken',
     'hero.feat.fuel': 'Treibstoff & Autobahngebühren Inklusive',
@@ -830,16 +830,16 @@ const TRANSLATIONS = {
     'fleet.subtitle': 'Unsere private Flotte erfüllt höchste Standards mit Klimaanlage, kostenlosem WLAN und großzügigem Gepäckraum.',
     'fleet.sedan.name': 'Toyota Premio / Prius / Axio',
     'fleet.sedan.subtitle': 'Perfekt für Paare und Alleinreisende, die ruhigen Komfort schätzen.',
-    'fleet.sedan.pax': '1–3 Passagiere',
-    'fleet.sedan.bags': '2–3 Koffer',
+    'fleet.sedan.pax': '1-3 Passagiere',
+    'fleet.sedan.bags': '2-3 Koffer',
     'fleet.van.name': 'Toyota KDH & Nissan E25 Van',
     'fleet.van.subtitle': 'Flachdach- und Hochdachausführung für Familien und Reisegruppen.',
-    'fleet.van.pax': '4–10 Pax (Flachdach: 4-6 | Hochdach: 8-10)',
-    'fleet.van.bags': '4–8 Große Koffer',
+    'fleet.van.pax': '4-10 Pax (Flachdach: 4-6 | Hochdach: 8-10)',
+    'fleet.van.bags': '4-8 Große Koffer',
     'fleet.bus.name': 'Toyota Coaster & King Long Reisebusse',
     'fleet.bus.subtitle': 'Großzügiger Panoramablick für große Reisegruppen und Delegationen.',
-    'fleet.bus.pax': '18–35 Pax (Coaster: 18-20 | King Long: 20-35)',
-    'fleet.bus.bags': '12–25 Große Koffer',
+    'fleet.bus.pax': '18-35 Pax (Coaster: 18-20 | King Long: 20-35)',
+    'fleet.bus.bags': '12-25 Große Koffer',
     'fleet.viewall': 'Vollständige Flottenspezifikationen Anzeigen',
     'fleet.btn.quote': 'Angebot Anfragen',
     'fleet.btn.whatsapp': 'WhatsApp',
@@ -896,8 +896,8 @@ const TRANSLATIONS = {
     'pkg.filter.beach': 'Küste & Strände',
     'pkg.filter.scenic': 'Malerisches Hochland',
     'pkg.dur.all': 'Alle Reisedauern',
-    'pkg.dur.short': '1–7 Tage',
-    'pkg.dur.medium': '8–14 Tage',
+    'pkg.dur.short': '1-7 Tage',
+    'pkg.dur.medium': '8-14 Tage',
     'pkg.dur.long': '15+ Tage',
     'pkg.day': 'Tag',
     'pkg.days': 'Tage',
@@ -931,7 +931,7 @@ const TRANSLATIONS = {
     'booking.arrival.label': 'Ankunftsdatum in Sri Lanka',
     'booking.departure.label': 'Abreisedatum',
     'booking.adults.label': 'Erwachsene Passagiere (12+ Jahre)',
-    'booking.kids.label': 'Kinder (0–11 Jahre)',
+    'booking.kids.label': 'Kinder (0-11 Jahre)',
     'booking.s3': '3. Fahrzeugklasse Wählen',
     'booking.s4': '4. Bevorzugtes Paket oder Individuelle Route',
     'booking.pkg.label': 'Master-Reisepaket oder Individuelle Route Wählen',
@@ -942,13 +942,13 @@ const TRANSLATIONS = {
     'booking.nav.whatsapp': 'WhatsApp-Concierge',
 
     'veh.sedan.name': 'Executive Limousine',
-    'veh.sedan.cap': '1–3 Pers., 2–3 Koffer',
+    'veh.sedan.cap': '1-3 Pers., 2-3 Koffer',
     'veh.sedan.models': 'Premio, Prius, Axio',
     'veh.van.name': 'Luxus-Transporter',
-    'veh.van.cap': '4–10 Pers., 4–8 Koffer',
+    'veh.van.cap': '4-10 Pers., 4-8 Koffer',
     'veh.van.models': 'Flachdach (4-6), Hochdach (8-10)',
     'veh.bus.name': 'Luxus-Bus / Coach',
-    'veh.bus.cap': '18–35 Pers., 12–25 Koffer',
+    'veh.bus.cap': '18-35 Pers., 12-25 Koffer',
     'veh.bus.models': 'Coaster (18-20), King Long (20-35)',
 
     'summary.title': 'Live-Tarifschätzung',
@@ -1040,7 +1040,7 @@ function autoTagElements() {
   document.querySelectorAll('.nav-cta a.btn').forEach(btn => {
     if (!btn.hasAttribute('data-i18n')) {
       btn.setAttribute('data-i18n', 'nav.cta');
-      btn.setAttribute('data-i18n-icon', 'fas fa-calendar-check');
+      btn.setAttribute('data-i18n-icon', 'ph ph-calendar-check');
     }
   });
 
@@ -1048,7 +1048,7 @@ function autoTagElements() {
   const heroBadge = document.querySelector('.hero-badge');
   if (heroBadge && !heroBadge.hasAttribute('data-i18n')) {
     heroBadge.setAttribute('data-i18n', 'hero.badge');
-    heroBadge.setAttribute('data-i18n-icon', 'fas fa-certificate');
+    heroBadge.setAttribute('data-i18n-icon', 'ph ph-seal-check');
   }
 
   const heroTitle = document.querySelector('.hero-title');
@@ -1070,13 +1070,13 @@ function autoTagElements() {
   const heroWa = document.querySelector('.hero-ctas .btn-whatsapp');
   if (heroWa && !heroWa.hasAttribute('data-i18n')) {
     heroWa.setAttribute('data-i18n', 'hero.btn.whatsapp');
-    heroWa.setAttribute('data-i18n-icon', 'fab fa-whatsapp');
+    heroWa.setAttribute('data-i18n-icon', 'ph ph-whatsapp-logo');
   }
 
   const heroPkg = document.querySelector('.hero-ctas .btn-outline-light');
   if (heroPkg && !heroPkg.hasAttribute('data-i18n')) {
     heroPkg.setAttribute('data-i18n', 'hero.btn.packages');
-    heroPkg.setAttribute('data-i18n-icon', 'fas fa-compass');
+    heroPkg.setAttribute('data-i18n-icon', 'ph ph-compass');
   }
 
   // 3. Floating concierge tooltip
@@ -1183,7 +1183,7 @@ function applyTranslations(lang = currentLanguage) {
     if (translated) el.setAttribute('aria-label', translated);
   });
 
-  // Handle special compound elements like hero title "Explore Sri Lanka in Comfort & Style – <span>Premium Private Chauffeur Services</span>"
+  // Handle special compound elements like hero title "Explore Sri Lanka in Comfort & Style <span>Premium Private Chauffeur Services</span>"
   const heroTitle = document.querySelector('.hero-title');
   if (heroTitle && heroTitle.getAttribute('data-i18n-tagged') === 'true') {
     const t1 = t('hero.title1', lang);
@@ -1221,11 +1221,11 @@ function initLanguageSwitcher() {
     langWrap.className = 'nav-select-pill language-picker-wrap';
     langWrap.title = 'Select Language';
     langWrap.innerHTML = `
-      <i class="fas fa-language select-icon text-gold"></i>
+      <i class="ph ph-translate select-icon"></i>
       <select class="language-select-box" aria-label="Select Language">
         ${Object.keys(LANGUAGES).map(code => `
           <option value="${code}" ${code === currentLanguage ? 'selected' : ''}>
-            ${LANGUAGES[code].flag} ${LANGUAGES[code].label}
+            ${LANGUAGES[code].label}
           </option>
         `).join('')}
       </select>
@@ -1249,14 +1249,14 @@ function initLanguageSwitcher() {
     mobilePrefs.innerHTML = `
       <div class="mobile-prefs-header">
         <span class="mobile-prefs-title">
-          <i class="fas fa-sliders-h text-gold"></i>
+          <i class="ph ph-sliders-horizontal"></i>
           <span data-i18n="nav.prefs">${t('nav.prefs', activeLang)}</span>
         </span>
       </div>
       <div class="mobile-prefs-controls">
         <div class="mobile-pref-row">
           <span class="mobile-pref-label">
-            <i class="fas fa-coins text-gold"></i>
+            <i class="ph ph-coins"></i>
             <span data-i18n="nav.currency">${t('nav.currency', activeLang)}</span>
           </span>
           <select class="currency-select-box" aria-label="Select Currency">
@@ -1271,13 +1271,13 @@ function initLanguageSwitcher() {
         </div>
         <div class="mobile-pref-row">
           <span class="mobile-pref-label">
-            <i class="fas fa-globe text-gold"></i>
+            <i class="ph ph-globe"></i>
             <span data-i18n="nav.language">${t('nav.language', activeLang)}</span>
           </span>
           <select class="language-select-box" aria-label="Select Language">
             ${Object.keys(LANGUAGES).map(code => `
               <option value="${code}" ${code === activeLang ? 'selected' : ''}>
-                ${LANGUAGES[code].flag} ${LANGUAGES[code].label} - ${LANGUAGES[code].name}
+                ${LANGUAGES[code].label} - ${LANGUAGES[code].name}
               </option>
             `).join('')}
           </select>

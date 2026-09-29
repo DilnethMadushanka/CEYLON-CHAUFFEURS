@@ -786,10 +786,10 @@ function renderPackages() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div class="no-results-msg" style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
-        <i class="fas fa-search" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 16px;"></i>
-        <h3 style="color: var(--primary-emerald);">No Tour Packages Found</h3>
-        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 20px;">
+      <div class="no-results-msg">
+        <i class="ph ph-magnifying-glass"></i>
+        <h3>No Tour Packages Found</h3>
+        <p>
           We couldn't find an itinerary matching your current filter criteria. Try clearing some filters or build a custom route.
         </p>
         <a href="booking.html" class="btn btn-primary btn-sm">Request Custom Itinerary</a>
@@ -817,38 +817,36 @@ function renderPackages() {
     return `
       <div class="package-card" data-category="${pkg.category}" onmouseenter="highlightPackageRoute('${pkg.id}')">
         <div class="package-img-box">
-          <img src="${pkg.image}" alt="${pkg.title}" loading="lazy">
-          <div class="package-duration-pill">
-            <i class="far fa-clock"></i> ${pkg.days} ${lblDays} / ${pkg.days - 1} Nights
-          </div>
-          <div class="package-badge-cat">${pkg.categoryName}</div>
+          <img src="${pkg.image}" alt="${pkg.title}" loading="lazy" width="1376" height="768">
         </div>
         <div class="package-body">
+          <div class="package-meta">
+            <span class="package-duration-pill"><i class="ph ph-clock"></i> ${pkg.days} ${lblDays} / ${pkg.days - 1} Nights</span>
+            <span class="package-badge-cat">${pkg.categoryName}</span>
+          </div>
           <h3>${pkg.title}</h3>
           <div class="package-key-feature">
-            <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> ${pkg.keyFeature}</span>
+            <i class="ph ph-bed"></i> <span><strong>Key Feature:</strong> ${pkg.keyFeature}</span>
           </div>
           <div class="package-route-preview">
             <strong>${lblRoute}</strong> ${pkg.route}
           </div>
           <ul class="package-highlights-list">
-            ${pkg.highlights.map(h => `<li><i class="fas fa-check-circle"></i> ${h}</li>`).join('')}
+            ${pkg.highlights.map(h => `<li><i class="ph ph-check-circle"></i> ${h}</li>`).join('')}
           </ul>
           <div class="package-price-box">
             <div>
               <div class="price-label">${lblStartingFrom}</div>
               <div class="price-amount">${convertedRate.formatted} <span>${convertedRate.code}</span></div>
             </div>
-            <div style="text-align: right;">
-              <span style="font-size: 0.78rem; color: var(--text-muted);">${priceNote}</span>
-            </div>
+            <span class="price-note">${priceNote}</span>
           </div>
           <div class="package-card-actions">
             <button class="btn btn-outline-emerald btn-sm" onclick="openItineraryModal('${pkg.id}')">
-              <i class="fas fa-list-ul"></i> ${lblItinerary}
+              <i class="ph ph-list-bullets"></i> ${lblItinerary}
             </button>
-            <button class="btn btn-whatsapp btn-sm action-pkg-whatsapp" onclick="bookPackageWhatsApp('${pkg.id}')">
-              <i class="fab fa-whatsapp"></i> ${lblBook}
+            <button class="btn btn-primary btn-sm action-pkg-whatsapp" onclick="bookPackageWhatsApp('${pkg.id}')">
+              <i class="ph ph-whatsapp-logo"></i> ${lblBook}
             </button>
           </div>
         </div>
@@ -935,6 +933,8 @@ function initLeafletMap() {
   const mapElem = document.getElementById('ceylon-route-map');
   if (!mapElem || typeof L === 'undefined') return;
 
+  const mapColors = getMapColors();
+
   try {
     leafletMap = L.map('ceylon-route-map', {
       center: [7.8731, 80.7718],
@@ -943,7 +943,9 @@ function initLeafletMap() {
     });
 
     // Elegant CartoDB Voyager / OSM map tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const tileStyle = prefersDark ? 'dark_all' : 'rastertiles/voyager';
+    L.tileLayer(`https://{s}.basemaps.cartocdn.com/${tileStyle}/{z}/{x}/{y}{r}.png`, {
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
       maxZoom: 18
     }).addTo(leafletMap);
@@ -953,19 +955,30 @@ function initLeafletMap() {
       const coord = DESTINATION_COORDS[place];
       const marker = L.circleMarker(coord, {
         radius: 6,
-        fillColor: '#092c23',
-        color: '#d4af37',
+        fillColor: mapColors.ink,
+        color: mapColors.accent,
         weight: 2,
         opacity: 1,
         fillOpacity: 0.9
       }).addTo(leafletMap);
 
-      marker.bindPopup(`<strong>${place}</strong><br><span style="font-size:0.8rem;color:#666;">Chauffeur Waypoint</span>`);
+      marker.bindPopup(`<strong>${place}</strong><br><span class="map-popup-note">Chauffeur Waypoint</span>`);
       mapMarkers.push({ name: place, marker: marker });
     });
   } catch (err) {
     console.warn('Map initialization note:', err);
   }
+}
+
+/**
+ * Map marker and route colours, read from the page's design tokens
+ */
+function getMapColors() {
+  const styles = getComputedStyle(document.documentElement);
+  return {
+    accent: styles.getPropertyValue('--accent').trim() || '#0d6a4c',
+    ink: styles.getPropertyValue('--ink').trim() || '#111814'
+  };
 }
 
 /**
@@ -979,7 +992,7 @@ function highlightPackageRoute(packageId) {
 
   const tagElem = document.getElementById('map-active-package-tag');
   if (tagElem) {
-    tagElem.innerHTML = `<i class="fas fa-route text-gold"></i> Route: ${pkg.title}`;
+    tagElem.innerHTML = `<i class="ph ph-path"></i> Route: ${pkg.title}`;
   }
 
   // Remove previous polyline
@@ -997,7 +1010,7 @@ function highlightPackageRoute(packageId) {
 
   if (latlngs.length > 1) {
     activeRoutePolyline = L.polyline(latlngs, {
-      color: '#d4af37',
+      color: getMapColors().accent,
       weight: 4,
       dashArray: '8, 8',
       opacity: 0.95
@@ -1028,11 +1041,11 @@ function openItineraryModal(packageId) {
   if (bodyElem) {
     bodyElem.innerHTML = `
       <div class="modal-itinerary-header-callout">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; color: var(--primary-emerald); font-size: 0.95rem;">
-          <i class="fas fa-bed text-gold"></i> Key Feature: ${pkg.keyFeature}
+        <div class="callout-feature">
+          <i class="ph ph-bed"></i> Key Feature: ${pkg.keyFeature}
         </div>
-        <p style="font-size: 0.92rem; margin-bottom: 6px; line-height: 1.5;"><strong>Complete Route:</strong> ${pkg.route}</p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">
+        <p class="callout-route"><strong>Complete Route:</strong> ${pkg.route}</p>
+        <p class="callout-note">
           All Ceylon Chauffeur tours strictly include fuel, expressway tolls, parking fees, and chauffeur lodging & meals. Zero hidden costs.
         </p>
       </div>
@@ -1044,20 +1057,20 @@ function openItineraryModal(packageId) {
           
           if (tagToUse) {
             let tagClass = 'tag-rest-explore';
-            let iconClass = 'fas fa-compass';
+            let iconClass = 'ph ph-compass';
             const upper = tagToUse.toUpperCase();
             if (upper.includes('BEACH')) {
               tagClass = 'tag-beach-rest';
-              iconClass = 'fas fa-umbrella-beach';
+              iconClass = 'ph ph-umbrella-simple';
             } else if (upper.includes('WILDLIFE') || upper.includes('SAFARI')) {
               tagClass = 'tag-wildlife-rest';
-              iconClass = 'fas fa-paw';
+              iconClass = 'ph ph-paw-print';
             } else if (upper.includes('TREK')) {
               tagClass = 'tag-nature-trek';
-              iconClass = 'fas fa-hiking';
+              iconClass = 'ph ph-person-simple-hike';
             } else if (upper.includes('EXPLORE & RELAX')) {
               tagClass = 'tag-explore-relax';
-              iconClass = 'fas fa-mountain';
+              iconClass = 'ph ph-mountains';
             }
             tagHtml = `<span class="itinerary-tag ${tagClass}"><i class="${iconClass}"></i> ${tagToUse}</span>`;
           }

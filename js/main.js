@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPolicyModals();
   initFleetTabs();
   initFleetDropdowns();
+  initReveal();
   updateAllCurrencyDisplays();
 });
 
@@ -105,7 +106,7 @@ function initCurrencySwitcher() {
     switcherWrap.className = 'nav-select-pill currency-picker-wrap';
     switcherWrap.title = 'Select Currency';
     switcherWrap.innerHTML = `
-      <i class="fas fa-coins select-icon text-gold"></i>
+      <i class="ph ph-coins select-icon"></i>
       <select class="currency-select-box" aria-label="Select Currency">
         ${Object.keys(CURRENCIES).map(key => `
           <option value="${key}" ${key === currentCurrency ? 'selected' : ''}>${CURRENCIES[key].label}</option>
@@ -149,7 +150,7 @@ function initNavigation() {
     backdrop?.classList.remove('active');
     document.body.style.overflow = '';
     const icon = mobileToggle?.querySelector('i');
-    if (icon) icon.className = 'fas fa-bars';
+    if (icon) icon.className = 'ph ph-list';
   }
 
   function openMenu() {
@@ -157,7 +158,7 @@ function initNavigation() {
     backdrop?.classList.add('active');
     document.body.style.overflow = 'hidden';
     const icon = mobileToggle?.querySelector('i');
-    if (icon) icon.className = 'fas fa-times';
+    if (icon) icon.className = 'ph ph-x';
   }
 
   if (mobileToggle && navMenu) {
@@ -177,14 +178,46 @@ function initNavigation() {
     });
   }
 
-  // Sticky header shadow change on scroll
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      header?.classList.add('scrolled');
-    } else {
-      header?.classList.remove('scrolled');
-    }
+  // Sticky header border once the page leaves the top (observer, no scroll listener)
+  if (header && 'IntersectionObserver' in window) {
+    const sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(([entry]) => {
+      header.classList.toggle('scrolled', !entry.isIntersecting);
+    }).observe(sentinel);
+  }
+}
+
+/**
+ * Reveal-on-scroll for [data-reveal] blocks (CSS handles reduced motion)
+ */
+function initReveal() {
+  const items = document.querySelectorAll('[data-reveal]');
+  if (!items.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('is-in'));
+    return;
+  }
+
+  // Stagger siblings that enter together
+  items.forEach(el => {
+    const siblings = Array.from(el.parentElement?.children || []).filter(c => c.hasAttribute('data-reveal'));
+    el.style.setProperty('--reveal-i', Math.min(siblings.indexOf(el), 5));
   });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+  items.forEach(el => observer.observe(el));
 }
 
 /**
@@ -405,17 +438,18 @@ function initPolicyModals() {
     policyModal = document.createElement('div');
     policyModal.id = 'ceylon-policy-modal';
     policyModal.className = 'modal-overlay';
+    policyModal.setAttribute('role', 'dialog');
+    policyModal.setAttribute('aria-modal', 'true');
+    policyModal.setAttribute('aria-labelledby', 'policy-modal-title');
     policyModal.innerHTML = `
-      <div class="modal-card policy-modal-card">
+      <div class="modal-card modal-card--narrow policy-modal-card">
         <div class="modal-header">
           <h3 id="policy-modal-title">Booking Terms & Conditions</h3>
-          <button class="modal-close-btn" onclick="closeAllActiveModals()">&times;</button>
+          <button class="modal-close-btn" onclick="closeAllActiveModals()" aria-label="Close">&times;</button>
         </div>
-        <div id="policy-modal-content" class="modal-content" style="max-height: 70vh; overflow-y: auto; font-size: 0.92rem; line-height: 1.7; color: var(--text-dark);">
-          <!-- Dynamic Policy Content -->
-        </div>
-        <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 0.8rem; color: var(--text-muted);">Ceylon Chauffeur – SLTDA Certified Excellence</span>
+        <div id="policy-modal-content" class="modal-content"></div>
+        <div class="modal-footer">
+          <span class="modal-footer-note">Ceylon Chauffeur, SLTDA Certified Excellence</span>
           <button class="btn btn-primary btn-sm" onclick="closeAllActiveModals()">Understood & Agree</button>
         </div>
       </div>
@@ -447,31 +481,31 @@ function openPolicyModal(type) {
   if (!modal || !title || !content) return;
 
   if (type === 'cancellation') {
-    title.innerHTML = `<i class="fas fa-shield-alt text-gold"></i> Cancellation, Refund & Change Policy`;
+    title.innerHTML = `<i class="ph ph-shield-check"></i> Cancellation, Refund & Change Policy`;
     content.innerHTML = `
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">1. Transparent Cancellation Guarantee</h4>
-      <p style="margin-bottom: 16px;">We understand international flight plans change. Ceylon Chauffeur provides flexible cancellation terms designed for foreign travelers:</p>
-      <ul style="padding-left: 20px; margin-bottom: 16px;">
+      <h4>1. Transparent Cancellation Guarantee</h4>
+      <p>We understand international flight plans change. Ceylon Chauffeur provides flexible cancellation terms designed for foreign travelers:</p>
+      <ul>
         <li><strong>Cancellation 48+ Hours Before Pickup:</strong> 100% Full Refund of any advance deposit with zero administrative penalties.</li>
-        <li><strong>Cancellation Within 24–48 Hours:</strong> 80% Refund or free date rescheduling within 12 months.</li>
+        <li><strong>Cancellation Within 24-48 Hours:</strong> 80% Refund or free date rescheduling within 12 months.</li>
         <li><strong>Flight Delays or Rescheduling:</strong> Free automatic rescheduling. We track your flight into Colombo (CMB) at all times.</li>
       </ul>
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">2. Zero Hidden Surcharges Guarantee</h4>
-      <p style="margin-bottom: 16px;">The daily rate agreed in your proposal is 100% all-inclusive. You will never be asked to pay extra for driver fuel, expressway tolls, tourist parking permits, or driver overnight meals/accommodation.</p>
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">3. Route Adjustments During Your Tour</h4>
+      <h4>2. Zero Hidden Surcharges Guarantee</h4>
+      <p>The daily rate agreed in your proposal is 100% all-inclusive. You will never be asked to pay extra for driver fuel, expressway tolls, tourist parking permits, or driver overnight meals/accommodation.</p>
+      <h4>3. Route Adjustments During Your Tour</h4>
       <p>Your itinerary is completely flexible. You may request reasonable detour stops, change daily start times, or adjust sightseeing durations directly with your chauffeur at zero extra cost.</p>
     `;
   } else {
-    title.innerHTML = `<i class="fas fa-file-contract text-gold"></i> Chauffeur Service Terms & Traveler Protection`;
+    title.innerHTML = `<i class="ph ph-file-text"></i> Chauffeur Service Terms & Traveler Protection`;
     content.innerHTML = `
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">1. Chauffeur Standards & Credentials</h4>
-      <p style="margin-bottom: 16px;">All Ceylon Chauffeur drivers are licensed by the Sri Lanka Tourism Development Authority (SLTDA), police background verified, medically certified, and fluent in spoken English.</p>
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">2. Vehicle Specifications & Amenities</h4>
-      <p style="margin-bottom: 16px;">Every vehicle is late-model Japanese manufacture (Toyota/Honda), strictly non-smoking, equipped with dual air conditioning, complimentary onboard high-speed 4G Wi-Fi, USB charging ports, and chilled bottled water supplied daily.</p>
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">3. Inclusions vs. Exclusions</h4>
-      <p style="margin-bottom: 8px;"><strong>100% Included:</strong> Vehicle, licensed chauffeur, unlimited touring mileage, petrol/diesel fuel, all highway/expressway tolls, airport parking fees, and driver lodging & meals.</p>
-      <p style="margin-bottom: 16px;"><strong>Excluded:</strong> Personal monument entrance fees (e.g. Sigiriya, Polonnaruwa, national park jeep fees) and personal hotel bookings, unless you choose our Full All-Inclusive Package.</p>
-      <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">4. Passenger Insurance</h4>
+      <h4>1. Chauffeur Standards & Credentials</h4>
+      <p>All Ceylon Chauffeur drivers are licensed by the Sri Lanka Tourism Development Authority (SLTDA), police background verified, medically certified, and fluent in spoken English.</p>
+      <h4>2. Vehicle Specifications & Amenities</h4>
+      <p>Every vehicle is late-model Japanese manufacture (Toyota/Honda), strictly non-smoking, equipped with dual air conditioning, complimentary onboard high-speed 4G Wi-Fi, USB charging ports, and chilled bottled water supplied daily.</p>
+      <h4>3. Inclusions vs. Exclusions</h4>
+      <p><strong>100% Included:</strong> Vehicle, licensed chauffeur, unlimited touring mileage, petrol/diesel fuel, all highway/expressway tolls, airport parking fees, and driver lodging & meals.</p>
+      <p><strong>Excluded:</strong> Personal monument entrance fees (e.g. Sigiriya, Polonnaruwa, national park jeep fees) and personal hotel bookings, unless you choose our Full All-Inclusive Package.</p>
+      <h4>4. Passenger Insurance</h4>
       <p>All passengers in Ceylon Chauffeur vehicles are fully covered under comprehensive luxury commercial passenger vehicle insurance.</p>
     `;
   }

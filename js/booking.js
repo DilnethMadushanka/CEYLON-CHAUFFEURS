@@ -4,7 +4,7 @@
  * inquiry persistence (localStorage), draft recovery, auto-responder, and WhatsApp prefill.
  *
  * ============================================================
- *  EMAIL CONFIGURATION — EmailJS Setup
+ *  EMAIL CONFIGURATION - EmailJS Setup
  * ============================================================
  *  1. Go to https://www.emailjs.com and create a free account.
  *  2. Add your email service (Gmail / Outlook) → copy the Service ID.
@@ -27,9 +27,9 @@ const EMAILJS_CONFIG = {
 // ────────────────────────────────────────────────────────────────────────────
 
 const DAILY_RATES = {
-  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2–3 Bags' },
-  van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 10, luggage: '4–8 Large Bags' },
-  bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long)', rate: 160, maxPax: 35, luggage: '12–25 Large Bags' }
+  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
+  van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 10, luggage: '4-8 Large Bags' },
+  bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long)', rate: 160, maxPax: 35, luggage: '12-25 Large Bags' }
 };
 
 const PACKAGE_DURATIONS = {
@@ -219,13 +219,13 @@ function validateCapacity() {
   if (totalPax > vehicleData.maxPax) {
     let recommendation = '';
     if (totalPax <= 6) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH Flat Roof (4–6 Pax • 4–5 Bags)</strong>.`;
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH Flat Roof (4-6 Pax, 4-5 Bags)</strong>.`;
     } else if (totalPax <= 10) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH High Roof (8–10 Pax • 6–8 Bags)</strong>.`;
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota KDH High Roof (8-10 Pax, 6-8 Bags)</strong>.`;
     } else if (totalPax <= 20) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota Coaster Mini-Coach (18–20 Pax • 12–15 Bags)</strong>.`;
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>Toyota Coaster Mini-Coach (18-20 Pax, 12-15 Bags)</strong>.`;
     } else if (totalPax <= 35) {
-      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>King Long Luxury Coach (20–35 Pax • 18–25 Bags)</strong>.`;
+      recommendation = `You have ${totalPax} passengers. The ${vehicleData.name.split('(')[0].trim()} fits up to ${vehicleData.maxPax} passengers. We recommend switching to our <strong>King Long Luxury Coach (20-35 Pax, 18-25 Bags)</strong>.`;
     } else {
       recommendation = `You have ${totalPax} passengers. For groups of 35+ travelers, we coordinate multiple luxury coaches. Please continue your booking and our concierge will tailor the fleet for your group.`;
     }
@@ -297,7 +297,7 @@ function calculateQuote() {
   if (vehicleElem) vehicleElem.textContent = vehicleData.name;
   if (dailyRateElem) dailyRateElem.textContent = `${convertedDaily.formatted} / day`;
   if (totalElem) totalElem.textContent = convertedTotal.formatted;
-  if (totalNoteElem) totalNoteElem.textContent = `${convertedTotal.code} • 100% All-Inclusive Guarantee`;
+  if (totalNoteElem) totalNoteElem.textContent = `${convertedTotal.code}, 100% All-Inclusive Guarantee`;
 
   return { days, vehicleData, estimatedTotalUSD, convertedTotal, convertedDaily };
 }
@@ -484,7 +484,7 @@ A new tour inquiry has been received through the website. Please review the clie
 ${routeNotes}
 
 ─────────────────────────────
-⚡ *NEXT STEP:* Please reply to this client within 2–4 hours with a customised PDF proposal and confirm vehicle availability.
+⚡ *NEXT STEP:* Please reply to this client within 2-4 hours with a customised PDF proposal and confirm vehicle availability.
 ─────────────────────────────
 _Automated inquiry via ceylonchauffeur.com_`;
 
@@ -540,20 +540,20 @@ _Automated inquiry via ceylonchauffeur.com_`;
  *  2. Admin notification email (to bookings@ceylonchauffeur.com)
  *
  * EMAILJS TEMPLATE VARIABLES to use in your templates:
- *  {{to_name}}          – Customer full name
- *  {{to_email}}         – Customer email
- *  {{customer_country}} – Country of residence
- *  {{customer_phone}}   – WhatsApp/phone number
- *  {{booking_ref}}      – Booking reference (e.g. CC-2026-4523)
- *  {{travel_dates}}     – Travel date range and duration
- *  {{passengers}}       – Adults & children count
- *  {{vehicle_name}}     – Vehicle class selected
- *  {{tour_package}}     – Package / route name
- *  {{route_notes}}      – Customer's special requests / notes
- *  {{estimated_total}}  – Total estimated price
- *  {{submitted_at}}     – Submission timestamp (Sri Lanka time)
- *  {{admin_email}}      – bookings@ceylonchauffeur.com
- *  {{reply_to}}         – Customer email (for admin to reply)
+ *  {{to_name}}          - Customer full name
+ *  {{to_email}}         - Customer email
+ *  {{customer_country}} - Country of residence
+ *  {{customer_phone}}   - WhatsApp/phone number
+ *  {{booking_ref}}      - Booking reference (e.g. CC-2026-4523)
+ *  {{travel_dates}}     - Travel date range and duration
+ *  {{passengers}}       - Adults & children count
+ *  {{vehicle_name}}     - Vehicle class selected
+ *  {{tour_package}}     - Package / route name
+ *  {{route_notes}}      - Customer's special requests / notes
+ *  {{estimated_total}}  - Total estimated price
+ *  {{submitted_at}}     - Submission timestamp (Sri Lanka time)
+ *  {{admin_email}}      - bookings@ceylonchauffeur.com
+ *  {{reply_to}}         - Customer email (for admin to reply)
  */
 function sendEmailsViaEmailJS(params, customerEmail, bookingRef) {
   // Check if EmailJS is loaded and credentials are configured
@@ -622,20 +622,20 @@ function showEmailStatusBanner(status) {
     banner.className = 'email-send-status-banner';
 
     if (status === 'customer-sent') {
-      banner.style.cssText = 'background:#dcfce7;border-left:4px solid #16a34a;color:#14532d;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
-      banner.innerHTML = '<i class="fas fa-envelope-circle-check" style="color:#16a34a;"></i> <span><strong>Confirmation emails sent!</strong> Check your inbox (and spam folder) for your booking receipt from <strong>bookings@ceylonchauffeur.com</strong>.</span>';
+      banner.classList.add('is-sent');
+      banner.innerHTML = '<i class="ph ph-envelope-simple-open"></i> <span><strong>Confirmation emails sent.</strong> Check your inbox (and spam folder) for your booking receipt from <strong>bookings@ceylonchauffeur.com</strong>.</span>';
     } else if (status === 'config-missing') {
-      banner.style.cssText = 'background:#fef9c3;border-left:4px solid #ca8a04;color:#713f12;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
-      banner.innerHTML = '<i class="fas fa-triangle-exclamation" style="color:#ca8a04;"></i> <span><strong>Email sending not configured yet.</strong> Your inquiry is saved locally. Our team will be in touch via WhatsApp.</span>';
+      banner.classList.add('is-pending');
+      banner.innerHTML = '<i class="ph ph-warning"></i> <span><strong>Email sending not configured yet.</strong> Your inquiry is saved locally. Our team will be in touch via WhatsApp.</span>';
     } else if (status === 'error') {
-      banner.style.cssText = 'background:#fee2e2;border-left:4px solid #dc2626;color:#7f1d1d;padding:10px 18px;font-size:0.85rem;display:flex;align-items:center;gap:10px;';
-      banner.innerHTML = '<i class="fas fa-circle-exclamation" style="color:#dc2626;"></i> <span><strong>Email delivery issue.</strong> Your inquiry is saved. Please follow up via WhatsApp to confirm receipt.</span>';
+      banner.classList.add('is-error');
+      banner.innerHTML = '<i class="ph ph-warning-circle"></i> <span><strong>Email delivery issue.</strong> Your inquiry is saved. Please follow up via WhatsApp to confirm receipt.</span>';
     }
 
     // Insert banner just below the email header fields section
     const emailBody = modalContent.querySelector('.email-body-rendered');
     if (emailBody) {
-      emailBody.insertBefore(banner, emailBody.firstChild);
+      emailBody.parentNode.insertBefore(banner, emailBody);
     }
   }, 600);
 }
@@ -651,20 +651,15 @@ function renderAutoResponderModal(data) {
   if (contentBox) {
     contentBox.innerHTML = `
       <div class="email-inbox-modal modal-card">
-        <!-- Header Bar -->
         <div class="email-header-bar">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <i class="fas fa-check-circle" style="color: #22c55e; font-size: 1.2rem;"></i>
-            <span style="font-weight: 700; font-size: 0.95rem; color: var(--primary-emerald);">Inquiry Received & Confirmed</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span class="booking-ref-badge"><i class="fas fa-ticket-alt text-gold"></i> Ref: ${data.bookingRef}</span>
-            <button class="modal-close-btn" onclick="closeAutoResponderModal()">&times;</button>
+          <span class="email-status"><i class="ph ph-check-circle"></i> Inquiry Received & Confirmed</span>
+          <div class="email-header-actions">
+            <span class="booking-ref-badge"><i class="ph ph-ticket"></i> Ref: ${data.bookingRef}</span>
+            <button class="modal-close-btn" onclick="closeAutoResponderModal()" aria-label="Close">&times;</button>
           </div>
         </div>
 
-        <!-- Simulated Email Header Fields -->
-        <div style="padding: 14px 24px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 0.88rem;">
+        <div class="email-meta">
           <div class="email-meta-field">
             <span class="email-meta-label">From:</span>
             <span class="email-meta-val">Ceylon Chauffeur Concierge &lt;bookings@ceylonchauffeur.com&gt;</span>
@@ -675,69 +670,58 @@ function renderAutoResponderModal(data) {
           </div>
           <div class="email-meta-field">
             <span class="email-meta-label">Subject:</span>
-            <span class="email-meta-val" style="color: var(--primary-emerald); font-weight: 700;">We received your inquiry! [Ref: ${data.bookingRef}] – Ceylon Chauffeur 🇱🇰</span>
+            <span class="email-meta-val email-meta-val--subject">We received your inquiry [Ref: ${data.bookingRef}], Ceylon Chauffeur</span>
           </div>
         </div>
 
-        <!-- Rendered Email & Receipt Body -->
         <div class="email-body-rendered">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; gap: 10px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <img src="assets/images/logo.png" alt="Ceylon Chauffeurs" style="height: 44px; border-radius: 6px; border: 1px solid var(--border-gold); padding: 2px; background: #ffffff;">
+          <div class="email-brand-row">
+            <div class="email-brand">
+              <span class="brand-mark"><img src="assets/images/logo.png" alt="" class="brand-logo-img" width="62" height="62"></span>
               <div>
-                <h4 style="color: var(--primary-emerald); margin: 0; font-family: var(--font-serif); font-size: 1.15rem;">CEYLON CHAUFFEURS</h4>
-                <small style="color: var(--accent-gold-hover); letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; font-size: 0.7rem;">Official Booking Confirmation Receipt</small>
+                <div class="email-brand-name">Ceylon Chauffeurs</div>
+                <small>Official Booking Confirmation Receipt</small>
               </div>
             </div>
-            <div style="text-align: right;">
-              <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">Status:</span>
-              <span style="font-size: 0.82rem; font-weight: 700; color: #15803d; background: #dcfce7; padding: 3px 10px; border-radius: 20px; display: inline-block;">
-                ✓ Logged & Stored
-              </span>
-            </div>
+            <span class="email-logged-pill"><i class="ph ph-check"></i> Logged & Stored</span>
           </div>
 
-          <p style="margin-bottom: 14px;"><strong>Dear ${data.customerName},</strong></p>
-          
-          <p style="margin-bottom: 14px;">
+          <p><strong>Dear ${data.customerName},</strong></p>
+
+          <p>
             Thank you for contacting <strong>Ceylon Chauffeurs</strong>. Your private chauffeur tour inquiry has been successfully recorded in our central booking dispatch system under Reference Number <strong>${data.bookingRef}</strong>.
           </p>
 
-          <!-- Itinerary Summary Card -->
-          <div class="email-callout-box" style="margin: 16px 0;">
+          <div class="email-callout-box">
             <div class="email-receipt-grid">
-              <div><strong>Travel Dates:</strong><br>${data.travelDates}</div>
-              <div><strong>Party Size:</strong><br>${data.passengers}</div>
-              <div><strong>Vehicle Class:</strong><br>${data.vehicleName.split('(')[0]}</div>
-              <div><strong>Tour Selection:</strong><br>${data.preferredPackage}</div>
-              <div><strong>Estimated Rate:</strong><br><span style="font-weight: 800; color: var(--primary-emerald); font-size: 1.05rem;">${data.estimatedTotalFormatted}</span></div>
-              <div><strong>Inclusions:</strong><br>Fuel, Tolls & Driver Lodging (100%)</div>
+              <div><strong>Travel Dates</strong>${data.travelDates}</div>
+              <div><strong>Party Size</strong>${data.passengers}</div>
+              <div><strong>Vehicle Class</strong>${data.vehicleName.split('(')[0]}</div>
+              <div><strong>Tour Selection</strong>${data.preferredPackage}</div>
+              <div><strong>Estimated Rate</strong><span class="email-receipt-total">${data.estimatedTotalFormatted}</span></div>
+              <div><strong>Inclusions</strong>Fuel, Tolls & Driver Lodging (100%)</div>
             </div>
           </div>
 
-          <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 4px; margin-bottom: 18px; font-size: 0.88rem; color: #1e3a8a;">
-            <strong>⏱️ Turnaround Guarantee:</strong> Our lead travel coordinator is currently reviewing your route. You will receive an individualized PDF proposal within <strong>2 to 4 hours</strong>.
+          <div class="email-turnaround">
+            <i class="ph ph-hourglass-medium"></i>
+            <span><strong>Turnaround Guarantee:</strong> Our lead travel coordinator is currently reviewing your route. You will receive an individualized PDF proposal within <strong>2 to 4 hours</strong>.</span>
           </div>
 
-          <p style="font-size: 0.9rem; margin-bottom: 6px;"><strong>Want Instant Confirmation & Immediate Route Chat?</strong></p>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 18px;">
-            Connect with our 24/7 Concierge on WhatsApp with your pre-filled inquiry to lock in vehicle availability immediately.
-          </p>
+          <p><strong>Want Instant Confirmation & Immediate Route Chat?</strong><br>
+          Connect with our 24/7 Concierge on WhatsApp with your pre-filled inquiry to lock in vehicle availability immediately.</p>
         </div>
 
-        <!-- Modal Action Footer with WhatsApp Transition & Print Option -->
         <div class="email-footer-actions">
           <div class="email-modal-actions">
-            <button class="btn btn-whatsapp btn-lg email-btn-whatsapp" onclick="continueToWhatsApp('${encodeURIComponent(data.whatsAppText)}')">
-              <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Continue to WhatsApp with Ref #${data.bookingRef}
+            <button class="btn btn-whatsapp email-btn-whatsapp" onclick="continueToWhatsApp('${encodeURIComponent(data.whatsAppText)}')">
+              <i class="ph ph-whatsapp-logo"></i> Continue to WhatsApp with Ref #${data.bookingRef}
             </button>
-            <button class="btn btn-outline-emerald btn-sm email-btn-print" onclick="window.print()">
-              <i class="fas fa-print"></i> Print Receipt
+            <button class="btn btn-outline-emerald email-btn-print" onclick="window.print()">
+              <i class="ph ph-printer"></i> Print Receipt
             </button>
           </div>
-          <span style="font-size: 0.82rem; color: var(--text-muted); margin-top: 6px;">
-            A copy of this inquiry has been preserved locally in your session.
-          </span>
+          <span class="email-footer-note">A copy of this inquiry has been preserved locally in your session.</span>
         </div>
       </div>
     `;
