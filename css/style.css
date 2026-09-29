@@ -439,7 +439,7 @@ strong { font-weight: 600; }
   color: var(--ink);
 }
 .brand-text span:not(.brand-name) {
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -813,7 +813,7 @@ html[lang="ru"] .nav-menu:not(.active) .nav-link { padding-inline: 8px; font-siz
 .hero-feat-item i { color: var(--accent); font-size: 1.1rem; }
 
 @media (max-width: 1024px) {
-  .quick-bar-form { grid-template-columns: 1fr 1fr; }
+  .quick-bar-form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .quick-bar-form .btn { grid-column: 1 / -1; }
 }
 @media (max-width: 640px) {
@@ -859,6 +859,7 @@ input[type="date"].form-control { font-variant-numeric: tabular-nums; }
 
 /* ---------- Inclusions (bento) ---------- */
 .inclusions-banner { padding: clamp(72px, 9vw, 120px) 0; }
+.inclusions-banner.section--flush-top { padding-top: 0; }
 
 .inclusions-layout {
   display: grid;
@@ -1712,7 +1713,12 @@ a.platform-badge:hover { color: var(--ink); }
   .reviews-hero-stats { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 520px) {
-  .reviews-hero-stats { grid-template-columns: 1fr; }
+  .reviews-hero-stats { gap: 10px; }
+  .review-stat-item { padding: 18px; }
+  .review-stat-item:first-child,
+  .review-stat-item:last-child { grid-column: 1 / -1; }
+  .review-stat-item h3 { font-size: 1.8rem; }
+  .review-stat-item p { font-size: 0.88rem; }
 }
 
 /* Driver standards */
@@ -2512,3 +2518,70 @@ a.platform-badge:hover { color: var(--ink); }
 .callout-route { font-size: 0.92rem; margin-bottom: 6px; line-height: 1.5; }
 .callout-note { font-size: 0.85rem; color: var(--muted); }
 .map-popup-note { font-size: 0.8rem; color: #58625b; }
+
+/* ---------- Mobile refinements ---------- */
+.packages-filter-bar > * { min-width: 0; }
+
+@media (max-width: 640px) {
+  .fleet-details-dropdown-btn { min-height: 44px; }
+
+  /* Primary actions span the screen so they are easy to tap */
+  .hero-ctas,
+  .page-banner-ctas { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; }
+  .hero-ctas .btn,
+  .page-banner-ctas .btn { width: 100%; }
+
+  .fleet-side { flex-direction: column; align-items: stretch; gap: 14px; }
+  .fleet-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .fleet-actions .btn { width: 100%; padding-inline: 12px; }
+
+  .filter-bottom-row { flex-direction: column; align-items: stretch; }
+  .package-search-box { flex: none; width: 100%; max-width: none; }
+  .veh-pill-btn { height: auto; min-height: 40px; padding-block: 8px; white-space: normal; text-align: left; line-height: 1.3; max-width: 100%; }
+  .pill-btn { min-height: 40px; }
+
+  .footer-about .footer-actions { display: grid; grid-template-columns: 1fr; }
+  .footer-about .footer-actions .btn { width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .fleet-detailed-card .fleet-actions { grid-template-columns: 1fr; }
+
+  /* Comparison table rows stack as cards */
+  .table-responsive-wrapper { overflow: visible; border: 0; background: none; }
+  .compare-table { min-width: 0; display: block; }
+  .compare-table thead { display: none; }
+  .compare-table tbody { display: grid; gap: 12px; }
+  .compare-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+  }
+  .compare-table tbody tr + tr td,
+  .compare-table tbody tr.group-start td { border-top: 0; }
+  .compare-table td { display: block; padding: 0; }
+  .compare-table td:first-child { grid-column: 1 / -1; font-size: 1.02rem; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .compare-table td:not(:first-child)::before {
+    content: attr(data-label);
+    display: block;
+    white-space: normal;
+    margin-bottom: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .footer-about,
+  .footer-grid > .footer-col:last-child { grid-column: 1 / -1; }
+  .footer-links a { font-size: 0.88rem; }
+  .footer-legal { gap: 12px 20px; }
+}

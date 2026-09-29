@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFleetTabs();
   initFleetDropdowns();
   initReveal();
+  initResponsiveTables();
   updateAllCurrencyDisplays();
 });
 
@@ -188,6 +189,21 @@ function initNavigation() {
       header.classList.toggle('scrolled', !entry.isIntersecting);
     }).observe(sentinel);
   }
+}
+
+/**
+ * Label each comparison-table cell with its column heading so rows can
+ * stack as cards on phones. Re-runs after a language change.
+ */
+function initResponsiveTables() {
+  const label = () => document.querySelectorAll('.compare-table').forEach(table => {
+    const heads = [...table.querySelectorAll('thead th')].map(th => th.textContent.trim());
+    table.querySelectorAll('tbody tr').forEach(row => {
+      [...row.children].forEach((cell, i) => { if (heads[i]) cell.dataset.label = heads[i]; });
+    });
+  });
+  label();
+  window.addEventListener('ceylon_language_changed', () => setTimeout(label, 0));
 }
 
 /**
