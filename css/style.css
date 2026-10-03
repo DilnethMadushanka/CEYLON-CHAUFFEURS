@@ -497,35 +497,23 @@ strong { font-weight: 600; }
   flex-shrink: 0;
 }
 
-/* The logo PNG is a black mark with the wordmark below it; we crop to the mark
-   and typeset the wordmark so it stays crisp and themeable. */
+/* The mark is a transparent black PNG; the wordmark is typeset beside it so
+   it stays crisp. Dark mode inverts the mark to the light ink colour. */
 .brand-mark {
-  position: relative;
-  width: 34px;
-  height: 30px;
-  overflow: hidden;
+  display: inline-flex;
   flex-shrink: 0;
   transition: transform 0.6s var(--ease-bounce);
 }
 .brand-logo:hover .brand-mark { transform: rotate(-8deg) scale(1.06); }
-.brand-mark img,
-.brand-logo-img,
-.footer-logo-img {
-  position: absolute;
-  width: 62px;
-  height: 62px;
+.brand-mark img {
+  display: block;
+  width: auto;
+  height: 32px;
   max-width: none;
-  left: -14.8px;
-  top: -11.8px;
-  mix-blend-mode: multiply;
 }
+.footer-logo-badge .brand-mark img { height: 40px; }
 @media (prefers-color-scheme: dark) {
-  .brand-mark img,
-  .brand-logo-img,
-  .footer-logo-img {
-    filter: invert(1);
-    mix-blend-mode: screen;
-  }
+  .brand-mark img { filter: invert(0.94); }
 }
 
 .brand-text {
@@ -538,7 +526,7 @@ strong { font-weight: 600; }
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink);
 }

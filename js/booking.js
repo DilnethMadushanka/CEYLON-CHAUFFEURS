@@ -682,7 +682,7 @@ function renderAutoResponderModal(data) {
         <div class="email-body-rendered">
           <div class="email-brand-row">
             <div class="email-brand">
-              <span class="brand-mark"><img src="assets/images/logo.png" alt="" class="brand-logo-img" width="62" height="62"></span>
+              <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="brand-logo-img" width="225" height="192"></span>
               <div>
                 <div class="email-brand-name">Ceylon Chauffeurs</div>
                 <small>Official Booking Confirmation Receipt</small>
