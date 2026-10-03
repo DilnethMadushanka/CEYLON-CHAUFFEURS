@@ -853,6 +853,9 @@ function renderPackages() {
       </div>
     `;
   }).join('');
+
+  // Cards fade up as they scroll in (and again after each filter change)
+  window.observeReveal?.(container);
 }
 
 /**
@@ -1051,7 +1054,7 @@ function openItineraryModal(packageId) {
       </div>
 
       <div class="itinerary-timeline">
-        ${pkg.itinerary.map(item => {
+        ${pkg.itinerary.map((item, idx) => {
           let tagHtml = '';
           const tagToUse = item.tag || (item.title.match(/^\[(.*?)\]/) ? item.title.match(/^\[(.*?)\]/)[1] : null);
           
@@ -1079,7 +1082,7 @@ function openItineraryModal(packageId) {
           const cleanTitle = item.title.replace(/^\[.*?\]\s*/, '');
 
           return `
-            <div class="timeline-step">
+            <div class="timeline-step" style="--step-i: ${Math.min(idx, 12)}">
               <div class="timeline-dot">${item.day}</div>
               <div class="timeline-title">
                 ${tagHtml}

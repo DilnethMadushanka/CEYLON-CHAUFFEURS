@@ -149,18 +149,22 @@ function initNavigation() {
   function closeMenu() {
     navMenu?.classList.remove('active');
     backdrop?.classList.remove('active');
+    header?.classList.remove('menu-open');
+    mobileToggle?.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    const icon = mobileToggle?.querySelector('i');
-    if (icon) icon.className = 'ph ph-list';
   }
 
   function openMenu() {
     navMenu?.classList.add('active');
     backdrop?.classList.add('active');
+    header?.classList.add('menu-open');
+    mobileToggle?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    const icon = mobileToggle?.querySelector('i');
-    if (icon) icon.className = 'ph ph-x';
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu?.classList.contains('active')) closeMenu();
+  });
 
   if (mobileToggle && navMenu) {
     mobileToggle.addEventListener('click', () => {
@@ -207,10 +211,44 @@ function initResponsiveTables() {
 }
 
 /**
- * Reveal-on-scroll for [data-reveal] blocks (CSS handles reduced motion)
+ * Reveal-on-scroll. Marked [data-reveal] blocks plus common content
+ * (section heads, cards, media) fade up out of a blur as they enter the
+ * viewport; images use a wipe. CSS handles reduced motion.
  */
-function initReveal() {
-  const items = document.querySelectorAll('[data-reveal]');
+const REVEAL_AUTO = [
+  '.section-head > *',
+  '.section-head--row > div > *',
+  '.package-card',
+  '.inclusion-card',
+  '.review-card',
+  '.review-stat-item',
+  '.standard-item',
+  '.faq-item',
+  '.cta-panel',
+  '.route-map-wrapper',
+  '.packages-filter-bar',
+  '.booking-form-card',
+  '.booking-summary-sidebar',
+  '.fleet-selector-tabs',
+  '.compare-table tbody tr',
+  '.footer-col',
+  '.section-foot'
+].join(',');
+const REVEAL_MEDIA = '.inclusions-header > img, .fleet-grid .fleet-image-wrap';
+
+let revealObserver = null;
+const mediaByParent = new WeakMap();
+
+function observeReveal(root = document) {
+  if (!document.documentElement.classList.contains('js')) return;
+  root.querySelectorAll(REVEAL_AUTO).forEach(el => {
+    if (!el.hasAttribute('data-reveal') && !el.closest('.modal-overlay, .hero-section, .page-hero, .fleet-grid')) {
+      el.setAttribute('data-reveal', '');
+    }
+  });
+  root.querySelectorAll(REVEAL_MEDIA).forEach(el => el.setAttribute('data-reveal', 'media'));
+
+  const items = [...root.querySelectorAll('[data-reveal]:not(.is-in)')];
   if (!items.length) return;
 
   if (!('IntersectionObserver' in window)) {
@@ -221,19 +259,90 @@ function initReveal() {
   // Stagger siblings that enter together
   items.forEach(el => {
     const siblings = Array.from(el.parentElement?.children || []).filter(c => c.hasAttribute('data-reveal'));
-    el.style.setProperty('--reveal-i', Math.min(siblings.indexOf(el), 5));
+    el.style.setProperty('--reveal-i', Math.min(siblings.indexOf(el), 6));
   });
 
-  const observer = new IntersectionObserver((entries) => {
+  revealObserver = revealObserver || new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-in');
-        observer.unobserve(entry.target);
+        // Clipped media are watched through their parent (a fully clipped
+        // element never reports as intersecting)
+        mediaByParent.get(entry.target)?.classList.add('is-in');
+        if (entry.target.hasAttribute('data-reveal')) entry.target.classList.add('is-in');
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
 
-  items.forEach(el => observer.observe(el));
+  items.forEach(el => {
+    if (el.getAttribute('data-reveal') === 'media' && el.parentElement) {
+      mediaByParent.set(el.parentElement, el);
+      revealObserver.observe(el.parentElement);
+    } else {
+      revealObserver.observe(el);
+    }
+  });
+}
+window.observeReveal = observeReveal;
+
+function initReveal() {
+  observeReveal(document);
+
+  // Scroll progress line (styled only where CSS scroll timelines exist)
+  if (!document.querySelector('.scroll-progress')) {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+  }
+
+  initCountUp();
+}
+
+/**
+ * Count stat figures up from zero when they first scroll into view.
+ * Keeps any prefix/suffix ("4.98 / 5", "1,450+", "100%").
+ */
+function initCountUp() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll('.review-stat-item h3, .rating-figure, [data-count]');
+  if (reduce || !targets.length || !('IntersectionObserver' in window)) return;
+
+  const run = (el) => {
+    const node = [...el.childNodes].find(n => n.nodeType === 3 && /\d/.test(n.textContent));
+    if (!node) return;
+    const original = node.textContent;
+    const match = original.match(/[\d,]*\.?\d+/);
+    if (!match) return;
+    const raw = match[0];
+    const end = parseFloat(raw.replace(/,/g, ''));
+    const decimals = (raw.split('.')[1] || '').length;
+    const useComma = raw.includes(',');
+    const start = performance.now();
+    const duration = 1600;
+    const fmt = (v) => {
+      const fixed = v.toFixed(decimals);
+      return useComma ? Number(fixed).toLocaleString('en-US', { minimumFractionDigits: decimals }) : fixed;
+    };
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 4);
+      node.textContent = original.replace(raw, fmt(end * eased));
+      if (t < 1) requestAnimationFrame(tick);
+      else node.textContent = original;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        run(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  targets.forEach(el => io.observe(el));
 }
 
 /**

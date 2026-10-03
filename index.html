@@ -21,9 +21,10 @@
   <meta name="twitter:image" content="assets/images/hero.jpg">
 
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-  <meta name="theme-color" content="#f3f5f1" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b100e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
   <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/icons.css">
 
@@ -77,8 +78,8 @@
         <a href="booking.html" class="btn btn-primary btn-sm">
           <i class="ph ph-calendar-check"></i> Get a Custom Quote
         </a>
-        <button class="mobile-toggle" aria-label="Toggle Navigation">
-          <i class="ph ph-list"></i>
+        <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </div>
@@ -168,6 +169,14 @@
           <div class="hero-feat-item"><i class="ph ph-wifi-high"></i> Free High-Speed Onboard Wi-Fi</div>
           <div class="hero-feat-item"><i class="ph ph-clock"></i> Unlimited Sightseeing Freedom</div>
         </div>
+      </div>
+    </div>
+
+    <!-- Destination strip -->
+    <div class="marquee" aria-label="Destinations we drive to">
+      <div class="marquee-track">
+        <div class="marquee-group"><span>Sigiriya</span><span>Kandy</span><span>Ella</span><span>Nuwara Eliya</span><span>Yala</span><span>Galle</span><span>Mirissa</span><span>Trincomalee</span><span>Anuradhapura</span><span>Dambulla</span></div>
+        <div class="marquee-group" aria-hidden="true"><span>Sigiriya</span><span>Kandy</span><span>Ella</span><span>Nuwara Eliya</span><span>Yala</span><span>Galle</span><span>Mirissa</span><span>Trincomalee</span><span>Anuradhapura</span><span>Dambulla</span></div>
       </div>
     </div>
 

@@ -296,7 +296,12 @@ function calculateQuote() {
   if (durationElem) durationElem.textContent = `${days} Day${days > 1 ? 's' : ''} (${Math.max(1, days - 1)} Nights)`;
   if (vehicleElem) vehicleElem.textContent = vehicleData.name;
   if (dailyRateElem) dailyRateElem.textContent = `${convertedDaily.formatted} / day`;
-  if (totalElem) totalElem.textContent = convertedTotal.formatted;
+  if (totalElem && totalElem.textContent !== convertedTotal.formatted) {
+    totalElem.textContent = convertedTotal.formatted;
+    totalElem.classList.remove('is-bumped');
+    void totalElem.offsetWidth; // restart the bump animation
+    totalElem.classList.add('is-bumped');
+  }
   if (totalNoteElem) totalNoteElem.textContent = `${convertedTotal.code}, 100% All-Inclusive Guarantee`;
 
   return { days, vehicleData, estimatedTotalUSD, convertedTotal, convertedDaily };
