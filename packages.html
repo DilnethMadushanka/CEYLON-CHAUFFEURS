@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Tour Packages Matrix & Day-by-Day Itineraries | Ceylon Chauffeur</title>
   <meta name="description" content="Browse our 11 master Sri Lanka tour itineraries across Cultural Highlights, Wildlife Safari, and Tropical Beaches. Available as private daily chauffeur service or full package.">
   
@@ -19,9 +20,15 @@
   <meta name="twitter:description" content="Explore ancient kingdoms, wild elephant safaris, and tropical beaches with an accredited chauffeur.">
   <meta name="twitter:image" content="assets/images/sigiriya.jpg">
 
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/icons.css">
 
   <!-- Leaflet.js Interactive Mapping Stylesheet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -58,16 +65,17 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Main Navigation -->
   <header class="main-header">
     <div class="container navbar">
-      <a href="index.html" class="brand-logo">
-        <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="brand-logo-img">
-        <div class="brand-text">
-          <h2>CEYLON CHAUFFEURS</h2>
+      <a href="index.html" class="brand-logo" aria-label="Ceylon Chauffeurs home">
+        <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="brand-logo-img" width="225" height="192"></span>
+        <span class="brand-text">
+          <span class="brand-name">Ceylon Chauffeurs</span>
           <span>Explore Sri Lanka in Luxury</span>
-        </div>
+        </span>
       </a>
 
       <ul class="nav-menu">
@@ -80,219 +88,194 @@
 
       <div class="nav-cta">
         <a href="booking.html" class="btn btn-primary btn-sm">
-          <i class="fas fa-calendar-check"></i> Get a Custom Quote
+          <i class="ph ph-calendar-check"></i> Get a Custom Quote
         </a>
-        <button class="mobile-toggle" aria-label="Toggle Navigation">
-          <i class="fas fa-bars"></i>
+        <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Page Header Banner -->
-  <section style="background: linear-gradient(180deg, rgba(4, 23, 18, 0.85) 0%, rgba(9, 44, 35, 0.95) 100%), url('assets/images/sigiriya.jpg') center/cover no-repeat; padding: 70px 0; color: #ffffff; text-align: center;">
-    <div class="container">
-      <span class="section-tag" style="color: var(--accent-gold-light);">Curated Sri Lanka Journeys</span>
-      <h1 style="color: #ffffff; font-size: clamp(2.2rem, 4vw, 3.4rem); margin-bottom: 16px;">
-        Master Tour Packages & Day-by-Day Itineraries
-      </h1>
-      <p style="max-width: 720px; margin: 0 auto 28px; color: rgba(255, 255, 255, 0.9); font-size: 1.1rem;">
-        Choose your desired itinerary with your private vehicle and driver-guide. Select between transparent <strong>Base Daily Chauffeur Rates</strong> (fuel & tolls included) or <strong>Full All-Inclusive Packages</strong>.
-      </p>
-      <div class="page-banner-ctas" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-        <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking a tour package.">
-          <i class="fab fa-whatsapp"></i> Inquire on WhatsApp
-        </button>
-        <a href="booking.html" class="btn btn-outline-light">
-          <i class="fas fa-sliders-h"></i> Customize Any Route
-        </a>
+  <main id="main">
+    <!-- Page Header -->
+    <section class="page-hero">
+      <div class="container page-hero-grid">
+        <div class="page-hero-copy">
+          <span class="section-tag">Curated Sri Lanka Journeys</span>
+          <h1>Master Tour Packages & Day-by-Day Itineraries</h1>
+          <p>Choose your desired itinerary with your private vehicle and driver-guide. Select between transparent <strong>Base Daily Chauffeur Rates</strong> (fuel & tolls included) or <strong>Full All-Inclusive Packages</strong>.</p>
+          <div class="page-banner-ctas">
+            <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking a tour package.">
+              <i class="ph ph-whatsapp-logo"></i> Inquire on WhatsApp
+            </button>
+            <a href="booking.html" class="btn btn-outline-emerald">
+              <i class="ph ph-sliders-horizontal"></i> Customize Any Route
+            </a>
+          </div>
+        </div>
+        <div class="page-hero-media">
+          <img src="assets/images/sigiriya.jpg" alt="Sigiriya Lion Rock fortress at sunrise" width="1376" height="768" fetchpriority="high">
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Tour Packages Matrix Section -->
-  <section class="packages-section">
-    <div class="container">
+    <!-- Tour Packages Matrix -->
+    <section class="packages-section section section--flush-top">
+      <div class="container">
 
-      <!-- Interactive Route Explorer Map Banner -->
-      <div class="route-map-wrapper" style="margin-bottom: 40px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-          <div>
-            <h3 style="font-size: 1.3rem; color: var(--primary-emerald); margin-bottom: 2px;">
-              <i class="fas fa-map-marked-alt text-gold"></i> Interactive Island Route Explorer
-            </h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">
-              Click any package card below to preview its route stops and waypoints across Sri Lanka.
-            </p>
+        <!-- Interactive Route Explorer Map -->
+        <div class="route-map-wrapper">
+          <div class="route-map-head">
+            <div>
+              <h2><i class="ph ph-map-trifold"></i> Interactive Island Route Explorer</h2>
+              <p>Click any package card below to preview its route stops and waypoints across Sri Lanka.</p>
+            </div>
+            <div id="map-active-package-tag">Showing: Full Island Tourist Network</div>
           </div>
-          <div id="map-active-package-tag" style="font-size: 0.82rem; background: var(--bg-sand); border: 1px solid var(--border-gold); padding: 4px 12px; border-radius: 20px; color: var(--primary-emerald); font-weight: 700;">
-            Showing: Full Island Tourist Network
-          </div>
-        </div>
-        <div id="ceylon-route-map" class="interactive-map-box"></div>
-      </div>
-
-      <!-- Advanced Filter Controls & Pricing Switcher -->
-      <div class="packages-filter-bar">
-        
-        <!-- Category Tabs -->
-        <div class="category-tabs">
-          <button class="tab-btn active" data-category="all">All Packages (11)</button>
-          <button class="tab-btn" data-category="all-rounder">All-Rounder / Island Highlights (5)</button>
-          <button class="tab-btn" data-category="wildlife">Wildlife & Nature Explorer (3)</button>
-          <button class="tab-btn" data-category="beach">Beach & Coastal Escape (3)</button>
+          <div id="ceylon-route-map" class="interactive-map-box"></div>
         </div>
 
-        <!-- Duration Filter Pills -->
-        <div class="duration-filter-pills">
-          <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-emerald); display: flex; align-items: center; gap: 4px;">
-            <i class="far fa-clock text-gold"></i> Duration:
-          </span>
-          <button class="pill-btn active" data-duration="all">All Durations</button>
-          <button class="pill-btn" data-duration="short">4–7 Days</button>
-          <button class="pill-btn" data-duration="medium">8–14 Days</button>
-          <button class="pill-btn" data-duration="long">15+ Days</button>
-        </div>
-
-        <!-- Vehicle Selection Bar for Package Rates -->
-        <div class="package-vehicle-bar">
-          <span style="font-size: 0.82rem; font-weight: 700; color: var(--primary-emerald); display: flex; align-items: center; gap: 4px;">
-            <i class="fas fa-car text-gold"></i> Calculate For Vehicle:
-          </span>
-          <div class="vehicle-pill-group">
-            <button class="veh-pill-btn active" data-vehicle="sedan">
-              Sedan (1–3 Pax) • <span data-usd-amount="65" data-usd-period="day">$65/d</span>
-            </button>
-            <button class="veh-pill-btn" data-vehicle="van">
-              Luxury Van (4–10 Pax) • <span data-usd-amount="105" data-usd-period="day">$105/d</span>
-            </button>
-            <button class="veh-pill-btn" data-vehicle="bus">
-              Luxury Coach (18–35 Pax) • <span data-usd-amount="160" data-usd-period="day">$160/d</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Search Bar and Pricing Mode Toggle -->
-        <div class="filter-bottom-row">
-          <div class="package-search-box">
-            <i class="fas fa-search text-gold"></i>
-            <input type="text" id="package-search-input" placeholder="Search destinations (e.g. Ella, Sigiriya, Yala, Galle, Jaffna)..." aria-label="Search Packages">
+        <!-- Filter Controls & Pricing Switcher -->
+        <div class="packages-filter-bar">
+          <div class="category-tabs">
+            <button class="tab-btn active" data-category="all">All Packages (11)</button>
+            <button class="tab-btn" data-category="all-rounder">All-Rounder / Island Highlights (5)</button>
+            <button class="tab-btn" data-category="wildlife">Wildlife & Nature Explorer (3)</button>
+            <button class="tab-btn" data-category="beach">Beach & Coastal Escape (3)</button>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <div class="pricing-mode-toggle">
-              <span>Base Chauffeur Rate</span>
-              <label class="switch">
-                <input type="checkbox" id="pricing-mode-toggle-checkbox">
-                <span class="slider"></span>
-              </label>
-              <span style="color: var(--primary-emerald); font-weight: 700;">Full Package Estimate</span>
+          <div class="filter-row duration-filter-pills">
+            <span class="filter-label"><i class="ph ph-clock"></i> Duration:</span>
+            <button class="pill-btn active" data-duration="all">All Durations</button>
+            <button class="pill-btn" data-duration="short">4-7 Days</button>
+            <button class="pill-btn" data-duration="medium">8-14 Days</button>
+            <button class="pill-btn" data-duration="long">15+ Days</button>
+          </div>
+
+          <div class="filter-row package-vehicle-bar">
+            <span class="filter-label"><i class="ph ph-car"></i> Calculate For Vehicle:</span>
+            <div class="vehicle-pill-group">
+              <button class="veh-pill-btn active" data-vehicle="sedan">
+                Sedan (1-3 Pax), <span data-usd-amount="65" data-usd-period="day">$65/d</span>
+              </button>
+              <button class="veh-pill-btn" data-vehicle="van">
+                Luxury Van (4-10 Pax), <span data-usd-amount="105" data-usd-period="day">$105/d</span>
+              </button>
+              <button class="veh-pill-btn" data-vehicle="bus">
+                Luxury Coach (18-35 Pax), <span data-usd-amount="160" data-usd-period="day">$160/d</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-bottom-row">
+            <div class="package-search-box">
+              <i class="ph ph-magnifying-glass"></i>
+              <input type="search" id="pkg-search-input" placeholder="Search destinations (e.g. Ella, Sigiriya, Yala, Galle, Jaffna)..." aria-label="Search Packages">
             </div>
 
-            <button type="button" class="btn btn-outline-emerald btn-sm" onclick="openFullPackageInfoModal()" title="See what is included in Full Package">
-              <i class="fas fa-info-circle text-gold"></i> What's Included?
-            </button>
+            <div class="pricing-controls">
+              <div class="pricing-mode-toggle">
+                <span>Base Chauffeur Rate</span>
+                <label class="switch">
+                  <input type="checkbox" id="pricing-mode-toggle" aria-label="Show full package estimate">
+                  <span class="slider"></span>
+                </label>
+                <span>Full Package Estimate</span>
+              </div>
+
+              <button type="button" class="btn btn-outline-emerald btn-sm" onclick="openFullPackageInfoModal()" title="See what is included in Full Package">
+                <i class="ph ph-info"></i> What's Included?
+              </button>
+            </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Packages Grid Container (Populated dynamically by packages.js) -->
-      <div id="packages-grid-container" class="packages-grid">
-        <!-- Rendered via JavaScript -->
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Inclusions Callout Banner -->
-  <section class="inclusions-banner">
-    <div class="container">
-      <div class="inclusions-header">
-        <span class="section-tag" style="color: var(--accent-gold-light);">Guaranteed Inclusions</span>
-        <h2>Every Tour Includes 100% Comprehensive Chauffeur Care</h2>
-        <p>All fuel, airport and expressway tolls, parking fees, and driver lodging & food are completely covered. You enjoy Sri Lanka with total peace of mind.</p>
-      </div>
-
-      <div class="inclusions-grid">
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-gas-pump"></i></div>
-          <h4>Fuel & Mileage</h4>
-          <p>Unlimited mileage for your itinerary with all fuel costs 100% included.</p>
+        <!-- Packages Grid (rendered by packages.js) -->
+        <div id="packages-grid-container" class="packages-grid" aria-live="polite">
         </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-road"></i></div>
-          <h4>Highway Tolls & Parking</h4>
-          <p>Southern expressway, central expressway, and all monument parking fees covered.</p>
+
+      </div>
+    </section>
+
+    <!-- Inclusions -->
+    <section class="inclusions-banner">
+      <div class="container inclusions-layout">
+        <div class="inclusions-header" data-reveal>
+          <img src="assets/images/beach.jpg" alt="" loading="lazy" width="1376" height="768">
+          <h2>Every Tour Includes 100% Comprehensive Chauffeur Care</h2>
+          <p>All fuel, airport and expressway tolls, parking fees, and driver lodging & food are completely covered. You enjoy Sri Lanka with total peace of mind.</p>
         </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-hotel"></i></div>
-          <h4>Driver Food & Lodging</h4>
-          <p>No extra fees or hotel bookings required for your driver. Handled entirely by us.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-route"></i></div>
-          <h4>Itinerary Flexibility</h4>
-          <p>Stop whenever you want for scenic photos, king coconuts, viewpoints, or tea breaks.</p>
+
+        <div class="inclusions-grid">
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-gas-pump"></i></div>
+            <h4>Fuel & Mileage</h4>
+            <p>Unlimited mileage for your itinerary with all fuel costs 100% included.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-road-horizon"></i></div>
+            <h4>Highway Tolls & Parking</h4>
+            <p>Southern expressway, central expressway, and all monument parking fees covered.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-buildings"></i></div>
+            <h4>Driver Food & Lodging</h4>
+            <p>No extra fees or hotel bookings required for your driver. Handled entirely by us.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-path"></i></div>
+            <h4>Itinerary Flexibility</h4>
+            <p>Stop whenever you want for scenic photos, king coconuts, viewpoints, or tea breaks.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Interactive Day-by-Day Itinerary Modal -->
-  <div id="itinerary-modal" class="modal-overlay">
+  <!-- Day-by-Day Itinerary Modal -->
+  <div id="itinerary-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-pkg-title">
     <div class="modal-card">
       <div class="modal-header">
         <h3 id="modal-pkg-title">Tour Itinerary</h3>
-        <button class="modal-close-btn" onclick="closeItineraryModal()">&times;</button>
+        <button class="modal-close-btn" onclick="closeItineraryModal()" aria-label="Close">&times;</button>
       </div>
       <div id="modal-pkg-body" class="modal-content">
-        <!-- Timeline injected via packages.js -->
       </div>
       <div class="modal-footer">
         <button id="modal-pkg-whatsapp-btn" class="btn btn-whatsapp btn-sm">
-          <i class="fab fa-whatsapp"></i> Book This Tour via WhatsApp
+          <i class="ph ph-whatsapp-logo"></i> Book This Tour via WhatsApp
         </button>
-        <button id="modal-pkg-quote-btn" class="btn btn-primary btn-sm">
-          <i class="fas fa-edit"></i> Customize & Get Quote
+        <button id="modal-pkg-quote-btn" class="btn btn-outline-emerald btn-sm">
+          <i class="ph ph-pencil-simple-line"></i> Customize & Get Quote
         </button>
       </div>
     </div>
   </div>
 
-  <!-- "What's Included in Full Package" Explanatory Modal -->
-  <div id="full-package-info-modal" class="modal-overlay">
-    <div class="modal-card" style="max-width: 640px;">
+  <!-- "What's Included in Full Package" Modal -->
+  <div id="full-package-info-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="full-package-title">
+    <div class="modal-card modal-card--narrow">
       <div class="modal-header">
-        <h3 style="color: var(--primary-emerald);"><i class="fas fa-award text-gold"></i> Full All-Inclusive Package Details</h3>
-        <button class="modal-close-btn" onclick="closeFullPackageInfoModal()">&times;</button>
+        <h3 id="full-package-title"><i class="ph ph-medal"></i> Full All-Inclusive Package Details</h3>
+        <button class="modal-close-btn" onclick="closeFullPackageInfoModal()" aria-label="Close">&times;</button>
       </div>
-      <div class="modal-content" style="padding: 24px; line-height: 1.7; font-size: 0.92rem;">
-        <p style="margin-bottom: 16px;">
-          When you toggle to <strong>Full Package Estimate</strong>, your tour becomes a completely hands-off VIP vacation. We curate every logistical detail so you never need to purchase tickets in line or arrange hotels.
-        </p>
+      <div class="modal-content">
+        <p>When you toggle to <strong>Full Package Estimate</strong>, your tour becomes a completely hands-off VIP vacation. We curate every logistical detail so you never need to purchase tickets in line or arrange hotels.</p>
 
-        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🏨 1. 4-Star & Boutique Heritage Hotels</h4>
-        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
-          Handpicked top-rated resorts and colonial boutique properties with daily breakfast & dinner included (Half-Board basis).
-        </p>
+        <h4><i class="ph ph-buildings"></i> 1. 4-Star & Boutique Heritage Hotels</h4>
+        <p>Handpicked top-rated resorts and colonial boutique properties with daily breakfast & dinner included (Half-Board basis).</p>
 
-        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🎟️ 2. All Official Monument & Heritage Entrance Fees</h4>
-        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
-          Direct VIP access to Sigiriya Lion Rock citadel, Polonnaruwa ruins, Dambulla Cave Temple, Kandy Temple of the Tooth, and Horton Plains World's End.
-        </p>
+        <h4><i class="ph ph-ticket"></i> 2. All Official Monument & Heritage Entrance Fees</h4>
+        <p>Direct VIP access to Sigiriya Lion Rock citadel, Polonnaruwa ruins, Dambulla Cave Temple, Kandy Temple of the Tooth, and Horton Plains World's End.</p>
 
-        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🚙 3. Dedicated 4x4 Safari Jeeps & Park Ranger Permits</h4>
-        <p style="margin-bottom: 14px; font-size: 0.88rem; color: var(--text-dark);">
-          Exclusive open-top 4x4 safari vehicles with certified wildlife spotters for Yala, Minneriya, and Wilpattu national parks.
-        </p>
+        <h4><i class="ph ph-paw-print"></i> 3. Dedicated 4x4 Safari Jeeps & Park Ranger Permits</h4>
+        <p>Exclusive open-top 4x4 safari vehicles with certified wildlife spotters for Yala, Minneriya, and Wilpattu national parks.</p>
 
-        <h4 style="color: var(--primary-emerald); margin-bottom: 8px;">🚂 4. Scenic Mountain Train Observation Tickets</h4>
-        <p style="font-size: 0.88rem; color: var(--text-dark);">
-          Reserved 1st or 2nd class observation window seats for the iconic blue mountain train from Kandy/Nanu Oya to Ella.
-        </p>
+        <h4><i class="ph ph-mountains"></i> 4. Scenic Mountain Train Observation Tickets</h4>
+        <p>Reserved 1st or 2nd class observation window seats for the iconic blue mountain train from Kandy/Nanu Oya to Ella.</p>
       </div>
-      <div class="modal-footer" style="text-align: right;">
+      <div class="modal-footer modal-footer--end">
         <button class="btn btn-primary btn-sm" onclick="closeFullPackageInfoModal()">Got It</button>
       </div>
     </div>
@@ -302,8 +285,7 @@
   <div class="floating-whatsapp">
     <div class="whatsapp-tooltip">Chat with Chauffeur Concierge</div>
     <a href="#" class="floating-whatsapp-btn action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka." aria-label="WhatsApp Us">
-      <div class="whatsapp-pulse"></div>
-      <i class="fab fa-whatsapp"></i>
+      <i class="ph ph-whatsapp-logo"></i>
     </a>
   </div>
 
@@ -312,21 +294,19 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col footer-about">
-          <div class="footer-logo-badge">
-            <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="footer-logo-img">
-            <div class="brand-text">
-              <h2 style="font-size: 1.1rem; color: var(--primary-emerald); margin: 0;">CEYLON CHAUFFEURS</h2>
-              <span style="font-size: 0.65rem; color: var(--accent-gold-hover); letter-spacing: 1.5px;">Explore Sri Lanka in Luxury</span>
-            </div>
+          <div class="footer-logo-badge brand-logo">
+            <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="footer-logo-img" width="225" height="192"></span>
+            <span class="brand-text">
+              <span class="brand-name">Ceylon Chauffeurs</span>
+              <span>Explore Sri Lanka in Luxury</span>
+            </span>
           </div>
-          <p>
-            Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
-          </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <p>Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, modern vehicles, and accredited English-speaking driver-guides.</p>
+          <div class="footer-actions">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
-              <i class="fab fa-whatsapp"></i> WhatsApp Concierge
+              <i class="ph ph-whatsapp-logo"></i> WhatsApp Concierge
             </button>
-            <a href="booking.html" class="btn btn-primary btn-sm">Get Custom Quote</a>
+            <a href="booking.html" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
           </div>
         </div>
 
@@ -358,7 +338,7 @@
         <div class="footer-col">
           <h4>Contact & Bookings</h4>
           <div class="footer-contact-item">
-            <i class="fas fa-envelope"></i>
+            <i class="ph ph-envelope-simple"></i>
             <div>
               <strong>Inquiries & Bookings:</strong><br>
               <a href="mailto:bookings@ceylonchauffeur.com">bookings@ceylonchauffeur.com</a><br>
@@ -366,14 +346,14 @@
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fab fa-whatsapp"></i>
+            <i class="ph ph-whatsapp-logo"></i>
             <div>
               <strong>WhatsApp (24/7 Available):</strong><br>
               <a href="#" class="action-whatsapp-btn">+94 76 054 2557</a>
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fas fa-map-marker-alt"></i>
+            <i class="ph ph-map-pin"></i>
             <div>
               <strong>Head Office:</strong><br>
               Colombo & Katunayake Airport Hub, Sri Lanka
@@ -384,7 +364,7 @@
 
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="footer-legal">
           <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
           <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
           <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>

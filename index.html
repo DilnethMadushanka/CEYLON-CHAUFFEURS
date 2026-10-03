@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Ceylon Chauffeurs | Premium Private Chauffeur Services & Tours in Sri Lanka</title>
   <meta name="description" content="Explore Sri Lanka in comfort and style with Ceylon Chauffeurs. Transparent daily rates, luxury private vehicles, professional English-speaking driver-guides, and customized island itineraries.">
   
@@ -19,9 +20,15 @@
   <meta name="twitter:description" content="Transparent daily rates for luxury private chauffeurs in Sri Lanka. Instant proposal & 24/7 WhatsApp assistance.">
   <meta name="twitter:image" content="assets/images/hero.jpg">
 
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/icons.css">
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -48,16 +55,17 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Main Navigation -->
   <header class="main-header">
     <div class="container navbar">
-      <a href="index.html" class="brand-logo">
-        <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="brand-logo-img">
-        <div class="brand-text">
-          <h2>CEYLON CHAUFFEURS</h2>
+      <a href="index.html" class="brand-logo" aria-label="Ceylon Chauffeurs home">
+        <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="brand-logo-img" width="225" height="192"></span>
+        <span class="brand-text">
+          <span class="brand-name">Ceylon Chauffeurs</span>
           <span>Explore Sri Lanka in Luxury</span>
-        </div>
+        </span>
       </a>
 
       <ul class="nav-menu">
@@ -70,478 +78,486 @@
 
       <div class="nav-cta">
         <a href="booking.html" class="btn btn-primary btn-sm">
-          <i class="fas fa-calendar-check"></i> Get a Custom Quote
+          <i class="ph ph-calendar-check"></i> Get a Custom Quote
         </a>
-        <button class="mobile-toggle" aria-label="Toggle Navigation">
-          <i class="fas fa-bars"></i>
+        <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <i class="fas fa-certificate"></i> Sri Lanka Tourist Board Approved & Verified
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero-section">
+      <div class="hero-media">
+        <img src="assets/images/hero.jpg" alt="Private chauffeur vehicle on a winding tea-country road in Sri Lanka" width="1376" height="768" fetchpriority="high">
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i class="ph ph-seal-check"></i> Sri Lanka Tourist Board Approved & Verified
+          </div>
+          <h1 class="hero-title">
+            Explore Sri Lanka in Comfort & Style <span>Premium Private Chauffeur Services</span>
+          </h1>
+          <p class="hero-subtitle">
+            Transparent daily rates, English-speaking driver-guides and itineraries shaped around you, from ancient kingdoms to tea country and safaris.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn btn-whatsapp btn-lg action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
+              <i class="ph ph-whatsapp-logo"></i> Book via WhatsApp
+            </button>
+            <a href="packages.html" class="btn btn-outline-light btn-lg">
+              <i class="ph ph-compass"></i> Explore Tour Packages
+            </a>
+          </div>
         </div>
-        <h1 class="hero-title">
-          Explore Sri Lanka in Comfort & Style – <span>Premium Private Chauffeur Services</span>
-        </h1>
-        <p class="hero-subtitle">
-          Transparent daily rates, professional English-speaking driver-guides, and customized itineraries. Discover ancient kingdoms, lush tea estates, and wild safaris in total relaxation.
-        </p>
+      </div>
+    </section>
 
-        <div class="hero-ctas">
-          <button class="btn btn-whatsapp btn-lg action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
-            <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> Book via WhatsApp
+    <!-- Quick Estimate & Booking Bar -->
+    <div class="container quick-booking-wrap">
+      <div class="quick-booking-bar">
+        <form class="quick-bar-form" action="booking.html" method="GET">
+          <div class="form-group-quick">
+            <label for="quick-vehicle"><i class="ph ph-car-profile"></i> Vehicle Class</label>
+            <select name="vehicle" class="form-control" id="quick-vehicle">
+              <option value="sedan" selected>Sedan (Premio / Prius / Axio) - 1-3 Pax ($65/day)</option>
+              <option value="van">Luxury Van (KDH Flat/High Roof) - 4-10 Pax ($105/day)</option>
+              <option value="bus">Luxury Bus / Coach (Coaster/King Long) - 18-35 Pax ($160/day)</option>
+            </select>
+          </div>
+          <div class="form-group-quick">
+            <label for="quick-duration"><i class="ph ph-calendar-blank"></i> Trip Duration</label>
+            <select name="duration" class="form-control" id="quick-duration">
+              <option value="4">4 Days Highlights</option>
+              <option value="7" selected>7 Days Classic Tour</option>
+              <option value="10">10 Days Complete Loop</option>
+              <option value="14">14 Days Grand Expedition</option>
+              <option value="21">21 Days Ultimate Island Loop</option>
+            </select>
+          </div>
+          <div class="form-group-quick">
+            <label for="quick-package"><i class="ph ph-map-trifold"></i> Tour Preference</label>
+            <select name="package" class="form-control" id="quick-package">
+              <option value="">Custom Route (Any Tailored Itinerary)</option>
+              <optgroup label="All-Rounder / Highlights">
+                <option value="pkg-4d-cultural">4-Day Cultural Highlights Tour</option>
+                <option value="pkg-7d-heritage" selected>7-Day Heritage & Hill Country</option>
+                <option value="pkg-10d-complete">10-Day Complete Island Highlights</option>
+                <option value="pkg-14d-grand">14-Day Grand Sri Lanka Loop</option>
+                <option value="pkg-21d-ultimate">21-Day Ultimate Ceylon Loop</option>
+              </optgroup>
+              <optgroup label="Wildlife & Nature">
+                <option value="pkg-4d-wildlife">4-Day Wild Safari Express</option>
+                <option value="pkg-7d-wildlife">7-Day Wild & National Parks Safari</option>
+                <option value="pkg-10d-wildlife">10-Day Ultimate Wildlife Expedition</option>
+              </optgroup>
+              <optgroup label="Beach & Coastal">
+                <option value="pkg-4d-beach">4-Day South Coast Sun & Fun</option>
+                <option value="pkg-7d-beach">7-Day Complete Coastal Explorer</option>
+                <option value="pkg-10d-beach">10-Day East-to-South Beach Loop</option>
+              </optgroup>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="ph ph-calculator"></i> Calculate & Book
           </button>
-          <a href="packages.html" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-compass"></i> Explore Tour Packages
+        </form>
+        <div class="hero-features">
+          <div class="hero-feat-item"><i class="ph ph-gas-pump"></i> Fuel & Highway Tolls Included</div>
+          <div class="hero-feat-item"><i class="ph ph-bed"></i> Driver Lodging & Food Included</div>
+          <div class="hero-feat-item"><i class="ph ph-wifi-high"></i> Free High-Speed Onboard Wi-Fi</div>
+          <div class="hero-feat-item"><i class="ph ph-clock"></i> Unlimited Sightseeing Freedom</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destination strip -->
+    <div class="marquee" aria-label="Destinations we drive to">
+      <div class="marquee-track">
+        <div class="marquee-group"><span>Sigiriya</span><span>Kandy</span><span>Ella</span><span>Nuwara Eliya</span><span>Yala</span><span>Galle</span><span>Mirissa</span><span>Trincomalee</span><span>Anuradhapura</span><span>Dambulla</span></div>
+        <div class="marquee-group" aria-hidden="true"><span>Sigiriya</span><span>Kandy</span><span>Ella</span><span>Nuwara Eliya</span><span>Yala</span><span>Galle</span><span>Mirissa</span><span>Trincomalee</span><span>Anuradhapura</span><span>Dambulla</span></div>
+      </div>
+    </div>
+
+    <!-- Trust & Inclusions -->
+    <section class="inclusions-banner">
+      <div class="container inclusions-layout">
+        <div class="inclusions-header" data-reveal>
+          <img src="assets/images/kandy.jpg" alt="" loading="lazy" width="1376" height="768">
+          <h2>What's 100% Included in Our Daily Rates</h2>
+          <p>No unexpected surcharges, no fuel bills, and no driver meal fees. When you book Ceylon Chauffeur, your rate covers every essential travel cost.</p>
+        </div>
+
+        <div class="inclusions-grid">
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-gas-pump"></i></div>
+            <h4>All Fuel & Mileage</h4>
+            <p>Unlimited mileage for your itinerary with all petrol/diesel completely covered.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-road-horizon"></i></div>
+            <h4>Highway Tolls & Parking</h4>
+            <p>All expressway charges, airport exit tolls, and tourist parking fees included.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-buildings"></i></div>
+            <h4>Driver Meals & Lodging</h4>
+            <p>You never need to arrange accommodation or meals for your driver. Handled 100% by us.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-shield-check"></i></div>
+            <h4>Licensed Driver-Guide</h4>
+            <p>Government certified, English-speaking, police verified, with comprehensive passenger insurance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Fleet Preview -->
+    <section class="fleet-section section section--flush-top">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Travel in Pristine Luxury & Safety</h2>
+          <p class="section-subtitle">Our immaculate private fleet is maintained to executive standards with full air conditioning, complimentary onboard Wi-Fi, and generous luggage capacity.</p>
+        </div>
+
+        <div class="fleet-grid">
+          <!-- Sedan -->
+          <article class="fleet-card" data-reveal>
+            <div class="fleet-image-wrap">
+              <img src="assets/images/sedan.jpg" alt="Executive Sedan Toyota Premio Prius Axio" loading="lazy" width="1376" height="768">
+            </div>
+            <div class="fleet-content">
+              <span class="fleet-category-badge">Executive Sedan</span>
+              <h3>Toyota Premio / Prius / Axio</h3>
+              <p class="fleet-subtitle">Perfect for couples and solo adventurers seeking whisper-quiet comfort.</p>
+              <div class="fleet-specs">
+                <div class="spec-item"><i class="ph ph-users"></i> 1-3 Passengers</div>
+                <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> 2-3 Bags</div>
+              </div>
+              <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Sedan features and inclusions">
+                <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
+                <i class="ph ph-caret-down dropdown-icon"></i>
+              </button>
+              <div class="fleet-details-collapse">
+                <div>
+                  <ul class="fleet-features-list">
+                    <li data-i18n="fleet.sedan.feat1"><i class="ph ph-check"></i> Dual Climate Control Air Conditioning</li>
+                    <li data-i18n="fleet.sedan.feat2"><i class="ph ph-check"></i> Free High-Speed Mobile Wi-Fi</li>
+                    <li data-i18n="fleet.sedan.feat3"><i class="ph ph-check"></i> Fuel, Tolls & Driver Lodging Included</li>
+                    <li data-i18n="fleet.sedan.feat4"><i class="ph ph-check"></i> Chilled Bottled Water Provided Daily</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="fleet-side">
+              <span class="fleet-rate-badge" data-usd-amount="65" data-usd-period="day">$65 / Day All-Inclusive</span>
+              <div class="fleet-actions">
+                <a href="booking.html?vehicle=sedan" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Executive Sedan (Toyota Premio / Prius / Axio) with a private chauffeur.">
+                  <i class="ph ph-whatsapp-logo"></i> WhatsApp
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Luxury Van -->
+          <article class="fleet-card" data-reveal>
+            <div class="fleet-image-wrap">
+              <img src="assets/images/van.jpg" alt="Luxury Van Toyota KDH Flat High Roof Nissan E25" loading="lazy" width="1376" height="768">
+            </div>
+            <div class="fleet-content">
+              <span class="fleet-category-badge">Luxury Passenger Van</span>
+              <h3>Toyota KDH & Nissan E25 Van</h3>
+              <p class="fleet-subtitle">Flat Roof & High Roof configurations for families and group expeditions.</p>
+              <div class="fleet-specs">
+                <div class="spec-item"><i class="ph ph-users"></i> 4-10 Pax (Flat Roof: 4-6 | High Roof: 8-10)</div>
+                <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> 4-8 Large Bags</div>
+              </div>
+              <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Luxury Van features and inclusions">
+                <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
+                <i class="ph ph-caret-down dropdown-icon"></i>
+              </button>
+              <div class="fleet-details-collapse">
+                <div>
+                  <ul class="fleet-features-list">
+                    <li data-i18n="fleet.van.feat1"><i class="ph ph-check"></i> Individual Reclining Luxury Captain Seats</li>
+                    <li data-i18n="fleet.van.feat2"><i class="ph ph-check"></i> Dual Independent Front & Rear A/C</li>
+                    <li data-i18n="fleet.van.feat3"><i class="ph ph-check"></i> Fuel, Tolls & Driver Lodging Included</li>
+                    <li data-i18n="fleet.van.feat4"><i class="ph ph-check"></i> Huge Trunk for Strollers, Surfboards & Bags</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="fleet-side">
+              <span class="fleet-rate-badge" data-usd-amount="105" data-usd-period="day">$105 / Day All-Inclusive</span>
+              <div class="fleet-actions">
+                <a href="booking.html?vehicle=van" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Van (Toyota KDH / Nissan E25) with a private chauffeur.">
+                  <i class="ph ph-whatsapp-logo"></i> WhatsApp
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Luxury Coach -->
+          <article class="fleet-card" data-reveal>
+            <div class="fleet-image-wrap">
+              <img src="assets/images/bus.jpg" alt="Luxury Tourist Coach Toyota Coaster King Long Yutong" loading="lazy" width="1376" height="768">
+            </div>
+            <div class="fleet-content">
+              <span class="fleet-category-badge">Luxury Tourist Coach</span>
+              <h3>Toyota Coaster & King Long Coaches</h3>
+              <p class="fleet-subtitle">Full-size panoramic comfort for large travel parties and delegations.</p>
+              <div class="fleet-specs">
+                <div class="spec-item"><i class="ph ph-users"></i> 18-35 Pax (Coaster: 18-20 | King Long: 20-35)</div>
+                <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> 12-25 Large Bags</div>
+              </div>
+              <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Luxury Coach features and inclusions">
+                <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
+                <i class="ph ph-caret-down dropdown-icon"></i>
+              </button>
+              <div class="fleet-details-collapse">
+                <div>
+                  <ul class="fleet-features-list">
+                    <li data-i18n="fleet.bus.feat1"><i class="ph ph-check"></i> Elevated Panoramic Sightseeing Windows</li>
+                    <li data-i18n="fleet.bus.feat2"><i class="ph ph-check"></i> High-Capacity Multi-Zone Commercial A/C & PA</li>
+                    <li data-i18n="fleet.bus.feat3"><i class="ph ph-check"></i> Cavernous Undercarriage Cargo Hold</li>
+                    <li data-i18n="fleet.bus.feat4"><i class="ph ph-check"></i> Fuel, Expressway Tolls & Crew Lodging Included</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="fleet-side">
+              <span class="fleet-rate-badge" data-usd-amount="160" data-usd-period="day">$160 / Day All-Inclusive</span>
+              <div class="fleet-actions">
+                <a href="booking.html?vehicle=bus" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Coach / Bus (Toyota Coaster / King Long) with a private chauffeur.">
+                  <i class="ph ph-whatsapp-logo"></i> WhatsApp
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-foot">
+          <a href="fleet.html" class="btn-link">View Complete Fleet Specifications & Capacities <i class="ph ph-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Tour Packages -->
+    <section class="packages-section section section--flush-top">
+      <div class="container">
+        <div class="section-head section-head--row">
+          <div>
+            <h2 class="section-title">Handcrafted Sri Lanka Journeys</h2>
+            <p class="section-subtitle">Choose from 11 master routes across Culture, Safari Wildlife, and Tropical Coastlines.</p>
+          </div>
+          <a href="packages.html" class="btn btn-outline-emerald">
+            <i class="ph ph-squares-four"></i> View All 11 Tour Packages
           </a>
         </div>
 
-        <div class="hero-features">
-          <div class="hero-feat-item">
-            <i class="fas fa-gas-pump"></i> Fuel & Highway Tolls Included
-          </div>
-          <div class="hero-feat-item">
-            <i class="fas fa-bed"></i> Driver Lodging & Food Included
-          </div>
-          <div class="hero-feat-item">
-            <i class="fas fa-wifi"></i> Free High-Speed Onboard Wi-Fi
-          </div>
-          <div class="hero-feat-item">
-            <i class="fas fa-clock"></i> Unlimited Sightseeing Freedom
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quick Estimate & Booking Bar -->
-  <section class="container">
-    <div class="quick-booking-bar">
-      <form class="quick-bar-form" action="booking.html" method="GET">
-        <div class="form-group-quick">
-          <label><i class="fas fa-car-side"></i> Vehicle Class</label>
-          <select name="vehicle" class="form-control" id="quick-vehicle">
-            <option value="sedan" selected>Sedan (Premio / Prius / Axio) - 1-3 Pax ($65/day)</option>
-            <option value="van">Luxury Van (KDH Flat/High Roof) - 4-10 Pax ($105/day)</option>
-            <option value="bus">Luxury Bus / Coach (Coaster/King Long) - 18-35 Pax ($160/day)</option>
-          </select>
-        </div>
-        <div class="form-group-quick">
-          <label><i class="far fa-calendar-alt"></i> Trip Duration</label>
-          <select name="duration" class="form-control" id="quick-duration">
-            <option value="4">4 Days Highlights</option>
-            <option value="7" selected>7 Days Classic Tour</option>
-            <option value="10">10 Days Complete Loop</option>
-            <option value="14">14 Days Grand Expedition</option>
-            <option value="21">21 Days Ultimate Island Loop</option>
-          </select>
-        </div>
-        <div class="form-group-quick">
-          <label><i class="fas fa-map-marked-alt"></i> Tour Preference</label>
-          <select name="package" class="form-control" id="quick-package">
-            <option value="">Custom Route (Any Tailored Itinerary)</option>
-            <optgroup label="All-Rounder / Highlights">
-              <option value="pkg-4d-cultural">4-Day Cultural Highlights Tour</option>
-              <option value="pkg-7d-heritage" selected>7-Day Heritage & Hill Country</option>
-              <option value="pkg-10d-complete">10-Day Complete Island Highlights</option>
-              <option value="pkg-14d-grand">14-Day Grand Sri Lanka Loop</option>
-              <option value="pkg-21d-ultimate">21-Day Ultimate Ceylon Loop</option>
-            </optgroup>
-            <optgroup label="Wildlife & Nature">
-              <option value="pkg-4d-wildlife">4-Day Wild Safari Express</option>
-              <option value="pkg-7d-wildlife">7-Day Wild & National Parks Safari</option>
-              <option value="pkg-10d-wildlife">10-Day Ultimate Wildlife Expedition</option>
-            </optgroup>
-            <optgroup label="Beach & Coastal">
-              <option value="pkg-4d-beach">4-Day South Coast Sun & Fun</option>
-              <option value="pkg-7d-beach">7-Day Complete Coastal Explorer</option>
-              <option value="pkg-10d-beach">10-Day East-to-South Beach Loop</option>
-            </optgroup>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary" style="height: 48px;">
-          <i class="fas fa-calculator"></i> Calculate & Book
-        </button>
-      </form>
-    </div>
-  </section>
-
-  <!-- Trust & Inclusions Banner (Crucial Requirement) -->
-  <section class="inclusions-banner" style="margin-top: 70px;">
-    <div class="container">
-      <div class="inclusions-header">
-        <span class="section-tag" style="color: var(--accent-gold-light);">Our Transparency Guarantee</span>
-        <h2>What's 100% Included in Our Daily Rates</h2>
-        <p>No unexpected surcharges, no fuel bills, and no driver meal fees. When you book Ceylon Chauffeur, your rate covers every essential travel cost.</p>
-      </div>
-
-      <div class="inclusions-grid">
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-gas-pump"></i></div>
-          <h4>All Fuel & Mileage</h4>
-          <p>Unlimited mileage for your itinerary with all petrol/diesel completely covered.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-road"></i></div>
-          <h4>Highway Tolls & Parking</h4>
-          <p>All expressway charges, airport exit tolls, and tourist parking fees included.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-hotel"></i></div>
-          <h4>Driver Meals & Lodging</h4>
-          <p>You never need to arrange accommodation or meals for your driver. Handled 100% by us.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-user-shield"></i></div>
-          <h4>Licensed Driver-Guide</h4>
-          <p>Government certified, English-speaking, police verified, with comprehensive passenger insurance.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Fleet Preview -->
-  <section class="fleet-section">
-    <div class="container">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
-        <span class="section-tag">Executive Chauffeur Fleet</span>
-        <h2 class="section-title">Travel in Pristine Luxury & Safety</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
-          Our immaculate private fleet is maintained to executive standards with full air conditioning, complimentary onboard Wi-Fi, and generous luggage capacity.
-        </p>
-      </div>
-
-      <div class="fleet-grid">
-        <!-- Sedan Card -->
-        <div class="fleet-card">
-          <div class="fleet-image-wrap">
-            <img src="assets/images/sedan.jpg" alt="Executive Sedan Toyota Premio Prius Axio">
-            <span class="fleet-category-badge">Executive Sedan</span>
-            <span class="fleet-rate-badge" data-usd-amount="65" data-usd-period="day">$65 / Day All-Inclusive</span>
-          </div>
-          <div class="fleet-content">
-            <h3>Toyota Premio / Prius / Axio</h3>
-            <p class="fleet-subtitle">Perfect for couples and solo adventurers seeking whisper-quiet comfort.</p>
-            <div class="fleet-specs">
-              <div class="spec-item"><i class="fas fa-user-friends"></i> 1–3 Passengers</div>
-              <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> 2–3 Bags</div>
+        <div class="packages-feature">
+          <!-- 7-Day Heritage & Hill Country -->
+          <article class="package-card" data-reveal>
+            <div class="package-img-box">
+              <img src="assets/images/ella.jpg" alt="7-Day Heritage & Hill Country Classic" loading="lazy" width="1376" height="768">
             </div>
-            <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Sedan features and inclusions">
-              <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </button>
-            <div class="fleet-details-collapse">
-              <ul class="fleet-features-list">
-                <li data-i18n="fleet.sedan.feat1"><i class="fas fa-check text-gold"></i> Dual Climate Control Air Conditioning</li>
-                <li data-i18n="fleet.sedan.feat2"><i class="fas fa-check text-gold"></i> Free High-Speed Mobile Wi-Fi</li>
-                <li data-i18n="fleet.sedan.feat3"><i class="fas fa-check text-gold"></i> Fuel, Tolls & Driver Lodging Included</li>
-                <li data-i18n="fleet.sedan.feat4"><i class="fas fa-check text-gold"></i> Chilled Bottled Water Provided Daily</li>
-              </ul>
-            </div>
-            <div class="fleet-actions">
-              <a href="booking.html?vehicle=sedan" class="btn btn-primary btn-sm">Get Custom Quote</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Executive Sedan (Toyota Premio / Prius / Axio) with a private chauffeur.">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Luxury Van Card -->
-        <div class="fleet-card">
-          <div class="fleet-image-wrap">
-            <img src="assets/images/van.jpg" alt="Luxury Van Toyota KDH Flat High Roof Nissan E25">
-            <span class="fleet-category-badge">Luxury Passenger Van</span>
-            <span class="fleet-rate-badge" data-usd-amount="105" data-usd-period="day">$105 / Day All-Inclusive</span>
-          </div>
-          <div class="fleet-content">
-            <h3>Toyota KDH & Nissan E25 Van</h3>
-            <p class="fleet-subtitle">Flat Roof & High Roof configurations for families and group expeditions.</p>
-            <div class="fleet-specs">
-              <div class="spec-item"><i class="fas fa-user-friends"></i> 4–10 Pax (Flat Roof: 4–6 | High Roof: 8–10)</div>
-              <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> 4–8 Large Bags</div>
-            </div>
-            <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Luxury Van features and inclusions">
-              <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </button>
-            <div class="fleet-details-collapse">
-              <ul class="fleet-features-list">
-                <li data-i18n="fleet.van.feat1"><i class="fas fa-check text-gold"></i> Individual Reclining Luxury Captain Seats</li>
-                <li data-i18n="fleet.van.feat2"><i class="fas fa-check text-gold"></i> Dual Independent Front & Rear A/C</li>
-                <li data-i18n="fleet.van.feat3"><i class="fas fa-check text-gold"></i> Fuel, Tolls & Driver Lodging Included</li>
-                <li data-i18n="fleet.van.feat4"><i class="fas fa-check text-gold"></i> Huge Trunk for Strollers, Surfboards & Bags</li>
-              </ul>
-            </div>
-            <div class="fleet-actions">
-              <a href="booking.html?vehicle=van" class="btn btn-primary btn-sm">Get Custom Quote</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Van (Toyota KDH / Nissan E25) with a private chauffeur.">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Luxury Bus / Coach Card -->
-        <div class="fleet-card">
-          <div class="fleet-image-wrap">
-            <img src="assets/images/bus.jpg" alt="Luxury Tourist Coach Toyota Coaster King Long Yutong">
-            <span class="fleet-category-badge">Luxury Tourist Coach</span>
-            <span class="fleet-rate-badge" data-usd-amount="160" data-usd-period="day">$160 / Day All-Inclusive</span>
-          </div>
-          <div class="fleet-content">
-            <h3>Toyota Coaster & King Long Coaches</h3>
-            <p class="fleet-subtitle">Full-size panoramic comfort for large travel parties and delegations.</p>
-            <div class="fleet-specs">
-              <div class="spec-item"><i class="fas fa-user-friends"></i> 18–35 Pax (Coaster: 18–20 | King Long: 20–35)</div>
-              <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> 12–25 Large Bags</div>
-            </div>
-            <button type="button" class="fleet-details-dropdown-btn" aria-expanded="false" aria-label="Toggle Luxury Coach features and inclusions">
-              <span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span>
-              <i class="fas fa-chevron-down dropdown-icon"></i>
-            </button>
-            <div class="fleet-details-collapse">
-              <ul class="fleet-features-list">
-                <li data-i18n="fleet.bus.feat1"><i class="fas fa-check text-gold"></i> Elevated Panoramic Sightseeing Windows</li>
-                <li data-i18n="fleet.bus.feat2"><i class="fas fa-check text-gold"></i> High-Capacity Multi-Zone Commercial A/C & PA</li>
-                <li data-i18n="fleet.bus.feat3"><i class="fas fa-check text-gold"></i> Cavernous Undercarriage Cargo Hold</li>
-                <li data-i18n="fleet.bus.feat4"><i class="fas fa-check text-gold"></i> Fuel, Expressway Tolls & Crew Lodging Included</li>
-              </ul>
-            </div>
-            <div class="fleet-actions">
-              <a href="booking.html?vehicle=bus" class="btn btn-primary btn-sm">Get Custom Quote</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Coach / Bus (Toyota Coaster / King Long) with a private chauffeur.">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="fleet.html" class="btn btn-outline-emerald">
-          <i class="fas fa-car"></i> View Complete Fleet Specifications & Capacities
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Curated Tour Packages Highlight -->
-  <section class="packages-section" style="background-color: var(--bg-sand-dark);">
-    <div class="container">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 20px;">
-        <div>
-          <span class="section-tag">Master Tour Itineraries</span>
-          <h2 class="section-title" style="margin-bottom: 8px;">Handcrafted Sri Lanka Journeys</h2>
-          <p class="section-subtitle" style="margin-bottom: 0;">Choose from 11 master routes across Culture, Safari Wildlife, and Tropical Coastlines.</p>
-        </div>
-        <a href="packages.html" class="btn btn-primary">
-          <i class="fas fa-th-large"></i> View All 11 Tour Packages
-        </a>
-      </div>
-
-      <!-- 3 Featured Packages Showcase with Enhanced Distinct Photos -->
-      <div class="packages-grid">
-        <!-- 7-Day Heritage & Hill Country -->
-        <div class="package-card">
-          <div class="package-img-box">
-            <img src="assets/images/ella.jpg" alt="7-Day Heritage & Hill Country Classic">
-            <div class="package-duration-pill"><i class="far fa-clock"></i> 7 Days / 6 Nights</div>
-            <div class="package-badge-cat">All-Rounder Classic</div>
-          </div>
-          <div class="package-body">
-            <h3>7-Day Heritage & Hill Country Classic</h3>
-            <div class="package-key-feature">
-              <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> 2 Nights Sigiriya + 2 Nights Ella</span>
-            </div>
-            <div class="package-route-preview">
-              <strong>Route:</strong> Negombo → Dambulla → Sigiriya → Matale → Kandy → Ella → Colombo
-            </div>
-            <ul class="package-highlights-list">
-              <li><i class="fas fa-check-circle"></i> 2 Nights in Sigiriya & 2 Nights in Ella for relaxed pacing</li>
-              <li><i class="fas fa-check-circle"></i> UNESCO Sigiriya Lion Rock & Dambulla Cave Temples</li>
-              <li><i class="fas fa-check-circle"></i> Scenic mountain blue train ride to Ella & Nine Arches Bridge</li>
-            </ul>
-            <div class="package-price-box">
-              <div>
-                <div class="price-label">Chauffeur Base Rate</div>
-                <div class="price-amount" data-usd-amount="455">$455 <span>USD</span></div>
+            <div class="package-body">
+              <div class="package-meta">
+                <span class="package-duration-pill"><i class="ph ph-clock"></i> 7 Days / 6 Nights</span>
+                <span class="package-badge-cat">All-Rounder Classic</span>
               </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Sedan Rate × 7 days</span>
-            </div>
-            <div class="package-card-actions">
-              <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 7-Day Heritage & Hill Country Classic Tour.">
-                <i class="fab fa-whatsapp"></i> Book Tour
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7-Day Wild Safari Explorer -->
-        <div class="package-card">
-          <div class="package-img-box">
-            <img src="assets/images/wildlife.jpg" alt="7-Day Wild & National Parks Safari">
-            <div class="package-duration-pill"><i class="far fa-clock"></i> 7 Days / 6 Nights</div>
-            <div class="package-badge-cat">Wildlife & Nature</div>
-          </div>
-          <div class="package-body">
-            <h3>7-Day Wild & National Parks Safari</h3>
-            <div class="package-key-feature">
-              <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> Wilpattu, Minneriya, Horton Plains & Yala</span>
-            </div>
-            <div class="package-route-preview">
-              <strong>Route:</strong> Negombo → Wilpattu → Sigiriya → Nuwara Eliya → Horton Plains → Udawalawe → Yala
-            </div>
-            <ul class="package-highlights-list">
-              <li><i class="fas fa-check-circle"></i> Premier wildlife loop with buffer rest days</li>
-              <li><i class="fas fa-check-circle"></i> Udawalawe & Minneriya massive wild elephant herds</li>
-              <li><i class="fas fa-check-circle"></i> Horton Plains UNESCO cloud forest & World's End</li>
-            </ul>
-            <div class="package-price-box">
-              <div>
-                <div class="price-label">Chauffeur Base Rate</div>
-                <div class="price-amount" data-usd-amount="455">$455 <span>USD</span></div>
+              <h3>7-Day Heritage & Hill Country Classic</h3>
+              <div class="package-key-feature">
+                <i class="ph ph-bed"></i> <span><strong>Key Feature:</strong> 2 Nights Sigiriya + 2 Nights Ella</span>
               </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Sedan Rate × 7 days</span>
-            </div>
-            <div class="package-card-actions">
-              <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 7-Day Wild & National Parks Safari Tour.">
-                <i class="fab fa-whatsapp"></i> Book Tour
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10-Day Complete Island Highlights -->
-        <div class="package-card">
-          <div class="package-img-box">
-            <img src="assets/images/galle.jpg" alt="10-Day Complete Island Highlights">
-            <div class="package-duration-pill"><i class="far fa-clock"></i> 10 Days / 9 Nights</div>
-            <div class="package-badge-cat">Island Highlights</div>
-          </div>
-          <div class="package-body">
-            <h3>10-Day Complete Island Highlights</h3>
-            <div class="package-key-feature">
-              <i class="fas fa-bed text-gold"></i> <span><strong>Key Feature:</strong> Multi-night Stays in Sigiriya, Ella & Mirissa</span>
-            </div>
-            <div class="package-route-preview">
-              <strong>Route:</strong> Negombo → Anuradhapura → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Mirissa → Galle
-            </div>
-            <ul class="package-highlights-list">
-              <li><i class="fas fa-check-circle"></i> Slow island loop: 2N Sigiriya, 2N Ella, 2N Mirissa</li>
-              <li><i class="fas fa-check-circle"></i> UNESCO Galle Dutch Fort & Mirissa full beach rest day</li>
-              <li><i class="fas fa-check-circle"></i> Yala safari, high mountain train & ancient kingdoms</li>
-            </ul>
-            <div class="package-price-box">
-              <div>
-                <div class="price-label">Chauffeur Base Rate</div>
-                <div class="price-amount" data-usd-amount="650">$650 <span>USD</span></div>
+              <div class="package-route-preview">
+                <strong>Route:</strong> Negombo → Dambulla → Sigiriya → Matale → Kandy → Ella → Colombo
               </div>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Sedan Rate × 10 days</span>
+              <ul class="package-highlights-list">
+                <li><i class="ph ph-check-circle"></i> 2 Nights in Sigiriya & 2 Nights in Ella for relaxed pacing</li>
+                <li><i class="ph ph-check-circle"></i> UNESCO Sigiriya Lion Rock & Dambulla Cave Temples</li>
+                <li><i class="ph ph-check-circle"></i> Scenic mountain blue train ride to Ella & Nine Arches Bridge</li>
+              </ul>
+              <div class="package-price-box">
+                <div>
+                  <div class="price-label">Chauffeur Base Rate</div>
+                  <div class="price-amount" data-usd-amount="455">$455 <span>USD</span></div>
+                </div>
+                <span class="price-note">Sedan Rate × 7 days</span>
+              </div>
+              <div class="package-card-actions">
+                <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 7-Day Heritage & Hill Country Classic Tour.">
+                  <i class="ph ph-whatsapp-logo"></i> Book Tour
+                </button>
+              </div>
             </div>
-            <div class="package-card-actions">
-              <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
-              <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 10-Day Complete Island Highlights Tour.">
-                <i class="fab fa-whatsapp"></i> Book Tour
-              </button>
+          </article>
+
+          <!-- 7-Day Wild Safari -->
+          <article class="package-card" data-reveal>
+            <div class="package-img-box">
+              <img src="assets/images/wildlife.jpg" alt="7-Day Wild & National Parks Safari" loading="lazy" width="1376" height="768">
             </div>
-          </div>
+            <div class="package-body">
+              <div class="package-meta">
+                <span class="package-duration-pill"><i class="ph ph-clock"></i> 7 Days / 6 Nights</span>
+                <span class="package-badge-cat">Wildlife & Nature</span>
+              </div>
+              <h3>7-Day Wild & National Parks Safari</h3>
+              <div class="package-key-feature">
+                <i class="ph ph-bed"></i> <span><strong>Key Feature:</strong> Wilpattu, Minneriya, Horton Plains & Yala</span>
+              </div>
+              <div class="package-route-preview">
+                <strong>Route:</strong> Negombo → Wilpattu → Sigiriya → Nuwara Eliya → Horton Plains → Udawalawe → Yala
+              </div>
+              <ul class="package-highlights-list">
+                <li><i class="ph ph-check-circle"></i> Premier wildlife loop with buffer rest days</li>
+                <li><i class="ph ph-check-circle"></i> Udawalawe & Minneriya massive wild elephant herds</li>
+                <li><i class="ph ph-check-circle"></i> Horton Plains UNESCO cloud forest & World's End</li>
+              </ul>
+              <div class="package-price-box">
+                <div>
+                  <div class="price-label">Chauffeur Base Rate</div>
+                  <div class="price-amount" data-usd-amount="455">$455 <span>USD</span></div>
+                </div>
+                <span class="price-note">Sedan Rate × 7 days</span>
+              </div>
+              <div class="package-card-actions">
+                <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 7-Day Wild & National Parks Safari Tour.">
+                  <i class="ph ph-whatsapp-logo"></i> Book Tour
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- 10-Day Complete Island -->
+          <article class="package-card" data-reveal>
+            <div class="package-img-box">
+              <img src="assets/images/galle.jpg" alt="10-Day Complete Island Highlights" loading="lazy" width="1376" height="768">
+            </div>
+            <div class="package-body">
+              <div class="package-meta">
+                <span class="package-duration-pill"><i class="ph ph-clock"></i> 10 Days / 9 Nights</span>
+                <span class="package-badge-cat">Island Highlights</span>
+              </div>
+              <h3>10-Day Complete Island Highlights</h3>
+              <div class="package-key-feature">
+                <i class="ph ph-bed"></i> <span><strong>Key Feature:</strong> Multi-night Stays in Sigiriya, Ella & Mirissa</span>
+              </div>
+              <div class="package-route-preview">
+                <strong>Route:</strong> Negombo → Anuradhapura → Sigiriya → Kandy → Nuwara Eliya → Ella → Yala → Mirissa → Galle
+              </div>
+              <ul class="package-highlights-list">
+                <li><i class="ph ph-check-circle"></i> Slow island loop: 2N Sigiriya, 2N Ella, 2N Mirissa</li>
+                <li><i class="ph ph-check-circle"></i> UNESCO Galle Dutch Fort & Mirissa full beach rest day</li>
+                <li><i class="ph ph-check-circle"></i> Yala safari, high mountain train & ancient kingdoms</li>
+              </ul>
+              <div class="package-price-box">
+                <div>
+                  <div class="price-label">Chauffeur Base Rate</div>
+                  <div class="price-amount" data-usd-amount="650">$650 <span>USD</span></div>
+                </div>
+                <span class="price-note">Sedan Rate × 10 days</span>
+              </div>
+              <div class="package-card-actions">
+                <a href="packages.html" class="btn btn-outline-emerald btn-sm">Full Itinerary</a>
+                <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to book the 10-Day Complete Island Highlights Tour.">
+                  <i class="ph ph-whatsapp-logo"></i> Book Tour
+                </button>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Customer Reviews Preview -->
-  <section class="container" style="padding: 80px 24px;">
-    <div style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
-      <span class="section-tag">Client Testimonials</span>
-      <h2 class="section-title">Rated 4.98/5 by International Travelers</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">Read genuine reviews from travelers around the globe who experienced Sri Lanka with our private chauffeurs.</p>
-    </div>
-
-    <div class="reviews-grid" style="margin-bottom: 30px;">
-      <!-- Review 1 -->
-      <div class="review-card">
-        <div class="review-source-tag">
-          <div class="stars-row">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <span class="platform-badge"><i class="fab fa-tripadvisor text-gold"></i> TripAdvisor Verified</span>
+    <!-- Customer Reviews Preview -->
+    <section class="section section--flush-top">
+      <div class="container reviews-home">
+        <div class="rating-summary">
+          <span class="section-tag">Client Testimonials</span>
+          <div class="stars-row rating-stars" aria-label="Average rating 4.98 out of 5"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <h2 class="section-title">Rated 4.98/5 by International Travelers</h2>
+          <p class="section-subtitle">Read genuine reviews from travelers around the globe who experienced Sri Lanka with our private chauffeurs.</p>
+          <a href="reviews.html" class="btn-link">Read All Verified Client Reviews & Trust Certifications <i class="ph ph-arrow-right"></i></a>
         </div>
-        <p class="review-quote">
-          "Our 10-day tour with Ceylon Chauffeur was absolutely flawless. Our chauffeur Roshan was punctual, knowledgeable, and made us feel so safe navigating the hill country. The vehicle was always spotless and cold bottled water was ready every morning!"
-        </p>
-        <div class="reviewer-meta">
-          <div class="reviewer-avatar">EH</div>
-          <div class="reviewer-details">
-            <h5>Emma & Harry Harrison</h5>
-            <p>London, United Kingdom • 10-Day Island Tour</p>
-          </div>
+
+        <div class="reviews-grid">
+          <article class="review-card" data-reveal>
+            <div class="review-source-tag">
+              <div class="stars-row" aria-label="5 out of 5 stars">
+                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+              </div>
+              <span class="platform-badge"><i class="ph ph-tripadvisor"></i> TripAdvisor Verified</span>
+            </div>
+            <p class="review-quote review-quote--clamp">
+              “Our 10-day tour with Ceylon Chauffeur was absolutely flawless. Our chauffeur Roshan was punctual, knowledgeable, and made us feel so safe navigating the hill country. The vehicle was always spotless and cold bottled water was ready every morning!”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">EH</div>
+              <div class="reviewer-details">
+                <h5>Emma & Harry Harrison</h5>
+                <p>London, United Kingdom, 10-Day Island Tour</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card" data-reveal>
+            <div class="review-source-tag">
+              <div class="stars-row" aria-label="5 out of 5 stars">
+                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+              </div>
+              <span class="platform-badge"><i class="ph ph-google"></i> Google Review</span>
+            </div>
+            <p class="review-quote review-quote--clamp">
+              “Having all fuel, tolls, and driver lodging included in the daily rate eliminated all stress. No hidden fees whatsoever. Our driver Sunimal helped us spot wild elephants and took us to authentic local restaurants away from tourist traps. Truly 5 stars!”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">MK</div>
+              <div class="reviewer-details">
+                <h5>Markus & Lena Klein</h5>
+                <p>Munich, Germany, 14-Day Grand Loop</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="review-card" data-reveal>
+            <div class="review-source-tag">
+              <div class="stars-row" aria-label="5 out of 5 stars">
+                <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+              </div>
+              <span class="platform-badge"><i class="ph ph-tripadvisor"></i> TripAdvisor Verified</span>
+            </div>
+            <p class="review-quote review-quote--clamp">
+              “Traveled with our two kids in the Toyota KDH van. Incredible space, smooth ride, and the communication via WhatsApp before arrival was instantaneous. Ceylon Chauffeur is the gold standard for private touring in Sri Lanka.”
+            </p>
+            <div class="reviewer-meta">
+              <div class="reviewer-avatar">SD</div>
+              <div class="reviewer-details">
+                <h5>Sarah & David Miller</h5>
+                <p>Sydney, Australia, 7-Day Hill Country Tour</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
-
-      <!-- Review 2 -->
-      <div class="review-card">
-        <div class="review-source-tag">
-          <div class="stars-row">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <span class="platform-badge"><i class="fab fa-google text-gold"></i> Google Review</span>
-        </div>
-        <p class="review-quote">
-          "Having all fuel, tolls, and driver lodging included in the daily rate eliminated all stress. No hidden fees whatsoever. Our driver Sunimal helped us spot wild elephants and took us to authentic local restaurants away from tourist traps. Truly 5 stars!"
-        </p>
-        <div class="reviewer-meta">
-          <div class="reviewer-avatar">MK</div>
-          <div class="reviewer-details">
-            <h5>Markus & Lena Klein</h5>
-            <p>Munich, Germany • 14-Day Grand Loop</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="review-card">
-        <div class="review-source-tag">
-          <div class="stars-row">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <span class="platform-badge"><i class="fab fa-tripadvisor text-gold"></i> TripAdvisor Verified</span>
-        </div>
-        <p class="review-quote">
-          "Traveled with our two kids in the Toyota KDH van. Incredible space, smooth ride, and the communication via WhatsApp before arrival was instantaneous. Ceylon Chauffeur is the gold standard for private touring in Sri Lanka."
-        </p>
-        <div class="reviewer-meta">
-          <div class="reviewer-avatar">SD</div>
-          <div class="reviewer-details">
-            <h5>Sarah & David Miller</h5>
-            <p>Sydney, Australia • 7-Day Hill Country Tour</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div style="text-align: center;">
-      <a href="reviews.html" class="btn btn-outline-emerald">
-        <i class="fas fa-star"></i> Read All Verified Client Reviews & Trust Certifications
-      </a>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- Floating WhatsApp CTA (Persistent) -->
   <div class="floating-whatsapp">
     <div class="whatsapp-tooltip">Chat with Chauffeur Concierge</div>
     <a href="#" class="floating-whatsapp-btn action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka." aria-label="WhatsApp Us">
-      <div class="whatsapp-pulse"></div>
-      <i class="fab fa-whatsapp"></i>
+      <i class="ph ph-whatsapp-logo"></i>
     </a>
   </div>
 
@@ -550,21 +566,19 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col footer-about">
-          <div class="footer-logo-badge">
-            <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="footer-logo-img">
-            <div class="brand-text">
-              <h2 style="font-size: 1.1rem; color: var(--primary-emerald); margin: 0;">CEYLON CHAUFFEURS</h2>
-              <span style="font-size: 0.65rem; color: var(--accent-gold-hover); letter-spacing: 1.5px;">Explore Sri Lanka in Luxury</span>
-            </div>
+          <div class="footer-logo-badge brand-logo">
+            <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="footer-logo-img" width="225" height="192"></span>
+            <span class="brand-text">
+              <span class="brand-name">Ceylon Chauffeurs</span>
+              <span>Explore Sri Lanka in Luxury</span>
+            </span>
           </div>
-          <p>
-            Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. We provide international tourists with transparent daily rates, modern vehicles, and accredited English-speaking driver-guides.
-          </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <p>Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, modern vehicles, and accredited English-speaking driver-guides.</p>
+          <div class="footer-actions">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
-              <i class="fab fa-whatsapp"></i> WhatsApp Concierge
+              <i class="ph ph-whatsapp-logo"></i> WhatsApp Concierge
             </button>
-            <a href="booking.html" class="btn btn-primary btn-sm">Get Custom Quote</a>
+            <a href="booking.html" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
           </div>
         </div>
 
@@ -596,7 +610,7 @@
         <div class="footer-col">
           <h4>Contact & Bookings</h4>
           <div class="footer-contact-item">
-            <i class="fas fa-envelope"></i>
+            <i class="ph ph-envelope-simple"></i>
             <div>
               <strong>Inquiries & Bookings:</strong><br>
               <a href="mailto:bookings@ceylonchauffeur.com">bookings@ceylonchauffeur.com</a><br>
@@ -604,14 +618,14 @@
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fab fa-whatsapp"></i>
+            <i class="ph ph-whatsapp-logo"></i>
             <div>
               <strong>WhatsApp (24/7 Available):</strong><br>
               <a href="#" class="action-whatsapp-btn">+94 76 054 2557</a>
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fas fa-map-marker-alt"></i>
+            <i class="ph ph-map-pin"></i>
             <div>
               <strong>Head Office:</strong><br>
               Colombo & Katunayake Airport Hub, Sri Lanka
@@ -622,7 +636,7 @@
 
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="footer-legal">
           <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
           <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
           <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>

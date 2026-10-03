@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Our Executive Fleet | Ceylon Chauffeurs Sri Lanka</title>
   <meta name="description" content="Explore our luxury fleet of private vehicles in Sri Lanka: Executive Sedans (Premio/Prius/Axio), Luxury Passenger Vans (Toyota KDH/Nissan E25), and Luxury Coaches (Toyota Coaster/King Long) with transparent all-inclusive daily rates.">
   
@@ -19,9 +20,15 @@
   <meta name="twitter:description" content="Explore late-model luxury Japanese vehicles with professional English-speaking driver guides.">
   <meta name="twitter:image" content="assets/images/sedan.jpg">
 
-  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/icons.css">
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -41,16 +48,17 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Main Navigation -->
   <header class="main-header">
     <div class="container navbar">
-      <a href="index.html" class="brand-logo">
-        <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="brand-logo-img">
-        <div class="brand-text">
-          <h2>CEYLON CHAUFFEURS</h2>
+      <a href="index.html" class="brand-logo" aria-label="Ceylon Chauffeurs home">
+        <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="brand-logo-img" width="225" height="192"></span>
+        <span class="brand-text">
+          <span class="brand-name">Ceylon Chauffeurs</span>
           <span>Explore Sri Lanka in Luxury</span>
-        </div>
+        </span>
       </a>
 
       <ul class="nav-menu">
@@ -63,295 +71,269 @@
 
       <div class="nav-cta">
         <a href="booking.html" class="btn btn-primary btn-sm">
-          <i class="fas fa-calendar-check"></i> Get a Custom Quote
+          <i class="ph ph-calendar-check"></i> Get a Custom Quote
         </a>
-        <button class="mobile-toggle" aria-label="Toggle Navigation">
-          <i class="fas fa-bars"></i>
+        <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Page Header Banner -->
-  <section style="background: linear-gradient(180deg, rgba(4, 23, 18, 0.85) 0%, rgba(9, 44, 35, 0.95) 100%), url('assets/images/hero.jpg') center/cover no-repeat; padding: 70px 0; color: #ffffff; text-align: center;">
-    <div class="container">
-      <span class="section-tag" style="color: var(--accent-gold-light);">Pristine Executive Vehicles</span>
-      <h1 style="color: #ffffff; font-size: clamp(2.2rem, 4vw, 3.4rem); margin-bottom: 16px;">
-        Our Luxury Fleet & Specifications
-      </h1>
-      <p style="max-width: 720px; margin: 0 auto 28px; color: rgba(255, 255, 255, 0.9); font-size: 1.1rem;">
-        Every Ceylon Chauffeur vehicle is late-model, non-smoking, meticulously sanitized, and driven by a licensed English-speaking chauffeur-guide.
-      </p>
-      <div class="page-banner-ctas" style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-        <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about fleet availability for my travel dates.">
-          <i class="fab fa-whatsapp"></i> Check Fleet Availability on WhatsApp
-        </button>
-        <a href="booking.html" class="btn btn-outline-light">
-          <i class="fas fa-calculator"></i> Calculate Rental Cost
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Detailed Fleet Section -->
-  <section class="fleet-section">
-    <div class="container">
-      <!-- Interactive Fleet Vehicle Selector Tabs -->
-      <div class="fleet-selector-tabs" id="fleet-vehicle-tabs" role="tablist" aria-label="Vehicle Selection">
-        <button type="button" class="fleet-tab-btn active" data-vehicle="sedan" role="tab" aria-selected="true" aria-controls="sedan">
-          <div class="fleet-tab-icon"><i class="fas fa-car-side"></i></div>
-          <div class="fleet-tab-info">
-            <span class="fleet-tab-name" data-i18n="veh.sedan.name">Executive Sedan</span>
-            <span class="fleet-tab-meta">1–3 Pax • Premio / Prius / Axio</span>
+  <main id="main">
+    <!-- Page Header -->
+    <section class="page-hero">
+      <div class="container page-hero-grid">
+        <div class="page-hero-copy">
+          <span class="section-tag">Pristine Executive Vehicles</span>
+          <h1>Our Luxury Fleet & Specifications</h1>
+          <p>Every Ceylon Chauffeur vehicle is late-model, non-smoking, meticulously sanitized, and driven by a licensed English-speaking chauffeur-guide.</p>
+          <div class="page-banner-ctas">
+            <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about fleet availability for my travel dates.">
+              <i class="ph ph-whatsapp-logo"></i> Check Fleet Availability on WhatsApp
+            </button>
+            <a href="booking.html" class="btn btn-outline-emerald">
+              <i class="ph ph-calculator"></i> Calculate Rental Cost
+            </a>
           </div>
-          <span class="fleet-tab-badge" data-usd-amount="65" data-usd-period="day">$65 / Day</span>
-        </button>
-
-        <button type="button" class="fleet-tab-btn" data-vehicle="van" role="tab" aria-selected="false" aria-controls="van">
-          <div class="fleet-tab-icon"><i class="fas fa-shuttle-van"></i></div>
-          <div class="fleet-tab-info">
-            <span class="fleet-tab-name" data-i18n="veh.van.name">Luxury Passenger Van</span>
-            <span class="fleet-tab-meta">4–10 Pax • KDH Flat / High Roof</span>
-          </div>
-          <span class="fleet-tab-badge" data-usd-amount="105" data-usd-period="day">$105 / Day</span>
-        </button>
-
-        <button type="button" class="fleet-tab-btn" data-vehicle="bus" role="tab" aria-selected="false" aria-controls="bus">
-          <div class="fleet-tab-icon"><i class="fas fa-bus-alt"></i></div>
-          <div class="fleet-tab-info">
-            <span class="fleet-tab-name" data-i18n="veh.bus.name">Luxury Coach / Bus</span>
-            <span class="fleet-tab-meta">18–35 Pax • Coaster / King Long</span>
-          </div>
-          <span class="fleet-tab-badge" data-usd-amount="160" data-usd-period="day">$160 / Day</span>
-        </button>
-      </div>
-
-      <!-- Vehicle 1: Sedan -->
-      <div class="fleet-card fleet-detailed-card active" id="sedan">
-        <div class="fleet-image-wrap">
-          <img src="assets/images/sedan.jpg" alt="Toyota Premio Prius Axio Sedan Executive Chauffeur" style="width: 100%; height: 100%; object-fit: cover;">
-          <span class="fleet-category-badge">Executive Sedan</span>
-          <span class="fleet-rate-badge" data-usd-amount="65" data-usd-period="day">$65 / Day All-Inclusive</span>
         </div>
-        <div class="fleet-content fleet-detailed-content">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-            <div>
-              <h2 class="fleet-title">Sedan (Toyota Premio / Prius / Axio)</h2>
-              <p class="fleet-subtitle">Premium Japanese comfort with whisper-quiet ride, hybrid efficiency, and climate control.</p>
+        <div class="page-hero-media">
+          <img src="assets/images/hero.jpg" alt="Private chauffeur vehicle on a scenic tea-country road" width="1376" height="768" fetchpriority="high">
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Fleet -->
+    <section class="fleet-section section section--flush-top">
+      <div class="container">
+        <!-- Vehicle Selector Tabs -->
+        <div class="fleet-selector-tabs" id="fleet-vehicle-tabs" role="tablist" aria-label="Vehicle Selection">
+          <button type="button" class="fleet-tab-btn active" data-vehicle="sedan" role="tab" aria-selected="true" aria-controls="sedan">
+            <div class="fleet-tab-icon"><i class="ph ph-car-profile"></i></div>
+            <div class="fleet-tab-info">
+              <span class="fleet-tab-name" data-i18n="veh.sedan.name">Executive Sedan</span>
+              <span class="fleet-tab-meta">1-3 Pax, Premio / Prius / Axio</span>
+            </div>
+            <span class="fleet-tab-badge" data-usd-amount="65" data-usd-period="day">$65 / Day</span>
+          </button>
+          <button type="button" class="fleet-tab-btn" data-vehicle="van" role="tab" aria-selected="false" aria-controls="van">
+            <div class="fleet-tab-icon"><i class="ph ph-van"></i></div>
+            <div class="fleet-tab-info">
+              <span class="fleet-tab-name" data-i18n="veh.van.name">Luxury Passenger Van</span>
+              <span class="fleet-tab-meta">4-10 Pax, KDH Flat / High Roof</span>
+            </div>
+            <span class="fleet-tab-badge" data-usd-amount="105" data-usd-period="day">$105 / Day</span>
+          </button>
+          <button type="button" class="fleet-tab-btn" data-vehicle="bus" role="tab" aria-selected="false" aria-controls="bus">
+            <div class="fleet-tab-icon"><i class="ph ph-bus"></i></div>
+            <div class="fleet-tab-info">
+              <span class="fleet-tab-name" data-i18n="veh.bus.name">Luxury Coach / Bus</span>
+              <span class="fleet-tab-meta">18-35 Pax, Coaster / King Long</span>
+            </div>
+            <span class="fleet-tab-badge" data-usd-amount="160" data-usd-period="day">$160 / Day</span>
+          </button>
+        </div>
+
+        <!-- Vehicle 1: Sedan -->
+        <div class="fleet-card fleet-detailed-card active" id="sedan" role="tabpanel">
+          <div class="fleet-image-wrap">
+            <img src="assets/images/sedan.jpg" alt="Toyota Premio Prius Axio Sedan Executive Chauffeur" width="1376" height="768">
+          </div>
+          <div class="fleet-content fleet-detailed-content">
+            <span class="fleet-category-badge">Executive Sedan</span>
+            <h2 class="fleet-title">Sedan (Toyota Premio / Prius / Axio)</h2>
+            <p class="fleet-subtitle">Premium Japanese comfort with whisper-quiet ride, hybrid efficiency, and climate control.</p>
+            <div class="fleet-specs">
+              <div class="spec-item"><i class="ph ph-users"></i> <strong>Capacity:</strong> 1-3 Passengers</div>
+              <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> <strong>Luggage:</strong> 2-3 Bags</div>
+            </div>
+            <span class="fleet-rate-badge" data-usd-amount="65" data-usd-period="day">$65 / Day All-Inclusive</span>
+            <p class="fleet-body-copy">The executive choice for couples, solo travelers, or business executives visiting Sri Lanka. Renowned for its smooth suspension, plush interior, hybrid eco-efficiency, and effortless maneuverability on both Colombo expressways and hill country passes.</p>
+            <ul class="fleet-features-list">
+              <li><i class="ph ph-check-circle"></i> <span><strong>Dual-Zone Climate Control:</strong> Full air conditioning optimized for tropical weather.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Free High-Speed Wi-Fi:</strong> Keep connected across the entire island.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>100% Inclusions:</strong> Fuel, highway tolls, parking fees, and driver lodging/meals included.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Amenities:</strong> Complimentary chilled mineral water and phone charging ports.</span></li>
+            </ul>
+            <div class="fleet-actions">
+              <a href="booking.html?vehicle=sedan" class="btn btn-primary">
+                <i class="ph ph-calendar-check"></i> Get a Custom Quote
+              </a>
+              <button class="btn btn-outline-emerald action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Executive Sedan (Toyota Premio / Prius / Axio).">
+                <i class="ph ph-whatsapp-logo"></i> Book via WhatsApp
+              </button>
             </div>
           </div>
-
-          <div class="fleet-specs" style="margin-bottom: 24px;">
-            <div class="spec-item"><i class="fas fa-user-friends"></i> <strong>Capacity:</strong> 1–3 Passengers</div>
-            <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> <strong>Luggage:</strong> 2–3 Bags</div>
-          </div>
-
-          <p style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 20px;">
-            The executive choice for couples, solo travelers, or business executives visiting Sri Lanka. Renowned for its smooth suspension, plush interior, hybrid eco-efficiency, and effortless maneuverability on both Colombo expressways and hill country passes.
-          </p>
-
-          <ul class="fleet-features-list">
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Dual-Zone Climate Control:</strong> Full air conditioning optimized for tropical weather.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Free High-Speed Wi-Fi:</strong> Keep connected across the entire island.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>100% Inclusions:</strong> Fuel, highway tolls, parking fees, and driver lodging/meals included.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Amenities:</strong> Complimentary chilled mineral water and phone charging ports.</li>
-          </ul>
-
-          <div class="fleet-actions" style="margin-top: 20px;">
-            <a href="booking.html?vehicle=sedan" class="btn btn-primary">
-              <i class="fas fa-calendar-check"></i> Get a Custom Quote
-            </a>
-            <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Executive Sedan (Toyota Premio / Prius / Axio).">
-              <i class="fab fa-whatsapp"></i> Book via WhatsApp
-            </button>
-          </div>
         </div>
-      </div>
 
-      <!-- Vehicle 2: Luxury Van -->
-      <div class="fleet-card fleet-detailed-card" id="van">
-        <div class="fleet-image-wrap">
-          <img src="assets/images/van.jpg" alt="Toyota KDH Flat Roof High Roof Nissan E25 Luxury Van" style="width: 100%; height: 100%; object-fit: cover;">
-          <span class="fleet-category-badge">Luxury Passenger Van</span>
-          <span class="fleet-rate-badge" data-usd-amount="105" data-usd-period="day">$105 / Day All-Inclusive</span>
-        </div>
-        <div class="fleet-content fleet-detailed-content">
-          <div>
+        <!-- Vehicle 2: Luxury Van -->
+        <div class="fleet-card fleet-detailed-card" id="van" role="tabpanel">
+          <div class="fleet-image-wrap">
+            <img src="assets/images/van.jpg" alt="Toyota KDH Flat Roof High Roof Nissan E25 Luxury Van" width="1376" height="768" loading="lazy">
+          </div>
+          <div class="fleet-content fleet-detailed-content">
+            <span class="fleet-category-badge">Luxury Passenger Van</span>
             <h2 class="fleet-title">VAN (Toyota KDH Flat Roof / High Roof, Nissan E25)</h2>
             <p class="fleet-subtitle">First-class executive passenger van for families, groups, and golf/surf tours.</p>
-          </div>
-
-          <div class="fleet-specs" style="margin-bottom: 24px;">
-            <div class="spec-item"><i class="fas fa-user-friends"></i> <strong>Capacity:</strong> Flat Roof (4–6 Pax) • High Roof (8–10 Pax)</div>
-            <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> <strong>Luggage:</strong> Flat Roof (4–5 Bags) • High Roof (6–8 Bags)</div>
-          </div>
-
-          <p style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 20px;">
-            The gold standard for family vacations and group travel across Sri Lanka. Offering versatile Toyota KDH Flat Roof and High Roof configurations along with the spacious Nissan Caravan E25. Features individual reclining plush captain seats and dual independent air conditioning units that keep every passenger cool and refreshed.
-          </p>
-
-          <ul class="fleet-features-list">
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Flat Roof & High Roof Options:</strong> Generous headroom and customizable seating comfort.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Individual Reclining Captain Seats:</strong> Luxurious legroom and customizable seating posture.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Dual Independent Air Conditioning:</strong> Front and rear passenger ceiling vents.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Massive Luggage Capacity:</strong> Accommodates 8 full-size suitcases, strollers, surfboards, or golf sets.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>100% Inclusions:</strong> Fuel, all expressway tolls, parking fees, and driver lodging/meals.</li>
-          </ul>
-
-          <div class="fleet-actions" style="margin-top: 20px;">
-            <a href="booking.html?vehicle=van" class="btn btn-primary">
-              <i class="fas fa-calendar-check"></i> Get a Custom Quote
-            </a>
-            <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Van (Toyota KDH Flat/High Roof / Nissan E25).">
-              <i class="fab fa-whatsapp"></i> Book via WhatsApp
-            </button>
+            <div class="fleet-specs">
+              <div class="spec-item"><i class="ph ph-users"></i> <strong>Capacity:</strong> Flat Roof (4-6 Pax), High Roof (8-10 Pax)</div>
+              <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> <strong>Luggage:</strong> Flat Roof (4-5 Bags), High Roof (6-8 Bags)</div>
+            </div>
+            <span class="fleet-rate-badge" data-usd-amount="105" data-usd-period="day">$105 / Day All-Inclusive</span>
+            <p class="fleet-body-copy">The gold standard for family vacations and group travel across Sri Lanka. Offering versatile Toyota KDH Flat Roof and High Roof configurations along with the spacious Nissan Caravan E25. Features individual reclining plush captain seats and dual independent air conditioning units that keep every passenger cool and refreshed.</p>
+            <ul class="fleet-features-list">
+              <li><i class="ph ph-check-circle"></i> <span><strong>Flat Roof & High Roof Options:</strong> Generous headroom and customizable seating comfort.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Individual Reclining Captain Seats:</strong> Luxurious legroom and customizable seating posture.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Dual Independent Air Conditioning:</strong> Front and rear passenger ceiling vents.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Massive Luggage Capacity:</strong> Accommodates 8 full-size suitcases, strollers, surfboards, or golf sets.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>100% Inclusions:</strong> Fuel, all expressway tolls, parking fees, and driver lodging/meals.</span></li>
+            </ul>
+            <div class="fleet-actions">
+              <a href="booking.html?vehicle=van" class="btn btn-primary">
+                <i class="ph ph-calendar-check"></i> Get a Custom Quote
+              </a>
+              <button class="btn btn-outline-emerald action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Van (Toyota KDH Flat/High Roof / Nissan E25).">
+                <i class="ph ph-whatsapp-logo"></i> Book via WhatsApp
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Vehicle 3: Luxury Bus / Coach -->
-      <div class="fleet-card fleet-detailed-card" id="bus">
-        <div class="fleet-image-wrap">
-          <img src="assets/images/bus.jpg" alt="Toyota Coaster King Long Yutong Luxury Coaches" style="width: 100%; height: 100%; object-fit: cover;">
-          <span class="fleet-category-badge">Luxury Tourist Coach</span>
-          <span class="fleet-rate-badge" data-usd-amount="160" data-usd-period="day">$160 / Day All-Inclusive</span>
-        </div>
-        <div class="fleet-content fleet-detailed-content">
-          <div>
+        <!-- Vehicle 3: Luxury Coach -->
+        <div class="fleet-card fleet-detailed-card" id="bus" role="tabpanel">
+          <div class="fleet-image-wrap">
+            <img src="assets/images/bus.jpg" alt="Toyota Coaster King Long Yutong Luxury Coaches" width="1376" height="768" loading="lazy">
+          </div>
+          <div class="fleet-content fleet-detailed-content">
+            <span class="fleet-category-badge">Luxury Tourist Coach</span>
             <h2 class="fleet-title">BUS (Toyota Coaster, King Long / Yutong Luxury Coaches)</h2>
             <p class="fleet-subtitle">Executive tourist coaches with panoramic visibility, PA system, and generous coach seating.</p>
-          </div>
-
-          <div class="fleet-specs" style="margin-bottom: 24px;">
-            <div class="spec-item"><i class="fas fa-user-friends"></i> <strong>Capacity:</strong> Coaster (18–20 Pax) • King Long (20–35 Pax)</div>
-            <div class="spec-item"><i class="fas fa-suitcase-rolling"></i> <strong>Luggage:</strong> Coaster (12–15 Bags) • King Long (18–25 Bags)</div>
-          </div>
-
-          <p style="font-size: 0.95rem; color: var(--text-dark); margin-bottom: 20px;">
-            Engineered for large travel groups, destination wedding parties, educational delegations, and corporate expeditions. Featuring premium Toyota Coaster mini-buses and full-size King Long / Yutong luxury coaches with whisper-quiet high-capacity climate control, panoramic tinted windows, and cavernous undercarriage baggage holds.
-          </p>
-
-          <ul class="fleet-features-list">
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>High-Floor Panoramic Sightseeing:</strong> Elevated panoramic windows for scenic island touring.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Commercial Multi-Zone A/C & PA System:</strong> Integrated tour-guide microphone and audio.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>Cavernous Undercarriage Storage:</strong> Full-size coach compartments for 20+ large travel suitcases.</li>
-            <li><i class="fas fa-check-circle text-gold"></i> <strong>100% Inclusions:</strong> Fuel, all expressway tolls, driver & crew lodging, and passenger permits.</li>
-          </ul>
-
-          <div class="fleet-actions" style="margin-top: 20px;">
-            <a href="booking.html?vehicle=bus" class="btn btn-primary">
-              <i class="fas fa-calendar-check"></i> Get a Custom Quote
-            </a>
-            <button class="btn btn-whatsapp action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Coach / Bus (Toyota Coaster / King Long / Yutong).">
-              <i class="fab fa-whatsapp"></i> Book via WhatsApp
-            </button>
+            <div class="fleet-specs">
+              <div class="spec-item"><i class="ph ph-users"></i> <strong>Capacity:</strong> Coaster (18-20 Pax), King Long (20-35 Pax)</div>
+              <div class="spec-item"><i class="ph ph-suitcase-rolling"></i> <strong>Luggage:</strong> Coaster (12-15 Bags), King Long (18-25 Bags)</div>
+            </div>
+            <span class="fleet-rate-badge" data-usd-amount="160" data-usd-period="day">$160 / Day All-Inclusive</span>
+            <p class="fleet-body-copy">Engineered for large travel groups, destination wedding parties, educational delegations, and corporate expeditions. Featuring premium Toyota Coaster mini-buses and full-size King Long / Yutong luxury coaches with whisper-quiet high-capacity climate control, panoramic tinted windows, and cavernous undercarriage baggage holds.</p>
+            <ul class="fleet-features-list">
+              <li><i class="ph ph-check-circle"></i> <span><strong>High-Floor Panoramic Sightseeing:</strong> Elevated panoramic windows for scenic island touring.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Commercial Multi-Zone A/C & PA System:</strong> Integrated tour-guide microphone and audio.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>Cavernous Undercarriage Storage:</strong> Full-size coach compartments for 20+ large travel suitcases.</span></li>
+              <li><i class="ph ph-check-circle"></i> <span><strong>100% Inclusions:</strong> Fuel, all expressway tolls, driver & crew lodging, and passenger permits.</span></li>
+            </ul>
+            <div class="fleet-actions">
+              <a href="booking.html?vehicle=bus" class="btn btn-primary">
+                <i class="ph ph-calendar-check"></i> Get a Custom Quote
+              </a>
+              <button class="btn btn-outline-emerald action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about booking your Luxury Coach / Bus (Toyota Coaster / King Long / Yutong).">
+                <i class="ph ph-whatsapp-logo"></i> Book via WhatsApp
+              </button>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- Fleet Comparison Table -->
-  <section class="container" style="padding-bottom: 90px;">
-    <div style="text-align: center; max-width: 700px; margin: 0 auto 40px;">
-      <span class="section-tag">Quick Comparison</span>
-      <h2 class="section-title">Fleet Specifications at a Glance</h2>
-      <p class="section-subtitle" style="margin: 0 auto;">Select the perfect vehicle for your party size and journey requirements.</p>
-    </div>
-
-    <div class="table-responsive-wrapper" style="background: #ffffff; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border: 1px solid var(--border-subtle); overflow-x: auto;">
-      <table style="width: 100%; border-collapse: collapse; text-align: left; min-width: 650px;">
-        <thead>
-          <tr style="background: var(--primary-emerald); color: #ffffff;">
-            <th style="padding: 16px 20px; font-family: var(--font-serif);">Vehicle Category</th>
-            <th style="padding: 16px 20px; font-family: var(--font-serif);">Ideal Passenger Count</th>
-            <th style="padding: 16px 20px; font-family: var(--font-serif);">Luggage Capacity</th>
-            <th style="padding: 16px 20px; font-family: var(--font-serif);">Daily Rate (All-Inclusive)</th>
-            <th style="padding: 16px 20px; font-family: var(--font-serif);">Best Suited For</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onclick="switchFleetVehicle('sedan', true)" title="Click to view Executive Sedan details">
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);"><i class="fas fa-car-side text-gold" style="margin-right: 6px;"></i> Executive Sedan (Toyota Premio / Prius / Axio)</td>
-            <td style="padding: 18px 20px;">1–3 Passengers</td>
-            <td style="padding: 18px 20px;">2–3 Standard Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="65" data-usd-period="day">$65 USD / Day</td>
-            <td style="padding: 18px 20px;">Solo Travelers & Couples</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border-subtle); background-color: var(--bg-sand); cursor: pointer;" onclick="switchFleetVehicle('van', true)" title="Click to view Luxury Van details">
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);"><i class="fas fa-shuttle-van text-gold" style="margin-right: 6px;"></i> Toyota KDH Flat Roof</td>
-            <td style="padding: 18px 20px;">4–6 Passengers</td>
-            <td style="padding: 18px 20px;">4–5 Large Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="105" data-usd-period="day">$105 USD / Day</td>
-            <td style="padding: 18px 20px;">Couples & Small Families</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onclick="switchFleetVehicle('van', true)" title="Click to view Luxury Van details">
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);"><i class="fas fa-shuttle-van text-gold" style="margin-right: 6px;"></i> Toyota KDH High Roof (incl. Nissan E25)</td>
-            <td style="padding: 18px 20px;">8–10 Passengers</td>
-            <td style="padding: 18px 20px;">6–8 Large Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="105" data-usd-period="day">$105 USD / Day</td>
-            <td style="padding: 18px 20px;">Large Families & Groups</td>
-          </tr>
-          <tr style="border-bottom: 1px solid var(--border-subtle); background-color: var(--bg-sand); cursor: pointer;" onclick="switchFleetVehicle('bus', true)" title="Click to view Luxury Coach details">
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);"><i class="fas fa-bus-alt text-gold" style="margin-right: 6px;"></i> Toyota Coaster Mini-Coach</td>
-            <td style="padding: 18px 20px;">18–20 Passengers</td>
-            <td style="padding: 18px 20px;">12–15 Large Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="160" data-usd-period="day">$160 USD / Day</td>
-            <td style="padding: 18px 20px;">Medium Tour Groups</td>
-          </tr>
-          <tr style="cursor: pointer;" onclick="switchFleetVehicle('bus', true)" title="Click to view Luxury Coach details">
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--primary-emerald);"><i class="fas fa-bus-alt text-gold" style="margin-right: 6px;"></i> King Long Luxury Coach</td>
-            <td style="padding: 18px 20px;">20–35 Passengers</td>
-            <td style="padding: 18px 20px;">18–25 Large Bags</td>
-            <td style="padding: 18px 20px; font-weight: 700; color: var(--accent-gold-hover);" data-usd-amount="160" data-usd-period="day">$160 USD / Day</td>
-            <td style="padding: 18px 20px;">Large Tour Groups & Delegations</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Inclusions Banner -->
-  <section class="inclusions-banner">
-    <div class="container">
-      <div class="inclusions-header">
-        <span class="section-tag" style="color: var(--accent-gold-light);">100% Inclusions</span>
-        <h2>Zero Hidden Costs Guaranteed Across All Vehicles</h2>
-        <p>No unexpected surcharges, no fuel bills, and no driver meal fees. Everything is bundled into our transparent daily rates.</p>
-      </div>
-
-      <div class="inclusions-grid">
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-gas-pump"></i></div>
-          <h4>Fuel & Mileage Included</h4>
-          <p>Unlimited mileage for your entire itinerary. Petrol and diesel completely covered.</p>
+    <!-- Fleet Comparison -->
+    <section class="section section--flush-top">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">Fleet Specifications at a Glance</h2>
+          <p class="section-subtitle">Select the perfect vehicle for your party size and journey requirements.</p>
         </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-road"></i></div>
-          <h4>Highway Tolls & Parking</h4>
-          <p>All expressway charges, airport exit tolls, and tourist parking fees included.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-hotel"></i></div>
-          <h4>Driver Meals & Lodging</h4>
-          <p>You never need to arrange accommodation or meals for your driver. Handled 100% by us.</p>
-        </div>
-        <div class="inclusion-card">
-          <div class="inclusion-icon"><i class="fas fa-user-shield"></i></div>
-          <h4>Licensed Driver-Guide</h4>
-          <p>Government certified, English-speaking, police verified, with comprehensive passenger insurance.</p>
+
+        <div class="table-responsive-wrapper" data-reveal>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">Vehicle Category</th>
+                <th scope="col">Ideal Passenger Count</th>
+                <th scope="col">Luggage Capacity</th>
+                <th scope="col">Daily Rate (All-Inclusive)</th>
+                <th scope="col">Best Suited For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="switchFleetVehicle('sedan', true)" title="Click to view Executive Sedan details">
+                <td><i class="ph ph-car-profile"></i> Executive Sedan (Toyota Premio / Prius / Axio)</td>
+                <td>1-3 Passengers</td>
+                <td>2-3 Standard Bags</td>
+                <td data-usd-amount="65" data-usd-period="day">$65 USD / Day</td>
+                <td>Solo Travelers & Couples</td>
+              </tr>
+              <tr class="group-start" onclick="switchFleetVehicle('van', true)" title="Click to view Luxury Van details">
+                <td><i class="ph ph-van"></i> Toyota KDH Flat Roof</td>
+                <td>4-6 Passengers</td>
+                <td>4-5 Large Bags</td>
+                <td data-usd-amount="105" data-usd-period="day">$105 USD / Day</td>
+                <td>Couples & Small Families</td>
+              </tr>
+              <tr onclick="switchFleetVehicle('van', true)" title="Click to view Luxury Van details">
+                <td><i class="ph ph-van"></i> Toyota KDH High Roof (incl. Nissan E25)</td>
+                <td>8-10 Passengers</td>
+                <td>6-8 Large Bags</td>
+                <td data-usd-amount="105" data-usd-period="day">$105 USD / Day</td>
+                <td>Large Families & Groups</td>
+              </tr>
+              <tr class="group-start" onclick="switchFleetVehicle('bus', true)" title="Click to view Luxury Coach details">
+                <td><i class="ph ph-bus"></i> Toyota Coaster Mini-Coach</td>
+                <td>18-20 Passengers</td>
+                <td>12-15 Large Bags</td>
+                <td data-usd-amount="160" data-usd-period="day">$160 USD / Day</td>
+                <td>Medium Tour Groups</td>
+              </tr>
+              <tr onclick="switchFleetVehicle('bus', true)" title="Click to view Luxury Coach details">
+                <td><i class="ph ph-bus"></i> King Long Luxury Coach</td>
+                <td>20-35 Passengers</td>
+                <td>18-25 Large Bags</td>
+                <td data-usd-amount="160" data-usd-period="day">$160 USD / Day</td>
+                <td>Large Tour Groups & Delegations</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- Inclusions -->
+    <section class="inclusions-banner section--flush-top">
+      <div class="container inclusions-layout">
+        <div class="inclusions-header" data-reveal>
+          <img src="assets/images/galle.jpg" alt="" loading="lazy" width="1376" height="768">
+          <h2>Zero Hidden Costs Guaranteed Across All Vehicles</h2>
+          <p>No unexpected surcharges, no fuel bills, and no driver meal fees. Everything is bundled into our transparent daily rates.</p>
+        </div>
+
+        <div class="inclusions-grid">
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-gas-pump"></i></div>
+            <h4>Fuel & Mileage Included</h4>
+            <p>Unlimited mileage for your entire itinerary. Petrol and diesel completely covered.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-road-horizon"></i></div>
+            <h4>Highway Tolls & Parking</h4>
+            <p>All expressway charges, airport exit tolls, and tourist parking fees included.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-buildings"></i></div>
+            <h4>Driver Meals & Lodging</h4>
+            <p>You never need to arrange accommodation or meals for your driver. Handled 100% by us.</p>
+          </div>
+          <div class="inclusion-card" data-reveal>
+            <div class="inclusion-icon"><i class="ph ph-shield-check"></i></div>
+            <h4>Licensed Driver-Guide</h4>
+            <p>Government certified, English-speaking, police verified, with comprehensive passenger insurance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Floating WhatsApp CTA (Persistent) -->
   <div class="floating-whatsapp">
     <div class="whatsapp-tooltip">Chat with Chauffeur Concierge</div>
     <a href="#" class="floating-whatsapp-btn action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka." aria-label="WhatsApp Us">
-      <div class="whatsapp-pulse"></div>
-      <i class="fab fa-whatsapp"></i>
+      <i class="ph ph-whatsapp-logo"></i>
     </a>
   </div>
 
@@ -360,21 +342,19 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col footer-about">
-          <div class="footer-logo-badge">
-            <img src="assets/images/logo.png" alt="Ceylon Chauffeurs Logo" class="footer-logo-img">
-            <div class="brand-text">
-              <h2 style="font-size: 1.1rem; color: var(--primary-emerald); margin: 0;">CEYLON CHAUFFEURS</h2>
-              <span style="font-size: 0.65rem; color: var(--accent-gold-hover); letter-spacing: 1.5px;">Explore Sri Lanka in Luxury</span>
-            </div>
+          <div class="footer-logo-badge brand-logo">
+            <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="footer-logo-img" width="225" height="192"></span>
+            <span class="brand-text">
+              <span class="brand-name">Ceylon Chauffeurs</span>
+              <span>Explore Sri Lanka in Luxury</span>
+            </span>
           </div>
-          <p>
-            Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, luxury vehicles, and accredited English-speaking driver-guides.
-          </p>
-          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <p>Ceylon Chauffeurs is Sri Lanka's leading private chauffeur and bespoke tour operator. Transparent daily rates, modern vehicles, and accredited English-speaking driver-guides.</p>
+          <div class="footer-actions">
             <button class="btn btn-whatsapp btn-sm action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I would like to inquire about a chauffeur service for my trip to Sri Lanka.">
-              <i class="fab fa-whatsapp"></i> WhatsApp Concierge
+              <i class="ph ph-whatsapp-logo"></i> WhatsApp Concierge
             </button>
-            <a href="booking.html" class="btn btn-primary btn-sm">Get Custom Quote</a>
+            <a href="booking.html" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>
           </div>
         </div>
 
@@ -406,7 +386,7 @@
         <div class="footer-col">
           <h4>Contact & Bookings</h4>
           <div class="footer-contact-item">
-            <i class="fas fa-envelope"></i>
+            <i class="ph ph-envelope-simple"></i>
             <div>
               <strong>Inquiries & Bookings:</strong><br>
               <a href="mailto:bookings@ceylonchauffeur.com">bookings@ceylonchauffeur.com</a><br>
@@ -414,14 +394,14 @@
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fab fa-whatsapp"></i>
+            <i class="ph ph-whatsapp-logo"></i>
             <div>
               <strong>WhatsApp (24/7 Available):</strong><br>
               <a href="#" class="action-whatsapp-btn">+94 76 054 2557</a>
             </div>
           </div>
           <div class="footer-contact-item">
-            <i class="fas fa-map-marker-alt"></i>
+            <i class="ph ph-map-pin"></i>
             <div>
               <strong>Head Office:</strong><br>
               Colombo & Katunayake Airport Hub, Sri Lanka
@@ -432,7 +412,7 @@
 
       <div class="footer-bottom">
         <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). All rights reserved. Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <div class="footer-legal">
           <a href="javascript:void(0)" onclick="openPolicyModal('cancellation')">Cancellation Policy</a>
           <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
           <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
