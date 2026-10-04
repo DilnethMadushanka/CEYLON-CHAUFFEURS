@@ -4,3 +4,8 @@ Thumbs.db
 node_modules/
 *.log
 scratch/
+# Large video files
+*.mov
+*.MOV
+*.avi
+*.mkv
