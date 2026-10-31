@@ -1955,7 +1955,7 @@ a.platform-badge:hover { color: var(--ink); }
 
 /* Live TripAdvisor rating widget */
 .ta-rating-strip {
-  margin-top: 16px;
+  margin-top: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
