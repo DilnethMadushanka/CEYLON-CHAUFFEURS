@@ -22,6 +22,12 @@ window.CC_FIREBASE_CONFIG = {
 
 window.CC_FIREBASE_SDK_VERSION = '10.14.1';
 
+/**
+ * Google Maps key for the route map on packages.html (see FIREBASE_SETUP.md → Google Maps).
+ * Leave empty to use the free OpenStreetMap map. Restrict the key to your website in Google Cloud.
+ */
+window.CC_GOOGLE_MAPS_KEY = '';
+
 window.CC_FIREBASE_READY = (function () {
   var c = window.CC_FIREBASE_CONFIG || {};
   return !!(c.apiKey && c.projectId && c.apiKey.indexOf('YOUR_') !== 0 && c.projectId.indexOf('YOUR_') !== 0);

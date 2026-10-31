@@ -732,6 +732,14 @@ let leafletMap = null;
 let activeRoutePolyline = null;
 let mapMarkers = [];
 
+// Google Maps globals (used when window.CC_GOOGLE_MAPS_KEY is set in js/firebase-config.js)
+let googleMap = null;
+let googleMapFailed = false;
+let googleRouteLayer = null;
+let googleInfoWindow = null;
+let pendingRoutePackageId = null;
+const googleRouteCache = {};
+
 document.addEventListener('DOMContentLoaded', () => {
   renderPackages();
   initCategoryFilters();
@@ -934,7 +942,12 @@ function initPricingToggle() {
  */
 function initLeafletMap() {
   const mapElem = document.getElementById('ceylon-route-map');
-  if (!mapElem || typeof L === 'undefined') return;
+  if (!mapElem) return;
+  if (window.CC_GOOGLE_MAPS_KEY && !googleMapFailed) {
+    initGoogleMap(mapElem);
+    return;
+  }
+  if (typeof L === 'undefined') return;
 
   const mapColors = getMapColors();
 
@@ -974,6 +987,133 @@ function initLeafletMap() {
 }
 
 /**
+ * Google Maps (JavaScript API). Loads only when a key is configured; falls back to the
+ * free Leaflet map if the script cannot load or Google rejects the key.
+ */
+function initGoogleMap(mapElem) {
+  window.gm_authFailure = function () { fallBackToLeaflet('Google Maps rejected the API key'); };
+  window.ccInitGoogleMap = function () {
+    try {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const colors = getMapColors();
+      googleMap = new google.maps.Map(mapElem, {
+        center: { lat: 7.8731, lng: 80.7718 },
+        zoom: 7,
+        gestureHandling: 'cooperative',
+        mapTypeControl: true,
+        mapTypeControlOptions: { mapTypeIds: ['roadmap', 'hybrid'] },
+        streetViewControl: false,
+        fullscreenControl: true,
+        clickableIcons: false,
+        styles: prefersDark ? GOOGLE_DARK_STYLE : GOOGLE_LIGHT_STYLE
+      });
+      googleInfoWindow = new google.maps.InfoWindow();
+      Object.keys(DESTINATION_COORDS).forEach(place => {
+        const c = DESTINATION_COORDS[place];
+        const marker = new google.maps.Marker({
+          position: { lat: c[0], lng: c[1] },
+          map: googleMap,
+          title: place,
+          icon: { path: google.maps.SymbolPath.CIRCLE, scale: 6, fillColor: colors.ink, fillOpacity: 0.9, strokeColor: colors.accent, strokeWeight: 2 }
+        });
+        marker.addListener('click', () => {
+          googleInfoWindow.setContent(`<strong>${place}</strong><br><span class="map-popup-note">Chauffeur Waypoint</span>`);
+          googleInfoWindow.open({ map: googleMap, anchor: marker });
+        });
+        mapMarkers.push({ name: place, marker: marker });
+      });
+      if (pendingRoutePackageId) {
+        const pkg = MASTER_PACKAGES.find(p => p.id === pendingRoutePackageId);
+        if (pkg) highlightGoogleRoute(pkg);
+      }
+    } catch (err) {
+      fallBackToLeaflet(err);
+    }
+  };
+  const script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(window.CC_GOOGLE_MAPS_KEY) + '&callback=ccInitGoogleMap&loading=async&region=LK';
+  script.async = true;
+  script.onerror = () => fallBackToLeaflet('Google Maps script failed to load');
+  document.head.appendChild(script);
+}
+
+function fallBackToLeaflet(reason) {
+  if (googleMapFailed) return;
+  console.warn('[Ceylon Chauffeurs] Using the standard map:', reason);
+  googleMapFailed = true;
+  googleMap = null;
+  mapMarkers = [];
+  const mapElem = document.getElementById('ceylon-route-map');
+  if (mapElem) { mapElem.innerHTML = ''; mapElem.removeAttribute('style'); }
+  initLeafletMap();
+  if (pendingRoutePackageId) highlightPackageRoute(pendingRoutePackageId);
+}
+
+function highlightGoogleRoute(pkg) {
+  pendingRoutePackageId = pkg.id;
+  if (googleRouteLayer) { googleRouteLayer.setMap(null); googleRouteLayer = null; }
+  const points = pkg.routePoints.filter(pt => DESTINATION_COORDS[pt]).map(pt => ({ lat: DESTINATION_COORDS[pt][0], lng: DESTINATION_COORDS[pt][1] }));
+  if (points.length < 2) return;
+  const color = getMapColors().accent;
+
+  const fitTo = (path) => {
+    const bounds = new google.maps.LatLngBounds();
+    path.forEach(p => bounds.extend(p));
+    googleMap.fitBounds(bounds, 40);
+  };
+  const drawStraight = () => {
+    googleRouteLayer = new google.maps.Polyline({
+      path: points, map: googleMap, strokeOpacity: 0,
+      icons: [{ icon: { path: 'M 0,-1 0,1', strokeOpacity: 0.95, strokeColor: color, strokeWeight: 4, scale: 3 }, offset: '0', repeat: '16px' }]
+    });
+    fitTo(points);
+  };
+  const drawRoad = (result) => {
+    if (pendingRoutePackageId !== pkg.id) return;
+    if (googleRouteLayer) googleRouteLayer.setMap(null);
+    googleRouteLayer = new google.maps.DirectionsRenderer({
+      map: googleMap, directions: result, suppressMarkers: true, preserveViewport: false,
+      polylineOptions: { strokeColor: color, strokeOpacity: 0.9, strokeWeight: 5 }
+    });
+  };
+
+  if (googleRouteCache[pkg.id]) { drawRoad(googleRouteCache[pkg.id]); return; }
+  drawStraight();
+  // Real road route. Needs the Directions API enabled on the key; otherwise the dashed line stays.
+  try {
+    new google.maps.DirectionsService().route({
+      origin: points[0],
+      destination: points[points.length - 1],
+      waypoints: points.slice(1, -1).slice(0, 23).map(p => ({ location: p, stopover: true })),
+      travelMode: google.maps.TravelMode.DRIVING,
+      region: 'LK'
+    }, (result, status) => {
+      if (status === 'OK') { googleRouteCache[pkg.id] = result; drawRoad(result); }
+      else console.warn('[Ceylon Chauffeurs] Road route unavailable:', status);
+    });
+  } catch (err) {
+    console.warn(err);
+  }
+}
+
+const GOOGLE_LIGHT_STYLE = [
+  { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+  { featureType: 'poi.park', stylers: [{ visibility: 'on' }] },
+  { featureType: 'transit', stylers: [{ visibility: 'off' }] }
+];
+const GOOGLE_DARK_STYLE = [
+  { elementType: 'geometry', stylers: [{ color: '#1d2420' }] },
+  { elementType: 'labels.text.fill', stylers: [{ color: '#9aa69f' }] },
+  { elementType: 'labels.text.stroke', stylers: [{ color: '#151a17' }] },
+  { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+  { featureType: 'poi.park', elementType: 'geometry', stylers: [{ visibility: 'on' }, { color: '#22302a' }] },
+  { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#2c3530' }] },
+  { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#3a4640' }] },
+  { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+  { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#0f1a1f' }] }
+];
+
+/**
  * Map marker and route colours, read from the page's design tokens
  */
 function getMapColors() {
@@ -985,11 +1125,38 @@ function getMapColors() {
 }
 
 /**
+ * Google Maps directions link for a package route (free, no API key).
+ * Opens the Google Maps app on phones. The URL allows up to 9 stops between start and end.
+ */
+const GMAPS_PLACE_NAMES = {
+  'Yala': 'Yala National Park',
+  'Udawalawe': 'Udawalawe National Park',
+  'Wilpattu': 'Wilpattu National Park',
+  'Horton Plains': 'Horton Plains National Park',
+  'Knuckles': 'Knuckles Mountain Range',
+  'Pinnawala': 'Pinnawala Elephant Orphanage',
+  'Negombo': 'Bandaranaike International Airport'
+};
+
+function googleMapsRouteUrl(pkg) {
+  if (!pkg || !Array.isArray(pkg.routePoints) || pkg.routePoints.length < 2) return '';
+  const stops = pkg.routePoints.map(p => (GMAPS_PLACE_NAMES[p] || p) + ', Sri Lanka');
+  const origin = stops[0];
+  const destination = stops[stops.length - 1];
+  let middle = stops.slice(1, -1);
+  if (middle.length > 9) {
+    const step = middle.length / 9;
+    middle = Array.from({ length: 9 }, (_, i) => middle[Math.floor(i * step)]);
+  }
+  const params = new URLSearchParams({ api: '1', origin, destination, travelmode: 'driving' });
+  if (middle.length) params.set('waypoints', middle.join('|'));
+  return 'https://www.google.com/maps/dir/?' + params.toString();
+}
+
+/**
  * Highlight a tour route on the interactive map
  */
 function highlightPackageRoute(packageId) {
-  if (!leafletMap || typeof L === 'undefined') return;
-
   const pkg = MASTER_PACKAGES.find(p => p.id === packageId);
   if (!pkg || !pkg.routePoints) return;
 
@@ -997,6 +1164,19 @@ function highlightPackageRoute(packageId) {
   if (tagElem) {
     tagElem.innerHTML = `<i class="ph ph-path"></i> Route: ${pkg.title}`;
   }
+  const gmapsLink = document.getElementById('map-gmaps-link');
+  if (gmapsLink) {
+    const url = googleMapsRouteUrl(pkg);
+    gmapsLink.hidden = !url;
+    if (url) gmapsLink.href = url;
+  }
+
+  if (window.CC_GOOGLE_MAPS_KEY && !googleMapFailed) {
+    if (googleMap) highlightGoogleRoute(pkg);
+    else pendingRoutePackageId = pkg.id;
+    return;
+  }
+  if (!leafletMap || typeof L === 'undefined') return;
 
   // Remove previous polyline
   if (activeRoutePolyline) {
@@ -1048,6 +1228,7 @@ function openItineraryModal(packageId) {
           <i class="ph ph-bed"></i> Key Feature: ${pkg.keyFeature}
         </div>
         <p class="callout-route"><strong>Complete Route:</strong> ${pkg.route}</p>
+        ${googleMapsRouteUrl(pkg) ? `<a class="gmaps-link gmaps-link--inline" href="${googleMapsRouteUrl(pkg)}" target="_blank" rel="noopener"><i class="ph ph-google-logo"></i> View this route on Google Maps</a>` : ''}
         <p class="callout-note">
           All Ceylon Chauffeur tours strictly include fuel, expressway tolls, parking fees, and chauffeur lodging & meals. Zero hidden costs.
         </p>

@@ -1611,6 +1611,23 @@ input[type="date"].form-control { font-variant-numeric: tabular-nums; }
   color: var(--ink);
 }
 #map-active-package-tag i { color: var(--accent); }
+.route-map-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.gmaps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  transition: background .2s, color .2s;
+}
+.gmaps-link:hover, .gmaps-link:focus-visible { background: var(--accent); color: #fff; }
+.gmaps-link[hidden] { display: none; }
+.gmaps-link--inline { margin: 4px 0 10px; }
 .interactive-map-box {
   height: 380px;
   border-radius: var(--radius-media);
