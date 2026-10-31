@@ -356,7 +356,7 @@
     var platform = r.source === 'google'
       ? '<a href="https://maps.google.com" target="_blank" rel="noopener" class="platform-badge"><i class="ph ph-google"></i> Google Verified Review <i class="ph ph-arrow-up-right"></i></a>'
       : r.source === 'tripadvisor'
-        ? '<a href="https://www.tripadvisor.com" target="_blank" rel="noopener" class="platform-badge"><i class="ph ph-tripadvisor"></i> TripAdvisor Verified <i class="ph ph-arrow-up-right"></i></a>'
+        ? '<a href="https://www.tripadvisor.com/Attraction_Review-g11913473-d34702787-Reviews-Ceylon_Chauffeur-Malabe_Western_Province.html" target="_blank" rel="noopener" class="platform-badge"><i class="ph ph-tripadvisor"></i> TripAdvisor Verified <i class="ph ph-arrow-up-right"></i></a>'
         : '<span class="platform-badge"><i class="ph ph-seal-check"></i> Verified Guest</span>';
     var initials = String(r.name || '?').split(/\s+/).filter(function (w) { return /^[A-Za-zÀ-ÿ]/.test(w) && w.toLowerCase() !== 'the'; }).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
     return '<article class="review-card" data-reveal><div class="review-source-tag"><div class="stars-row" aria-label="' + r.rating + ' out of 5 stars">' + stars + '</div>' + platform + '</div>' +
