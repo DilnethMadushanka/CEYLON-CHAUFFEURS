@@ -6,7 +6,7 @@
   var UI = window.CCUI, Store = window.CCStore, Charts = window.CCCharts;
   var icon = UI.icon, esc = UI.esc;
 
-  window.CC_SITE_IMAGES = ['assets/images/hero.jpg', 'assets/images/sigiriya.jpg', 'assets/images/kandy.jpg', 'assets/images/ella.jpg', 'assets/images/galle.jpg', 'assets/images/beach.jpg', 'assets/images/wildlife.jpg', 'assets/images/sedan.jpg', 'assets/images/van.jpg', 'assets/images/bus.jpg'];
+  window.CC_SITE_IMAGES = ['assets/images/hero.jpg', 'assets/images/sigiriya.jpg', 'assets/images/kandy.jpg', 'assets/images/ella.jpg', 'assets/images/galle.jpg', 'assets/images/beach.jpg', 'assets/images/wildlife.jpg', 'assets/images/safari-minneriya.jpg', 'assets/images/safari-yala.jpg', 'assets/images/safari-wilpattu.jpg', 'assets/images/sedan.jpg', 'assets/images/van.jpg', 'assets/images/bus.jpg'];
 
   var STATUSES = [
     { id: 'New', label: 'New', color: 'var(--st-new)', hint: 'Needs a reply' },
