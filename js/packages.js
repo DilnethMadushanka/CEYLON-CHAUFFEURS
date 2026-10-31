@@ -1177,6 +1177,7 @@ function highlightPackageRoute(packageId) {
     return;
   }
   if (!leafletMap || typeof L === 'undefined') return;
+  activeRouteId = pkg.id;
 
   // Remove previous polyline
   if (activeRoutePolyline) {
@@ -1200,7 +1201,49 @@ function highlightPackageRoute(packageId) {
     }).addTo(leafletMap);
 
     leafletMap.fitBounds(activeRoutePolyline.getBounds(), { padding: [30, 30] });
+
+    // Swap the dashed line for the real road route (free OSRM service, no key; cached per browser)
+    const routeFor = pkg.id;
+    fetchRoadRoute(latlngs).then(road => {
+      if (!road || !leafletMap || activeRouteId !== routeFor) return;
+      if (activeRoutePolyline) leafletMap.removeLayer(activeRoutePolyline);
+      activeRoutePolyline = L.polyline(road, {
+        color: getMapColors().accent,
+        weight: 5,
+        opacity: 0.9,
+        lineJoin: 'round'
+      }).addTo(leafletMap);
+      leafletMap.fitBounds(activeRoutePolyline.getBounds(), { padding: [30, 30] });
+    });
   }
+}
+
+/**
+ * Road geometry between stops from the public OSRM router (free, no API key).
+ * Results are cached in localStorage so each route is fetched once per visitor.
+ */
+let activeRouteId = null;
+const ROAD_CACHE_KEY = 'cc_road_routes_v1';
+
+function fetchRoadRoute(latlngs) {
+  const key = latlngs.map(p => p[0].toFixed(3) + ',' + p[1].toFixed(3)).join(';');
+  let cache = {};
+  try { cache = JSON.parse(localStorage.getItem(ROAD_CACHE_KEY) || '{}'); } catch (e) { cache = {}; }
+  if (cache[key]) return Promise.resolve(cache[key]);
+  const coords = latlngs.map(p => p[1] + ',' + p[0]).join(';');
+  const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), 8000) : null;
+  return fetch('https://router.project-osrm.org/route/v1/driving/' + coords + '?overview=simplified&geometries=geojson', ctrl ? { signal: ctrl.signal } : {})
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const line = data && data.code === 'Ok' && data.routes && data.routes[0] && data.routes[0].geometry.coordinates;
+      if (!line || line.length < 2) return null;
+      const road = line.map(c => [Math.round(c[1] * 1e5) / 1e5, Math.round(c[0] * 1e5) / 1e5]);
+      try { cache[key] = road; localStorage.setItem(ROAD_CACHE_KEY, JSON.stringify(cache)); } catch (e) { /* storage full or blocked */ }
+      return road;
+    })
+    .catch(() => null)
+    .finally(() => { if (timer) clearTimeout(timer); });
 }
 
 /**

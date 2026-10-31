@@ -105,7 +105,7 @@ Other features: a live Overview with KPIs and charts, real-time "new inquiry" al
 
 ### Google Maps on the tour packages page
 
-The route map on `packages.html` uses Google Maps when a key is set in `js/firebase-config.js` (`window.CC_GOOGLE_MAPS_KEY`). Without a key, it uses the free OpenStreetMap map. Both versions show an **Open in Google Maps** button that opens the full tour route with directions.
+The route map on `packages.html` uses Google Maps when a key is set in `js/firebase-config.js` (`window.CC_GOOGLE_MAPS_KEY`). Without a key, it uses the free OpenStreetMap map, which still draws each tour along real roads using the free public OSRM router (no key, no card). A Google key is optional. Both versions show an **Open in Google Maps** button that opens the full tour route with directions.
 
 1. Go to <https://console.cloud.google.com>, pick the same project as Firebase (`ceylon-chauffer`), and open **Billing**. Add a card. Google requires one, but the Maps JavaScript API includes a large free monthly allowance, which a tour website normally stays within.
 2. Open **APIs & Services → Library** and enable **Maps JavaScript API** and **Directions API**. The second one draws the route along real roads instead of a dashed line.
