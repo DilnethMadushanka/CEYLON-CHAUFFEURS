@@ -103,6 +103,21 @@ Other features: a live Overview with KPIs and charts, real-time "new inquiry" al
 
 ---
 
+### Google Maps on the tour packages page
+
+The route map on `packages.html` uses Google Maps when a key is set in `js/firebase-config.js` (`window.CC_GOOGLE_MAPS_KEY`). Without a key, it uses the free OpenStreetMap map, which still draws each tour along real roads using the free public OSRM router (no key, no card). A Google key is optional. Both versions show an **Open in Google Maps** button that opens the full tour route with directions.
+
+1. Go to <https://console.cloud.google.com>, pick the same project as Firebase (`ceylon-chauffer`), and open **Billing**. Add a card. Google requires one, but the Maps JavaScript API includes a large free monthly allowance, which a tour website normally stays within.
+2. Open **APIs & Services → Library** and enable **Maps JavaScript API** and **Directions API**. The second one draws the route along real roads instead of a dashed line.
+3. Open **APIs & Services → Credentials → Create credentials → API key**.
+4. Click the new key and set these restrictions:
+   - **Application restrictions → Websites**: add `https://ceylonchauffeur.com/*`, `https://www.ceylonchauffeur.com/*` and `https://*.vercel.app/*`.
+   - **API restrictions**: allow only Maps JavaScript API and Directions API.
+5. Paste the key into `window.CC_GOOGLE_MAPS_KEY` in `js/firebase-config.js` and deploy.
+6. Optional, as a safety net: **Billing → Budgets & alerts**, add a budget of $1 so that you get an email if usage ever goes over the free allowance.
+
+If the key is wrong or blocked, the page switches back to the OpenStreetMap map by itself.
+
 ### About website images
 
 Open **Website images** in the admin to replace any photo on the site (hero, tour photos, fleet photos, logos). Each card has a ready-made AI image prompt and a **Replace** button. The package and vehicle editors also have an **Upload** button next to the photo field.
