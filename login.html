@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.add('js');</script>
+  <title>Sign in or Create an Account | Ceylon Chauffeurs</title>
+  <meta name="description" content="Sign in to your Ceylon Chauffeurs account with Google or email to save your details and plan private chauffeur tours across Sri Lanka faster.">
+  <meta name="robots" content="noindex, follow">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/images/sigiriya.jpg" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Main Navigation -->
+  <header class="main-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo" aria-label="Ceylon Chauffeurs home">
+        <span class="brand-mark"><img src="assets/images/logo-mark.png" alt="" class="brand-logo-img" width="225" height="192"></span>
+        <span class="brand-text">
+          <span class="brand-name">Ceylon Chauffeurs</span>
+          <span>Explore Sri Lanka in Luxury</span>
+        </span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="packages.html" class="nav-link">Tour Packages</a></li>
+        <li><a href="fleet.html" class="nav-link">Our Fleet</a></li>
+        <li><a href="booking.html" class="nav-link">Custom Itinerary</a></li>
+        <li><a href="reviews.html" class="nav-link">Trust & Reviews</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="booking.html" class="btn btn-primary btn-sm">
+          <i class="ph ph-calendar-check"></i> Get a Custom Quote
+        </a>
+        <a href="login.html" class="nav-account" data-account-link aria-label="Sign in or create an account" title="Sign in" aria-current="page">
+          <i class="ph ph-user-circle" aria-hidden="true"></i>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle Navigation" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="auth-page">
+    <div class="auth-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+
+    <div class="container auth-shell">
+      <!-- Left: cinematic photo panel -->
+      <aside class="auth-visual" aria-hidden="true">
+        <div class="auth-visual-inner">
+          <img src="assets/images/sigiriya.jpg" alt="" width="1376" height="768" class="auth-visual-img" fetchpriority="high">
+          <div class="auth-visual-copy">
+            <span class="auth-chip"><i class="ph ph-seal-check"></i> Traveller Lounge</span>
+            <h2>Your Sri Lanka journey, saved in one place.</h2>
+            <ul class="auth-perks">
+              <li><i class="ph ph-check-circle"></i> Your details fill in by themselves on every quote</li>
+              <li><i class="ph ph-map-trifold"></i> Plan tours across the island at your own pace</li>
+              <li><i class="ph ph-shield-check"></i> Private and secure, we never share your details</li>
+            </ul>
+          </div>
+          <div class="auth-float-card">
+            <div class="stars-row"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+            <strong>4.98 / 5</strong>
+            <span>from 1,450+ island tours</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right: sign-in card -->
+      <section class="auth-panel" aria-labelledby="auth-title">
+        <div class="auth-card">
+          <div class="auth-card-inner">
+
+            <!-- Signed-out view -->
+            <div class="auth-view" id="auth-view" data-mode="signin">
+              <span class="auth-eyebrow"><i class="ph ph-steering-wheel"></i> Ceylon Chauffeurs account</span>
+              <h1 id="auth-title">
+                <span class="auth-title-text" data-for="signin">Welcome back</span>
+                <span class="auth-title-text" data-for="register">Create your account</span>
+                <span class="auth-title-text" data-for="reset">Reset your password</span>
+              </h1>
+              <p class="auth-sub">
+                <span data-for="signin">Sign in to plan your next trip around Sri Lanka.</span>
+                <span data-for="register">It takes less than a minute. Free, with no spam.</span>
+                <span data-for="reset">Enter your email and we will send you a link to set a new password.</span>
+              </p>
+
+              <div class="auth-tabs" role="tablist" aria-label="Sign in or register">
+                <span class="auth-tabs-indicator" aria-hidden="true"></span>
+                <button type="button" role="tab" class="auth-tab" id="tab-signin" data-mode-btn="signin" aria-selected="true" aria-controls="form-signin">Sign in</button>
+                <button type="button" role="tab" class="auth-tab" id="tab-register" data-mode-btn="register" aria-selected="false" aria-controls="form-register">Create account</button>
+              </div>
+
+              <div class="auth-social" data-for="signin register">
+                <button type="button" class="auth-google" id="google-btn">
+                  <svg class="auth-google-logo" viewBox="0 0 48 48" width="22" height="22" aria-hidden="true">
+                    <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/>
+                    <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+                    <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/>
+                    <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/>
+                  </svg>
+                  <span class="auth-google-label">Continue with Google</span>
+                  <span class="auth-spinner" aria-hidden="true"></span>
+                </button>
+                <div class="auth-divider"><span>or use your email</span></div>
+              </div>
+
+              <!-- Sign in -->
+              <form class="auth-form" id="form-signin" data-for="signin" role="tabpanel" aria-labelledby="tab-signin" novalidate>
+                <div class="auth-field">
+                  <label for="signin-email">Email address</label>
+                  <div class="auth-input">
+                    <i class="ph ph-envelope-simple" aria-hidden="true"></i>
+                    <input type="email" id="signin-email" class="form-control" autocomplete="email" placeholder="you@example.com" required>
+                  </div>
+                </div>
+                <div class="auth-field">
+                  <div class="auth-label-row">
+                    <label for="signin-password">Password</label>
+                    <button type="button" class="auth-text-btn" data-mode-btn="reset">Forgot password?</button>
+                  </div>
+                  <div class="auth-input">
+                    <i class="ph ph-lock-simple" aria-hidden="true"></i>
+                    <input type="password" id="signin-password" class="form-control" autocomplete="current-password" placeholder="Your password" required>
+                    <button type="button" class="auth-reveal" data-reveal-for="signin-password" aria-label="Show password">Show</button>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">
+                  <span class="auth-submit-label">Sign in</span>
+                  <span class="auth-spinner" aria-hidden="true"></span>
+                </button>
+              </form>
+
+              <!-- Register -->
+              <form class="auth-form" id="form-register" data-for="register" role="tabpanel" aria-labelledby="tab-register" novalidate>
+                <div class="auth-field">
+                  <label for="register-name">Full name</label>
+                  <div class="auth-input">
+                    <i class="ph ph-identification-badge" aria-hidden="true"></i>
+                    <input type="text" id="register-name" class="form-control" autocomplete="name" placeholder="e.g. Emma Watson" maxlength="120" required>
+                  </div>
+                </div>
+                <div class="auth-field">
+                  <label for="register-email">Email address</label>
+                  <div class="auth-input">
+                    <i class="ph ph-envelope-simple" aria-hidden="true"></i>
+                    <input type="email" id="register-email" class="form-control" autocomplete="email" placeholder="you@example.com" required>
+                  </div>
+                </div>
+                <div class="auth-field">
+                  <label for="register-password">Password</label>
+                  <div class="auth-input">
+                    <i class="ph ph-lock-simple" aria-hidden="true"></i>
+                    <input type="password" id="register-password" class="form-control" autocomplete="new-password" placeholder="At least 8 characters" minlength="8" required>
+                    <button type="button" class="auth-reveal" data-reveal-for="register-password" aria-label="Show password">Show</button>
+                  </div>
+                  <div class="auth-strength" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                  <p class="auth-hint" id="strength-hint">Use 8 or more characters with a mix of letters and numbers.</p>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">
+                  <span class="auth-submit-label">Create account</span>
+                  <span class="auth-spinner" aria-hidden="true"></span>
+                </button>
+                <p class="auth-legal">By creating an account you agree to our <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>.</p>
+              </form>
+
+              <!-- Password reset -->
+              <form class="auth-form" id="form-reset" data-for="reset" novalidate>
+                <div class="auth-field">
+                  <label for="reset-email">Email address</label>
+                  <div class="auth-input">
+                    <i class="ph ph-envelope-simple" aria-hidden="true"></i>
+                    <input type="email" id="reset-email" class="form-control" autocomplete="email" placeholder="you@example.com" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary auth-submit">
+                  <span class="auth-submit-label">Send reset link</span>
+                  <span class="auth-spinner" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="auth-text-btn auth-back" data-mode-btn="signin">Back to sign in</button>
+              </form>
+
+              <div class="auth-alert" id="auth-alert" role="status" aria-live="polite" hidden></div>
+            </div>
+
+            <!-- Signed-in view -->
+            <div class="auth-account" id="auth-account" hidden>
+              <div class="auth-avatar" id="account-avatar"></div>
+              <span class="auth-eyebrow"><i class="ph ph-user-check"></i> You are signed in</span>
+              <h1 class="auth-hello">Hello, <span id="account-name">traveller</span></h1>
+              <p class="auth-sub" id="account-email"></p>
+              <div class="auth-badges">
+                <span class="auth-badge" id="account-provider"></span>
+                <span class="auth-badge" id="account-verified"></span>
+              </div>
+
+              <div class="auth-actions">
+                <a href="booking.html" class="auth-action">
+                  <i class="ph ph-pencil-simple-line"></i>
+                  <span><strong>Plan a custom trip</strong><small>Your name and email are filled in for you</small></span>
+                  <i class="ph ph-arrow-up-right auth-action-go"></i>
+                </a>
+                <a href="packages.html" class="auth-action">
+                  <i class="ph ph-map-trifold"></i>
+                  <span><strong>Browse tour packages</strong><small>4 to 21 day routes around the island</small></span>
+                  <i class="ph ph-arrow-up-right auth-action-go"></i>
+                </a>
+                <button type="button" class="auth-action action-whatsapp-btn" data-whatsapp-msg="Hi Ceylon Chauffeur, I have an account on your website and would like help planning my trip to Sri Lanka.">
+                  <i class="ph ph-whatsapp-logo"></i>
+                  <span><strong>Chat with our concierge</strong><small>On WhatsApp, 24/7</small></span>
+                  <i class="ph ph-arrow-up-right auth-action-go"></i>
+                </button>
+              </div>
+
+              <button type="button" class="btn btn-outline-emerald auth-signout" id="signout-btn">Sign out</button>
+            </div>
+
+          </div>
+        </div>
+        <p class="auth-trust"><i class="ph ph-lock-simple"></i> Secure sign-in by Google Firebase. We never post anything or share your details.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="auth-footer">
+    <div class="container">
+      <p>&copy; 2026 Ceylon Chauffeur (ceylonchauffeur.com). Registered under Sri Lanka Tourism Development Authority (SLTDA).</p>
+      <div class="footer-legal">
+        <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Booking Terms</a>
+        <a href="mailto:bookings@ceylonchauffeur.com">Email Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/site-sync.js"></script>
+  <script src="js/account-nav.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

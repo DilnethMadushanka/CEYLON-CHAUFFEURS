@@ -45,6 +45,7 @@ What the rules allow:
 | `bookings` | Create a new inquiry only (validated) | Read, edit, delete |
 | `packages`, `vehicles`, `reviews`, `faqs`, `settings` | Read | Full access |
 | `visits` (visitor analytics) | Add an anonymous page-view record only | Read, delete |
+| `customers` (website accounts) | Each signed-in customer reads and writes only their own profile | Read, delete |
 | `drivers` | No access | Full access |
 | `admins` | No access | Full access |
 
@@ -130,6 +131,16 @@ Each page view on the public site writes one small, anonymous record to `visits`
 
 The Visitors page loads the last 60 days. On the free plan (50,000 reads/day), this is comfortable for a few hundred visits a day. If traffic grows a lot, delete old `visits` documents, or ask for a daily-summary version.
 
+### Customer accounts (login.html)
+
+Visitors can create an account or sign in at **`/login.html`** (the round person icon in the header), with **Google** or with an email and password. Their name and email then fill in by themselves on the booking form. Customer accounts never get dashboard access: `/admin/` only lets in users listed in the `admins` collection, and the rules stop customers writing there.
+
+One-time setup in the Firebase console:
+
+1. **Authentication → Sign-in method → Add new provider → Google** → Enable, pick a support email, **Save**. (Email/Password is already on for the admin login.)
+2. **Authentication → Settings → Authorized domains**: make sure your website domain is listed, for example `ceylonchauffeur.com` and `www.ceylonchauffeur.com` (plus your `*.vercel.app` / `github.io` address if you use one). `localhost` is there by default for testing.
+3. Publish the updated **`firestore.rules`** so each customer's small profile (`customers/{uid}`) can be saved. Sign-in still works before this, only the profile is skipped.
+
 ## සිංහලෙන් කෙටියෙන්
 
 1. <https://console.firebase.google.com> එකේ project එකක් හදන්න. **Firestore Database** සහ **Authentication → Email/Password** enable කරන්න.
@@ -137,3 +148,4 @@ The Visitors page loads the last 60 days. On the free plan (50,000 reads/day), t
 3. Firestore → **Rules** එකට **`firestore.rules`** file එකේ content එක paste කරලා **Publish** කරන්න.
 4. Authentication → **Add user** කරලා ඔයාගේ email/password හදන්න. ඊට පස්සේ Firestore එකේ `admins` කියලා collection එකක් හදලා, document ID එක ඔයාගේ **UID** එක දාලා `role = owner` field එක එකතු කරන්න.
 5. `/admin/` එකට log වෙලා **Import website content** button එක ඔබන්න. එතැන් සිට dashboard එකේ කරන හැම වෙනස්කමක්ම website එකේ පෙන්නනවා. Website එකෙන් එන booking ද live dashboard එකට එනවා. Website එකට කී දෙනෙක් ආවද, කොහේ ඉඳන්ද, මොන page බැලුවද කියලා **Website visitors** page එකේ බලන්න පුළුවන්.
+6. Customer login (`login.html`) එකට Google sign-in වැඩ කරන්න: Firebase console → **Authentication → Sign-in method → Google** enable කරන්න. **Authentication → Settings → Authorized domains** එකේ ඔයාගේ website domain එක (`ceylonchauffeur.com`) තියෙනවද බලන්න. අලුත් `firestore.rules` එකත් ආයෙත් Publish කරන්න. Customer account එකකට admin dashboard එකට යන්න බෑ, `admins` collection එකේ ඉන්න අයට විතරයි.
