@@ -267,6 +267,7 @@
         if (col === 'bookings') notifyNewBookings(rows);
         S.data[col] = sortRows(col, rows);
         S.ready[col] = true;
+        if (col === 'packages') upgradePackageImages(rows);
         updateBadges();
         App.rerender();
       }, function (err) {
@@ -275,6 +276,25 @@
         App.rerender();
       }));
     });
+  }
+
+  /* Packages imported before their own photos existed still point at the old shared
+     photo. Move them to the new one, once, only while they still use the old default. */
+  var PACKAGE_IMAGE_UPGRADES = {
+    'pkg-4d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-minneriya.jpg'],
+    'pkg-7d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-yala.jpg'],
+    'pkg-10d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-wilpattu.jpg']
+  };
+  var upgradingImages = false;
+  function upgradePackageImages(rows) {
+    if (upgradingImages || Store.mode !== 'firebase') return;
+    var todo = rows.filter(function (p) { var u = PACKAGE_IMAGE_UPGRADES[p.id]; return u && p.image === u[0]; });
+    if (!todo.length) return;
+    upgradingImages = true;
+    Promise.all(todo.map(function (p) { return Store.save('packages', p.id, { image: PACKAGE_IMAGE_UPGRADES[p.id][1] }); }))
+      .then(function () { UI.toast('Safari package photos updated', 'success'); })
+      .catch(function (e) { console.warn('Package photo upgrade failed', e); })
+      .then(function () { upgradingImages = false; });
   }
 
   function subscribeVisits() {
