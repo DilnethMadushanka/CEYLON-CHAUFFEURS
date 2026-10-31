@@ -958,12 +958,12 @@ function initLeafletMap() {
       scrollWheelZoom: false
     });
 
-    // Elegant CartoDB Voyager / OSM map tiles
+    // Free OpenStreetMap tiles (no API key). Dark mode darkens them with a CSS filter (.map-tiles-dark).
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const tileStyle = prefersDark ? 'dark_all' : 'rastertiles/voyager';
-    L.tileLayer(`https://{s}.basemaps.cartocdn.com/${tileStyle}/{z}/{x}/{y}{r}.png`, {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      maxZoom: 18
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+      className: prefersDark ? 'map-tiles-dark' : 'map-tiles-light'
     }).addTo(leafletMap);
 
     // Add destination markers
