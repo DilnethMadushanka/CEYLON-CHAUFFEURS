@@ -133,10 +133,25 @@
   Promise.all([sync.ready, domReady()]).then(function () {
     return Promise.all([
       db.collection('settings').doc('site').get().then(function (s) { return s.exists ? s.data() : null; }).catch(function () { return null; }),
-      getAll('vehicles'), getAll('packages'), getAll('reviews'), getAll('faqs')
+      getAll('vehicles'), getAll('packages'), getAll('reviews'), getAll('faqs'),
+      db.collection('settings').doc('images').get().then(function (s) { return s.exists ? (s.data().map || {}) : {}; }).catch(function () { return {}; })
     ]);
   }).then(function (res) {
+    // Resolve every "media:{id}" image reference (photos uploaded in the admin) before applying.
+    var refs = {};
+    Object.keys(res[5]).forEach(function (k) { refs[res[5][k]] = 1; });
+    res[2].forEach(function (p) { if (p.image) refs[p.image] = 1; });
+    var ids = Object.keys(refs).filter(function (r) { return r.indexOf('media:') === 0; });
+    return Promise.all(ids.map(function (r) {
+      return db.collection('media').doc(r.slice(6)).get().then(function (d) { return [r, d.exists ? d.data().data : null]; }).catch(function () { return [r, null]; });
+    })).then(function (pairs) {
+      pairs.forEach(function (p) { if (p[1]) mediaCache[p[0]] = p[1]; });
+      return res;
+    });
+  }).then(function (res) {
     var settings = res[0], vehicles = res[1], packages = res[2], reviews = res[3], faqs = res[4];
+    try { applyImages(res[5]); } catch (e) { console.warn(e); }
+    packages.forEach(function (p) { if (p.image) p.image = resolveMedia(p.image) || p.image; });
     try { if (settings) applySettings(settings); } catch (e) { console.warn(e); }
     try { if (vehicles.length) applyVehicles(vehicles); } catch (e) { console.warn(e); }
     try { if (packages.length) applyPackages(packages.filter(function (p) { return p.active !== false; }).sort(byOrder)); } catch (e) { console.warn(e); }
@@ -148,6 +163,62 @@
     window.dispatchEvent(new CustomEvent('ceylon_content_synced'));
   }).catch(function (err) {
     console.warn('[Ceylon Chauffeurs] Firebase sync skipped:', err);
+  });
+
+  /* ---------------- Images replaced in the admin ---------------- */
+  var mediaCache = {};
+  var imageMap = {};
+  var IMG_RE = /assets\/images\/([\w.-]+)$/;
+
+  function resolveMedia(v) {
+    if (!v) return '';
+    if (v.indexOf('media:') === 0) return mediaCache[v] || '';
+    return v;
+  }
+
+  function swapImg(img) {
+    var src = img.getAttribute('data-cc-orig') || img.getAttribute('src') || '';
+    var m = src.match(IMG_RE);
+    if (!m || !imageMap[m[1]]) return;
+    var next = resolveMedia(imageMap[m[1]]);
+    if (!next || img.getAttribute('src') === next) return;
+    img.setAttribute('data-cc-orig', src);
+    img.removeAttribute('srcset');
+    img.setAttribute('src', next);
+  }
+
+  function applyImages(map) {
+    imageMap = map || {};
+    // Remember plain URL overrides so the next page load can swap images instantly.
+    try {
+      var quick = {};
+      Object.keys(imageMap).forEach(function (k) { if (imageMap[k].indexOf('media:') !== 0) quick[k] = imageMap[k]; });
+      localStorage.setItem('cc_img_map', JSON.stringify(quick));
+    } catch (e) { /* ignore */ }
+    if (!Object.keys(imageMap).length) return;
+    document.querySelectorAll('img').forEach(swapImg);
+    document.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]').forEach(function () { /* favicons stay as files */ });
+    if (window.MutationObserver && !applyImages._obs) {
+      applyImages._obs = new MutationObserver(function (muts) {
+        muts.forEach(function (m) {
+          m.addedNodes.forEach(function (n) {
+            if (n.nodeType !== 1) return;
+            if (n.tagName === 'IMG') swapImg(n);
+            else n.querySelectorAll && n.querySelectorAll('img').forEach(swapImg);
+          });
+          if (m.type === 'attributes' && m.target.tagName === 'IMG' && !m.target.hasAttribute('data-cc-orig')) swapImg(m.target);
+        });
+      });
+      applyImages._obs.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+    }
+  }
+
+  // Instant swap from the cached map (before Firebase answers)
+  domReady().then(function () {
+    try {
+      var quick = JSON.parse(localStorage.getItem('cc_img_map') || '{}');
+      if (Object.keys(quick).length) { imageMap = quick; document.querySelectorAll('img').forEach(swapImg); }
+    } catch (e) { /* ignore */ }
   });
 
   /* ---------------- Settings ---------------- */

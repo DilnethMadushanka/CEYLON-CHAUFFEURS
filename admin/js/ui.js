@@ -219,7 +219,7 @@
       case 'image':
         var imgs = window.CC_SITE_IMAGES || [];
         input = '<div class="image-field"><div class="image-preview"><img src="' + esc(resolveImg(v)) + '" alt="" onerror="this.style.opacity=0"></div><div class="image-inputs">' +
-          '<input type="text" id="' + id + '" name="' + f.name + '" value="' + esc(v) + '" placeholder="assets/images/… or https://…">' +
+          '<div class="image-row"><input type="text" id="' + id + '" name="' + f.name + '" value="' + esc(v) + '" placeholder="assets/images/… or https://…"><label class="btn btn-ghost btn-sm upload-btn">' + icon('image') + '<span>Upload</span><input type="file" accept="image/*" data-upload hidden></label></div>' +
           '<div class="chip-row">' + imgs.map(function (src) { return '<button type="button" class="img-chip" data-img="' + src + '"><img src="../' + src + '" alt=""></button>'; }).join('') + '</div></div></div>';
         break;
       case 'stars':
@@ -247,6 +247,17 @@
       input.addEventListener('input', sync);
       wrap.querySelectorAll('[data-img]').forEach(function (b) {
         b.addEventListener('click', function () { input.value = b.getAttribute('data-img'); sync(); });
+      });
+      var up = wrap.querySelector('[data-upload]');
+      if (up) up.addEventListener('change', function () {
+        var file = up.files[0]; if (!file || !window.CCMedia) return;
+        var btn = up.closest('.upload-btn'); var lbl = btn.querySelector('span');
+        btn.classList.add('is-loading-soft'); lbl.textContent = 'Optimising…';
+        img.style.opacity = 1; img.src = URL.createObjectURL(file);
+        window.CCMedia.upload(file, { slot: input.name, onStatus: function (t) { lbl.textContent = t; } })
+          .then(function (url) { input.value = url; toast('Photo uploaded. Press Save to apply it.'); })
+          .catch(function (err) { toast(err.message || 'Upload failed', 'error'); sync(); })
+          .then(function () { btn.classList.remove('is-loading-soft'); lbl.textContent = 'Upload'; up.value = ''; });
       });
     });
     root.querySelectorAll('[data-stars]').forEach(function (wrap) {
