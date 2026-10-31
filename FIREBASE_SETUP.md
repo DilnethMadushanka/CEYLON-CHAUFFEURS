@@ -44,6 +44,7 @@ What the rules allow:
 | --- | --- | --- |
 | `bookings` | Create a new inquiry only (validated) | Read, edit, delete |
 | `packages`, `vehicles`, `reviews`, `faqs`, `settings` | Read | Full access |
+| `visits` (visitor analytics) | Add an anonymous page-view record only | Read, delete |
 | `drivers` | No access | Full access |
 | `admins` | No access | Full access |
 
@@ -95,11 +96,18 @@ firebase deploy               # deploys hosting + firestore.rules
 | Driver-guides | **Chauffeurs**: profiles, languages, availability, who is on tour now, next tour |
 | Reviews (`reviews.html`, home page) | **Reviews**: add, edit, publish/hide, feature, star rating, source |
 | FAQ accordion (`reviews.html`) | **FAQs**: add, edit, reorder, publish/hide |
+| Website traffic | **Website visitors**: visitors today / 7 / 30 days, online now, page views, daily chart, top pages, sources (Google, Instagram, TripAdvisor…), countries, devices, new vs returning, live feed, visit→inquiry rate |
 | Contact details, WhatsApp number, currency switcher | **Settings**: business details, currency rates, announcement bar, pause online bookings, JSON backup |
 
 Other features: a live Overview with KPIs and charts, real-time "new inquiry" alerts, Ctrl/Cmd + K quick search, light and dark themes, and a mobile layout with a bottom tab bar.
 
 ---
+
+### About visitor analytics
+
+Each page view on the public site writes one small, anonymous record to `visits`. The record holds the page, the source site, the device type, the time zone and a random browser ID. It does not store names, emails or IP addresses. The country is estimated from the visitor's time zone.
+
+The Visitors page loads the last 60 days. On the free plan (50,000 reads/day), this is comfortable for a few hundred visits a day. If traffic grows a lot, delete old `visits` documents, or ask for a daily-summary version.
 
 ## සිංහලෙන් කෙටියෙන්
 
@@ -107,4 +115,4 @@ Other features: a live Overview with KPIs and charts, real-time "new inquiry" al
 2. Project settings → Web app (`</>`) එකේ තියෙන `firebaseConfig` අගයන් **`js/firebase-config.js`** file එකට paste කරන්න.
 3. Firestore → **Rules** එකට **`firestore.rules`** file එකේ content එක paste කරලා **Publish** කරන්න.
 4. Authentication → **Add user** කරලා ඔයාගේ email/password හදන්න. ඊට පස්සේ Firestore එකේ `admins` කියලා collection එකක් හදලා, document ID එක ඔයාගේ **UID** එක දාලා `role = owner` field එක එකතු කරන්න.
-5. `/admin/` එකට log වෙලා **Import website content** button එක ඔබන්න. එතැන් සිට dashboard එකේ කරන හැම වෙනස්කමක්ම website එකේ පෙන්නනවා. Website එකෙන් එන booking ද live dashboard එකට එනවා.
+5. `/admin/` එකට log වෙලා **Import website content** button එක ඔබන්න. එතැන් සිට dashboard එකේ කරන හැම වෙනස්කමක්ම website එකේ පෙන්නනවා. Website එකෙන් එන booking ද live dashboard එකට එනවා. Website එකට කී දෙනෙක් ආවද, කොහේ ඉඳන්ද, මොන page බැලුවද කියලා **Website visitors** page එකේ බලන්න පුළුවන්.

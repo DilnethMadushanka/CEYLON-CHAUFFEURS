@@ -40,7 +40,55 @@
   };
   window.CCSync = sync;
 
-  if (!sync.enabled) { sync.ready = Promise.resolve(); return; }
+  /* ---------------- Visitor analytics ----------------
+   * One small record per page view: page, source, device, time zone, language and an
+   * anonymous browser id (no names, emails or IP addresses). Shown in Admin → Visitors.
+   */
+  function buildVisit() {
+    var ua = navigator.userAgent || '';
+    if (/bot|crawl|spider|slurp|lighthouse|headless/i.test(ua)) return null;
+    var vid = null, isNew = false, session = false;
+    try {
+      vid = localStorage.getItem('cc_vid');
+      if (!vid) { vid = 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); localStorage.setItem('cc_vid', vid); isNew = true; }
+      if (!sessionStorage.getItem('cc_sess')) { sessionStorage.setItem('cc_sess', '1'); session = true; }
+    } catch (e) { vid = vid || 'anon'; }
+    var ref = '';
+    try { if (document.referrer) { var r = new URL(document.referrer); if (r.host !== location.host) ref = r.host.replace(/^www\./, ''); } } catch (e) { /* ignore */ }
+    var utm = '';
+    try { utm = new URLSearchParams(location.search).get('utm_source') || ''; } catch (e) { /* ignore */ }
+    var w = Math.min(screen.width || 0, window.innerWidth || 9999);
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* ignore */ }
+    var path = location.pathname.replace(/\/index\.html$/, '/').split('/').pop() || 'index.html';
+    return {
+      at: new Date().toISOString(),
+      page: path.slice(0, 80),
+      title: String(document.title || '').split('|')[0].trim().slice(0, 120),
+      ref: (utm || ref).slice(0, 80),
+      device: /iPad|Tablet/i.test(ua) || (w >= 600 && w < 1024 && /Mobi|Android/i.test(ua)) ? 'tablet' : (/Mobi|Android|iPhone/i.test(ua) || w < 600 ? 'mobile' : 'desktop'),
+      tz: tz.slice(0, 60),
+      lang: String(navigator.language || '').slice(0, 12),
+      vid: String(vid).slice(0, 40),
+      isNew: isNew,
+      session: session
+    };
+  }
+
+  var visit = buildVisit();
+
+  if (!sync.enabled) {
+    sync.ready = Promise.resolve();
+    // Demo mode: keep visits in this browser so the admin demo can show them.
+    if (visit) {
+      try {
+        var list = JSON.parse(localStorage.getItem('cc_demo_visits') || '[]');
+        list.push(visit);
+        localStorage.setItem('cc_demo_visits', JSON.stringify(list.slice(-3000)));
+      } catch (e) { /* ignore */ }
+    }
+    return;
+  }
 
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
@@ -57,6 +105,11 @@
       var app = firebase.apps.length ? firebase.app() : firebase.initializeApp(window.CC_FIREBASE_CONFIG);
       db = app.firestore();
     });
+
+  if (visit) {
+    sync.ready.then(function () { return db.collection('visits').add(visit); })
+      .catch(function (err) { console.warn('[Ceylon Chauffeurs] Visit not recorded:', err && err.code); });
+  }
 
   function getAll(col) {
     return db.collection(col).get().then(function (snap) {

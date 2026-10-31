@@ -123,6 +123,42 @@
     });
   }
 
+  // Sample traffic for demo mode (stable per browser, regenerated daily)
+  var _demoVisits = null;
+  function demoVisits() {
+    if (_demoVisits) return _demoVisits;
+    var seedN = 7;
+    function rnd() { seedN = (seedN * 16807) % 2147483647; return (seedN - 1) / 2147483646; }
+    function pick(arr) { return arr[Math.floor(rnd() * arr.length)]; }
+    var pages = ['index.html', 'index.html', 'index.html', 'packages.html', 'packages.html', 'fleet.html', 'booking.html', 'reviews.html'];
+    var refs = ['', '', '', 'google.com', 'google.com', 'instagram.com', 'facebook.com', 'tripadvisor.com', 'l.wa.me'];
+    var tzs = ['Europe/London', 'Europe/Berlin', 'Europe/Paris', 'Asia/Colombo', 'Asia/Colombo', 'Australia/Sydney', 'America/New_York', 'Europe/Moscow', 'Asia/Shanghai', 'Asia/Kolkata'];
+    var out = [];
+    var now = Date.now();
+    var visitors = [];
+    for (var d = 29; d >= 0; d--) {
+      var dayStart = now - d * 86400000;
+      var n = Math.round(14 + rnd() * 18 + (29 - d) * 0.6);
+      for (var i = 0; i < n; i++) {
+        var returning = visitors.length > 20 && rnd() < 0.3;
+        var vid = returning ? pick(visitors) : 'demo' + out.length;
+        if (!returning) visitors.push(vid);
+        var t = dayStart - rnd() * 86400000 * (d === 0 ? 0.4 : 1);
+        var device = rnd() < 0.62 ? 'mobile' : (rnd() < 0.85 ? 'desktop' : 'tablet');
+        var ref = pick(refs), tz = pick(tzs);
+        var views = 1 + Math.floor(rnd() * 3);
+        for (var v = 0; v < views; v++) {
+          out.push({ at: new Date(t + v * 60000).toISOString(), page: v === 0 ? pick(pages) : pick(pages.slice(3)), ref: v === 0 ? ref : '', device: device, tz: tz, lang: 'en', vid: vid, isNew: !returning && v === 0, session: v === 0 });
+        }
+      }
+    }
+    for (var l = 0; l < 3; l++) {
+      out.push({ at: new Date(now - (l + 1) * 70000).toISOString(), page: ['packages.html', 'index.html', 'booking.html'][l], ref: ['google.com', '', 'instagram.com'][l], device: l === 1 ? 'desktop' : 'mobile', tz: ['Europe/London', 'Europe/Berlin', 'Australia/Sydney'][l], lang: 'en', vid: 'demo-live-' + l, isNew: true, session: true });
+    }
+    _demoVisits = out;
+    return out;
+  }
+
   function defaultContent(includeDemoBookings) {
     var out = {
       packages: (seed.packages || []).map(clone),
@@ -327,6 +363,25 @@
         unsub();
         listeners[col] = listeners[col].filter(function (f) { return f !== cb; });
       };
+    },
+
+    /** Website visits from the last `days` days (live). */
+    subscribeVisits: function (days, cb, onError) {
+      var since = new Date(Date.now() - days * 86400000).toISOString();
+      if (mode === 'demo') {
+        function read() {
+          var real = [];
+          try { real = JSON.parse(localStorage.getItem('cc_demo_visits') || '[]'); } catch (e) { real = []; }
+          return demoVisits().concat(real).filter(function (v) { return v.at >= since; });
+        }
+        setTimeout(function () { cb(read()); }, 0);
+        var onStorage = function (e) { if (e.key === 'cc_demo_visits') cb(read()); };
+        window.addEventListener('storage', onStorage);
+        return function () { window.removeEventListener('storage', onStorage); };
+      }
+      return db.collection('visits').where('at', '>=', since).onSnapshot(function (snap) {
+        cb(snap.docs.map(function (d) { return d.data(); }));
+      }, function (err) { console.error('visits', err); if (onError) onError(err); });
     },
 
     /** Create or merge a document. Returns the id. */

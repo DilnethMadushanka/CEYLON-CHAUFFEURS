@@ -51,6 +51,18 @@ service cloud.firestore {
       );
     }
 
+    // Visitor analytics: the website may only ADD an anonymous page-view record.
+    match /visits/{id} {
+      allow read, delete: if isAdmin();
+      allow update: if false;
+      allow create: if request.resource.data.keys().hasOnly(['at', 'page', 'title', 'ref', 'device', 'tz', 'lang', 'vid', 'isNew', 'session'])
+        && request.resource.data.at is string && request.resource.data.at.size() <= 30
+        && request.resource.data.vid is string && request.resource.data.vid.size() <= 40
+        && request.resource.data.device in ['mobile', 'tablet', 'desktop']
+        && str('page', 80) && str('title', 120) && str('ref', 80) && str('tz', 60) && str('lang', 12)
+        && request.resource.data.isNew is bool && request.resource.data.session is bool;
+    }
+
     // Website content: anyone can read (the public site loads it), only admins can change it.
     match /packages/{id} { allow read: if true; allow write: if isAdmin(); }
     match /vehicles/{id} { allow read: if true; allow write: if isAdmin(); }

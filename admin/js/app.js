@@ -29,6 +29,7 @@
     { id: 'overview', label: 'Overview', icon: 'dashboard', group: 'main' },
     { id: 'bookings', label: 'Bookings', icon: 'inbox', group: 'main', badge: true },
     { id: 'calendar', label: 'Tour calendar', icon: 'calendar', group: 'main' },
+    { id: 'visitors', label: 'Website visitors', icon: 'eye', group: 'main', live: true },
     { id: 'packages', label: 'Tour packages', icon: 'map', group: 'content' },
     { id: 'fleet', label: 'Fleet & prices', icon: 'car', group: 'content' },
     { id: 'drivers', label: 'Chauffeurs', icon: 'wheel', group: 'content' },
@@ -40,7 +41,7 @@
   var S = {
     user: null,
     ready: {},
-    data: { bookings: [], packages: [], vehicles: [], drivers: [], reviews: [], faqs: [], settings: [] },
+    data: { bookings: [], packages: [], vehicles: [], drivers: [], reviews: [], faqs: [], settings: [], visits: [] },
     route: 'overview',
     view: null,
     unsubs: [],
@@ -194,14 +195,14 @@
     Object.keys(groups).forEach(function (g) {
       html += '<p class="nav-group">' + groups[g] + '</p>';
       NAV.filter(function (n) { return n.group === g; }).forEach(function (n) {
-        html += '<a href="#/' + n.id + '" class="nav-link" data-route="' + n.id + '">' + icon(n.icon) + '<span>' + n.label + '</span>' + (n.badge ? '<b class="nav-badge" data-new-count hidden>0</b>' : '') + '</a>';
+        html += '<a href="#/' + n.id + '" class="nav-link" data-route="' + n.id + '">' + icon(n.icon) + '<span>' + n.label + '</span>' + (n.badge ? '<b class="nav-badge" data-new-count hidden>0</b>' : '') + (n.live ? '<b class="nav-live" data-live-count hidden>0</b>' : '') + '</a>';
       });
     });
     nav.innerHTML = html;
 
     // Mobile bottom tab bar
-    var tabs = ['overview', 'bookings', 'calendar', 'packages'];
-    var short = { overview: 'Overview', bookings: 'Bookings', calendar: 'Calendar', packages: 'Tours' };
+    var tabs = ['overview', 'bookings', 'visitors', 'calendar'];
+    var short = { overview: 'Overview', bookings: 'Bookings', visitors: 'Visitors', calendar: 'Calendar' };
     document.getElementById('tabbar').innerHTML = tabs.map(function (id) {
       var n = NAV.filter(function (x) { return x.id === id; })[0];
       return '<a href="#/' + id + '" data-route="' + id + '">' + icon(n.icon) + '<span>' + short[id] + '</span>' + (n.badge ? '<b class="nav-badge" data-new-count hidden>0</b>' : '') + '</a>';
@@ -259,6 +260,7 @@
   }
 
   function subscribeAll() {
+    subscribeVisits();
     Store.collections.forEach(function (col) {
       S.unsubs.push(Store.subscribe(col, function (rows) {
         if (col === 'bookings') notifyNewBookings(rows);
@@ -272,6 +274,27 @@
         App.rerender();
       }));
     });
+  }
+
+  function subscribeVisits() {
+    S.unsubs.push(Store.subscribeVisits(60, function (rows) {
+      S.data.visits = rows;
+      S.ready.visits = true;
+      updateLive();
+      if (S.route === 'visitors' || S.route === 'overview') App.rerender();
+    }, function (err) {
+      S.ready.visits = true;
+      console.warn('Visits unavailable', err);
+      App.rerender();
+    }));
+    var t = setInterval(updateLive, 30000);
+    S.unsubs.push(function () { clearInterval(t); });
+  }
+
+  function updateLive() {
+    if (!App.visitSummary) return;
+    var n = App.visitSummary().live;
+    document.querySelectorAll('[data-live-count]').forEach(function (el) { el.textContent = n + ' live'; el.hidden = !n; });
   }
 
   function sortRows(col, rows) {
@@ -402,11 +425,14 @@
       var hour = now.getHours();
       var greet = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
       var emptyDb = Store.mode === 'firebase' && S.ready.packages && !D.packages.length;
+      var vs = App.visitSummary ? App.visitSummary() : { today: 0, views: 0, live: 0 };
+      var visitLine = '<a class="visit-strip" href="#/visitors">' + icon('eye') + '<span><b>' + vs.today + '</b> visitors today</span><span><b>' + vs.views + '</b> page views</span>' + (vs.live ? '<span class="live-dot"><i></i><b>' + vs.live + '</b> online now</span>' : '') + icon('right', 'chev') + '</a>';
 
       host.innerHTML =
         App.pageHead(now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }), greet + ', ' + (S.user.email || '').split('@')[0],
           newCount ? '<b class="accent">' + newCount + ' new ' + (newCount === 1 ? 'inquiry needs' : 'inquiries need') + '</b> a reply. ' + (onTour.length ? onTour.length + ' tour' + (onTour.length > 1 ? 's are' : ' is') + ' on the road today.' : '') : 'You are all caught up. ' + (onTour.length ? onTour.length + ' tour' + (onTour.length > 1 ? 's are' : ' is') + ' on the road today.' : ''),
           '<a class="btn btn-ghost" href="../index.html" target="_blank" rel="noopener">' + icon('external') + '<span>View site</span></a><a class="btn btn-primary" href="#/bookings?status=New">' + icon('inbox') + '<span>Open inbox</span></a>') +
+        visitLine +
         (emptyDb ? '<div class="banner banner--warn">' + icon('database') + '<div><b>Your Firebase database is empty.</b><p>Import the tours, vehicles, prices, reviews and FAQs that are on the website now, then manage them here.</p></div><button class="btn btn-primary" data-import>' + icon('download') + '<span>Import website content</span></button></div>' : '') +
         '<section class="kpis">' +
           kpi('inbox', 'New inquiries', newCount, open.length + ' open in pipeline', null, '#/bookings?status=New') +
