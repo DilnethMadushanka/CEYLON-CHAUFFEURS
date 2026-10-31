@@ -11,12 +11,13 @@
  * These web keys are not secret: access is protected by firestore.rules.
  */
 window.CC_FIREBASE_CONFIG = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_PROJECT_ID.firebaseapp.com',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_PROJECT_ID.appspot.com',
-  messagingSenderId: 'YOUR_SENDER_ID',
-  appId: 'YOUR_APP_ID'
+  apiKey: 'AIzaSyCukhpsZkUEC8raHBsk2J6o_ukhG_BkZpE',
+  authDomain: 'ceylon-chauffer.firebaseapp.com',
+  projectId: 'ceylon-chauffer',
+  storageBucket: 'ceylon-chauffer.firebasestorage.app',
+  messagingSenderId: '1050214217877',
+  appId: '1:1050214217877:web:9ca7f34281d3526f05839c',
+  measurementId: 'G-EYPNQ6SWS7'
 };
 
 window.CC_FIREBASE_SDK_VERSION = '10.14.1';
