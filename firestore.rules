@@ -23,6 +23,19 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Customer accounts (login.html): each signed-in customer may read and write only
+    // their own small profile. Having a profile gives NO admin access: /admin checks /admins.
+    match /customers/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['name', 'email', 'photoURL', 'provider', 'createdAt', 'lastLoginAt'])
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.provider in ['google', 'password']
+        && str('name', 120) && str('email', 160) && str('photoURL', 1000)
+        && str('createdAt', 30) && str('lastLoginAt', 30);
+      allow delete: if isAdmin() || (request.auth != null && request.auth.uid == uid);
+    }
+
     // Bookings: visitors may only CREATE a new inquiry from the website form.
     // Reading, editing and deleting is for admins only.
     match /bookings/{id} {

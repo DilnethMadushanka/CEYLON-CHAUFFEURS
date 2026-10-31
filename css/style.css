@@ -3194,3 +3194,45 @@ body::after {
   .footer-links a { font-size: 0.88rem; }
   .footer-legal { gap: 12px 20px; }
 }
+
+/* ---------- Header account button (customer sign-in) ---------- */
+.nav-account {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--shell);
+  color: var(--ink);
+  font-size: 1.35rem;
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease-spring), background-color 0.4s var(--ease-spring), transform 0.5s var(--ease-spring);
+}
+.nav-account:hover { border-color: var(--accent); transform: translateY(-1px); }
+.nav-account:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nav-account img { width: 100%; height: 100%; object-fit: cover; }
+.nav-account .nav-account-initial {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nav-account.is-signed-in {
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.main-header .nav-account { position: relative; z-index: 50; }
+@media (max-width: 640px) {
+  .nav-account { width: 42px; height: 42px; font-size: 1.25rem; }
+}
+/* Make room for the account button between the mobile breakpoint and full width */
+@media (min-width: 1281px) and (max-width: 1440px) {
+  .navbar { gap: 12px; }
+  .nav-menu:not(.active) .nav-link { padding-inline: 8px; }
+  .nav-menu:not(.active) .nav-link::after { left: 8px; right: 8px; }
+  .nav-account { width: 42px; height: 42px; font-size: 1.25rem; }
+}
