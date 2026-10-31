@@ -1,0 +1,64 @@
+rules_version = '2';
+
+// Ceylon Chauffeurs - Cloud Firestore security rules
+// Deploy: Firebase console → Firestore Database → Rules → paste → Publish
+//         (or `firebase deploy --only firestore:rules`)
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // An admin is a signed-in user whose UID has a document in /admins
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function str(field, max) {
+      return !(field in request.resource.data)
+        || (request.resource.data[field] is string && request.resource.data[field].size() <= max);
+    }
+
+    // Admin list: each admin can read their own record; only admins manage it.
+    match /admins/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Bookings: visitors may only CREATE a new inquiry from the website form.
+    // Reading, editing and deleting is for admins only.
+    match /bookings/{id} {
+      allow read, update, delete: if isAdmin();
+      allow create: if isAdmin() || (
+        request.resource.data.keys().hasOnly([
+          'bookingRef', 'timestamp', 'createdAt', 'customerName', 'customerEmail', 'customerCountry',
+          'customerPhone', 'travelDates', 'daysCount', 'passengers', 'vehicle', 'package', 'notes',
+          'estimatedTotalUSD', 'convertedTotal', 'status', 'arrival', 'departure', 'adults', 'kids',
+          'vehicleType', 'packageId', 'currency', 'source', 'amountPaidUSD', 'paymentStatus',
+          'assignedDriver', 'activity'
+        ])
+        && request.resource.data.status == 'New'
+        && request.resource.data.source == 'website'
+        && request.resource.data.amountPaidUSD == 0
+        && request.resource.data.paymentStatus == 'Unpaid'
+        && request.resource.data.assignedDriver == ''
+        && request.resource.data.customerName is string
+        && request.resource.data.customerName.size() > 0
+        && request.resource.data.customerEmail is string
+        && request.resource.data.customerEmail.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && str('customerName', 120) && str('customerEmail', 160) && str('customerPhone', 40)
+        && str('customerCountry', 80) && str('notes', 3000) && str('package', 200)
+        && str('vehicle', 200) && str('travelDates', 120) && str('bookingRef', 40)
+        && request.resource.data.activity is list && request.resource.data.activity.size() <= 1
+      );
+    }
+
+    // Website content: anyone can read (the public site loads it), only admins can change it.
+    match /packages/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /vehicles/{id} { allow read: if true; allow write: if isAdmin(); }
+    match /reviews/{id}  { allow read: if true; allow write: if isAdmin(); }
+    match /faqs/{id}     { allow read: if true; allow write: if isAdmin(); }
+    match /settings/{id} { allow read: if true; allow write: if isAdmin(); }
+
+    // Chauffeur details (phone numbers etc.) are private to admins.
+    match /drivers/{id}  { allow read, write: if isAdmin(); }
+  }
+}

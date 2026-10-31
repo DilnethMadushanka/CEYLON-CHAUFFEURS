@@ -2,210 +2,122 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Concierge Operations Portal | Ceylon Chauffeurs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin | Ceylon Chauffeurs</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png">
-  <link rel="stylesheet" href="../css/admin.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#efefec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0a" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preload" href="../assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="admin.css">
 </head>
-<body class="admin-body">
+<body class="is-booting">
 
-  <!-- Admin Top Navigation Bar -->
-  <header class="admin-topbar">
-    <div class="admin-topbar-inner">
-      <div class="admin-brand">
-        <img src="../assets/images/logo.png" alt="Ceylon Chauffeurs" class="admin-logo">
-        <div>
-          <h2>CEYLON CHAUFFEURS</h2>
-          <span>Concierge Operations & Booking Dispatch</span>
-        </div>
+  <!-- Boot splash -->
+  <div class="boot" aria-hidden="true"><img src="../assets/images/logo-mark.png" alt=""><span class="boot-bar"></span></div>
+
+  <!-- ============ LOGIN ============ -->
+  <main id="login" class="auth" hidden>
+    <section class="auth-media" aria-hidden="true">
+      <img src="../assets/images/hero.jpg" alt="">
+      <div class="auth-media-copy">
+        <span class="eyebrow eyebrow--light">Concierge operations</span>
+        <h2>Every tour, chauffeur and traveler in one place.</h2>
+        <p>Bookings arrive live from the website. Prices, packages and reviews you edit here update the site instantly.</p>
       </div>
-
-      <div class="admin-topbar-actions">
-        <a href="../index.html" class="btn btn-outline-light btn-sm" target="_blank">
-          <i class="fas fa-external-link-alt"></i> View Public Site
-        </a>
-        <button id="btn-export-csv" class="btn btn-primary btn-sm">
-          <i class="fas fa-file-export"></i> Export CSV
-        </button>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <img src="../assets/images/logo.png" alt="Ceylon Chauffeurs" class="auth-logo">
+        <h1>Admin sign in</h1>
+        <p class="muted">Use your Ceylon Chauffeurs admin account.</p>
+        <div data-mode-badge></div>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" autocomplete="username" required placeholder="you@ceylonchauffeur.com">
+          </div>
+          <div class="field">
+            <label for="login-password">Password</label>
+            <div class="pw-wrap">
+              <input id="login-password" type="password" autocomplete="current-password" required placeholder="••••••••">
+              <button type="button" class="icon-btn" id="login-toggle-pw" aria-label="Show password"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            </div>
+          </div>
+          <p id="login-error" class="form-error" role="alert"></p>
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Sign in</button>
+          <button type="button" class="link-btn" id="login-forgot">Forgot password?</button>
+        </form>
+        <p id="login-demo-note" class="demo-note" hidden>Firebase is not connected yet, so you are in <b>demo mode</b>. Any email and password works and data stays in this browser. See <code>FIREBASE_SETUP.md</code> to go live.</p>
       </div>
-    </div>
-  </header>
-
-  <!-- Admin Dashboard Container -->
-  <main class="admin-main">
-    <div class="container">
-
-      <!-- Welcome Banner -->
-      <div class="admin-welcome-box">
-        <div>
-          <h1>Central Inquiries & Dispatch Dashboard</h1>
-          <p>Monitor incoming international booking inquiries, update reservation statuses, assign chauffeurs, and dispatch WhatsApp proposals.</p>
-        </div>
-        <div class="admin-live-clock" id="admin-clock">
-          <i class="far fa-clock text-gold"></i> Live Operations: <span id="current-time">--:--:--</span>
-        </div>
-      </div>
-
-      <!-- KPI Metrics Cards -->
-      <section class="admin-kpi-grid">
-        <!-- Metric 1 -->
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);">
-            <i class="fas fa-clipboard-list"></i>
-          </div>
-          <div class="kpi-content">
-            <span class="kpi-label">Total Inquiries</span>
-            <h2 id="kpi-total-inquiries">0</h2>
-            <small class="kpi-subtext">All logged travel leads</small>
-          </div>
-        </div>
-
-        <!-- Metric 2 -->
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap" style="background: rgba(34, 197, 94, 0.15); color: #22c55e;">
-            <i class="fas fa-file-invoice-dollar"></i>
-          </div>
-          <div class="kpi-content">
-            <span class="kpi-label">Estimated Pipeline</span>
-            <h2 id="kpi-pipeline-revenue">$0</h2>
-            <small class="kpi-subtext">Total potential quote value</small>
-          </div>
-        </div>
-
-        <!-- Metric 3 -->
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
-            <i class="fas fa-hourglass-half"></i>
-          </div>
-          <div class="kpi-content">
-            <span class="kpi-label">Pending Action</span>
-            <h2 id="kpi-pending-inquiries">0</h2>
-            <small class="kpi-subtext">Awaiting quotation dispatch</small>
-          </div>
-        </div>
-
-        <!-- Metric 4 -->
-        <div class="kpi-card">
-          <div class="kpi-icon-wrap" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
-            <i class="fas fa-check-double"></i>
-          </div>
-          <div class="kpi-content">
-            <span class="kpi-label">Confirmed Tours</span>
-            <h2 id="kpi-confirmed-inquiries">0</h2>
-            <small class="kpi-subtext">Driver assigned or locked</small>
-          </div>
-        </div>
-      </section>
-
-      <!-- Filter & Search Toolbar -->
-      <section class="admin-toolbar-card">
-        <div class="admin-search-wrap">
-          <i class="fas fa-search text-gold"></i>
-          <input type="text" id="admin-search-input" placeholder="Search by Traveler Name, Email, Country, or Booking Ref (e.g. CC-2026)...">
-        </div>
-
-        <div class="admin-filters-wrap">
-          <div class="filter-group">
-            <label for="filter-status"><i class="fas fa-tag"></i> Status:</label>
-            <select id="filter-status" class="form-control admin-select">
-              <option value="all">All Statuses</option>
-              <option value="Confirmed & Logged">Confirmed & Logged</option>
-              <option value="Pending">Pending Review</option>
-              <option value="Contacted">Contacted via WhatsApp</option>
-              <option value="Confirmed">Confirmed & Paid</option>
-              <option value="Completed">Completed Tour</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-vehicle"><i class="fas fa-car"></i> Vehicle:</label>
-            <select id="filter-vehicle" class="form-control admin-select">
-              <option value="all">All Vehicles</option>
-              <option value="Sedan">Executive Sedan (Premio / Prius / Axio)</option>
-              <option value="Van">Luxury Van (KDH / E25)</option>
-              <option value="Bus">Luxury Coach / Bus (Coaster / King Long)</option>
-            </select>
-          </div>
-
-          <button id="btn-reset-filters" class="btn btn-outline-emerald btn-sm" title="Clear all filters">
-            <i class="fas fa-undo"></i> Reset
-          </button>
-        </div>
-      </section>
-
-      <!-- Inquiries Data Table Card -->
-      <section class="admin-table-card">
-        <div class="admin-table-header">
-          <h3>
-            <i class="fas fa-list-alt text-gold"></i> Traveler Inquiries List
-            <span id="table-count-badge" class="table-count-badge">0 records</span>
-          </h3>
-          <span style="font-size: 0.8rem; color: var(--text-muted);">
-            Click any row to inspect traveler details, update reservation status, or assign a chauffeur.
-          </span>
-        </div>
-
-        <div class="table-responsive-wrapper">
-          <table class="admin-data-table">
-            <thead>
-              <tr>
-                <th>Booking Ref</th>
-                <th>Date Logged</th>
-                <th>Lead Traveler</th>
-                <th>Origin Country</th>
-                <th>Travel Dates</th>
-                <th>Vehicle Class</th>
-                <th>Est. Quote</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="inquiries-tbody">
-              <!-- Dynamically rendered by js/admin.js -->
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-    </div>
+      <a href="../index.html" class="back-link">← Back to website</a>
+    </section>
   </main>
 
-  <!-- Interactive Booking Dossier & Dispatch Modal -->
-  <div id="booking-dossier-modal" class="modal-overlay">
-    <div class="modal-card dossier-modal-card">
-      <div class="modal-header">
-        <div>
-          <span id="dossier-ref-tag" class="booking-ref-badge">CC-2026-XXXX</span>
-          <h3 id="dossier-traveler-title" style="margin-top: 4px; font-size: 1.25rem;">Traveler Dossier</h3>
-        </div>
-        <button class="modal-close-btn" onclick="closeDossierModal()">&times;</button>
+  <!-- ============ NOT AN ADMIN ============ -->
+  <main id="unauthorized" class="auth auth--single" hidden>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <img src="../assets/images/logo.png" alt="Ceylon Chauffeurs" class="auth-logo">
+        <h1>Almost there</h1>
+        <p class="muted">You are signed in as <b data-email></b>, but this account is not an admin yet.</p>
+        <ol class="steps-list">
+          <li>Open the Firebase console → Firestore Database.</li>
+          <li>Create a collection named <code>admins</code>.</li>
+          <li>Add a document whose ID is your UID below, with a field <code>role</code> = <code>owner</code>.</li>
+          <li>Reload this page.</li>
+        </ol>
+        <div class="uid-box"><code data-uid></code><button class="btn btn-ghost btn-sm" data-copy>Copy UID</button></div>
+        <button class="btn btn-ghost btn-block" data-signout>Sign out</button>
       </div>
+    </section>
+  </main>
 
-      <div id="dossier-content" class="modal-content dossier-body">
-        <!-- Dynamically injected by js/admin.js -->
+  <!-- ============ APP ============ -->
+  <div id="app" class="shell" hidden>
+    <aside class="sidebar" aria-label="Admin navigation">
+      <div class="sidebar-head">
+        <a href="#/overview" class="brand"><img src="../assets/images/logo-mark.png" alt=""><span><b>Ceylon Chauffeurs</b><small>Admin console</small></span></a>
+        <button class="icon-btn only-mobile" data-close-menu aria-label="Close menu"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       </div>
+      <nav id="nav" class="nav"></nav>
+      <div class="sidebar-foot">
+        <div data-mode-badge></div>
+        <div class="me"><span class="avatar" data-user-initials>AD</span><span class="me-mail" data-user-email></span><button class="icon-btn" id="signout" aria-label="Sign out" title="Sign out"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
+      </div>
+    </aside>
+    <div class="scrim-nav" data-close-menu></div>
 
-      <div class="modal-footer dossier-footer">
-        <div style="display: flex; gap: 8px;">
-          <button id="btn-print-voucher" class="btn btn-outline-emerald btn-sm">
-            <i class="fas fa-print"></i> Print Dispatch Voucher
-          </button>
-          <button id="btn-delete-inquiry" class="btn btn-sm" style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5;">
-            <i class="fas fa-trash-alt"></i> Delete
-          </button>
-        </div>
-        <button id="btn-whatsapp-traveler" class="btn btn-whatsapp btn-sm">
-          <i class="fab fa-whatsapp"></i> Chat with Traveler on WhatsApp
-        </button>
-      </div>
+    <div class="main-col">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" data-open-menu aria-label="Open menu"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <img src="../assets/images/logo-mark.png" alt="" class="topbar-mark only-mobile">
+        <span id="crumb" class="crumb"></span>
+        <button class="cmdk" id="cmdk-open" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span>Search…</span><kbd>Ctrl K</kbd></button>
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme"></button>
+        <a class="icon-btn" href="../index.html" target="_blank" rel="noopener" aria-label="Open website" title="Open website"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
+      </header>
+      <main id="main" class="main" tabindex="-1">
+        <div id="view" class="view"></div>
+      </main>
     </div>
+
+    <nav id="tabbar" class="tabbar" aria-label="Quick navigation"></nav>
   </div>
 
-  <!-- Scripts -->
-  <script src="../js/main.js"></script>
-  <script src="../js/admin.js"></script>
+  <div id="toast-host" class="toast-host" aria-live="polite"></div>
+
+  <script src="../js/firebase-config.js"></script>
+  <script src="js/seed-data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/bookings.js"></script>
+  <script src="js/content.js"></script>
 </body>
 </html>

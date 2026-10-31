@@ -22,6 +22,11 @@ Explore Sri Lanka in comfort and style with transparent daily rates, luxury priv
   - `[Book via WhatsApp]` with pre-filled inquiries across top bar, hero, fleet cards, modals, and persistent floating widget.
   - `[Get a Custom Quote]` linking directly to the inquiry form.
 
+- **Admin Dashboard (`/admin/`) connected to Firebase**:
+  - Live bookings inbox (table + drag-and-drop board), tour calendar, chauffeur assignment, pricing & payments, WhatsApp templates, printable vouchers and CSV export.
+  - Edit tour packages, fleet daily rates, chauffeurs, reviews, FAQs, contact details and currency rates; changes appear on the public site.
+  - Runs in demo mode until `js/firebase-config.js` is filled in. Setup guide: **[FIREBASE_SETUP.md](FIREBASE_SETUP.md)**.
+
 - **Fully Responsive Mobile UI**:
   - Optimized for mobile, tablet, and desktop screens with smooth mobile drawer navigation and touch-friendly controls.
 
@@ -35,9 +40,18 @@ Explore Sri Lanka in comfort and style with transparent daily rates, luxury priv
 ├── fleet.html                  # Page 3: Our Fleet Showcase
 ├── booking.html                # Page 4: Dynamic Custom Itinerary & Booking Form
 ├── reviews.html                # Page 5: Trust Factors & Customer Reviews
+├── admin/                      # Admin dashboard (Firebase Auth + Firestore)
+│   ├── index.html
+│   ├── admin.css
+│   └── js/                     # store (data layer), app, bookings, content, charts, ui
+├── firestore.rules             # Firestore security rules
+├── firebase.json               # Firebase Hosting / rules deploy config
+├── FIREBASE_SETUP.md           # Step-by-step Firebase connection guide
 ├── css/
-│   └── style.css               # Luxury Emerald & Champagne Gold Design System
+│   └── style.css               # Black & tan design system
 ├── js/
+│   ├── firebase-config.js      # Paste your Firebase web config here
+│   ├── site-sync.js            # Saves bookings to Firebase, loads admin-managed content
 │   ├── main.js                 # Global navigation & WhatsApp helpers
 │   ├── packages.js             # 11 Tour Packages dataset, filter & itinerary modal
 │   └── booking.js              # Booking calculator, email simulation & WhatsApp prefill

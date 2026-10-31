@@ -1,0 +1,110 @@
+# Ceylon Chauffeurs: connecting the admin dashboard to Firebase
+
+The admin dashboard lives at **`/admin/`** (for example `https://ceylonchauffeur.com/admin/`).
+
+Until Firebase is connected it runs in **demo mode**. Any email and password signs in, and data is saved only in that browser. This lets you try every feature before you go live.
+
+Firebase's free **Spark** plan is enough. The site only uses **Authentication** and **Cloud Firestore**. It does not use Storage, so you never need the paid Blaze plan.
+
+---
+
+## 1. Create the Firebase project (about 5 minutes)
+
+1. Go to <https://console.firebase.google.com> and click **Add project**. Name it, for example, `ceylon-chauffeurs`. You can turn Google Analytics off.
+2. In the left menu open **Build → Firestore Database → Create database**.
+   - Location: `asia-south1 (Mumbai)` is the closest region to Sri Lanka.
+   - Start in **production mode**. The rules from step 3 will open exactly what the site needs.
+3. Open **Build → Authentication → Get started → Sign-in method** and enable **Email/Password**.
+
+## 2. Paste your web config
+
+1. Open **Project settings** (gear icon) → **General** → **Your apps** → click the **`</>` (Web)** icon. Register the app (any nickname, no hosting needed).
+2. Firebase shows a `firebaseConfig = { ... }` block. Copy its values into **`js/firebase-config.js`**:
+
+```js
+window.CC_FIREBASE_CONFIG = {
+  apiKey: 'AIza...',
+  authDomain: 'ceylon-chauffeurs.firebaseapp.com',
+  projectId: 'ceylon-chauffeurs',
+  storageBucket: 'ceylon-chauffeurs.appspot.com',
+  messagingSenderId: '1234567890',
+  appId: '1:1234567890:web:abc123'
+};
+```
+
+These web keys are **not secret**. Google designs them to be public. Your data is protected by the security rules in the next step.
+
+## 3. Publish the security rules
+
+Open **Firestore Database → Rules**, replace everything with the contents of **`firestore.rules`** from this repo, and click **Publish**.
+
+What the rules allow:
+
+| Collection | Public website | Admins |
+| --- | --- | --- |
+| `bookings` | Create a new inquiry only (validated) | Read, edit, delete |
+| `packages`, `vehicles`, `reviews`, `faqs`, `settings` | Read | Full access |
+| `drivers` | No access | Full access |
+| `admins` | No access | Full access |
+
+## 4. Create your admin login
+
+1. **Authentication → Users → Add user**: enter your email and a strong password.
+2. Copy the new user's **User UID**.
+3. **Firestore Database → Start collection**:
+   - Collection ID: `admins`
+   - Document ID: *paste the UID*
+   - Field: `role` (string) = `owner`
+4. Open `/admin/` and sign in. If you skip step 3, the dashboard shows your UID and these same instructions.
+
+Repeat steps 1–3 for each staff member who needs access.
+
+## 5. Import the website content
+
+The first time you sign in, the Overview page shows **"Your Firebase database is empty"**. Click **Import website content**. This copies the site's current content into Firestore:
+
+- all 11 tour packages with their itineraries, routes and prices
+- the 3 vehicle classes and their daily rates
+- the chauffeurs list, reviews, FAQs, contact details and currency rates
+
+From then on, everything you edit in the dashboard updates the public website.
+
+You can run **Settings → Import missing website content** again at any time. It only adds records that are missing and never overwrites your edits.
+
+## 6. Deploy
+
+Push to GitHub. GitHub Pages, Vercel or Firebase Hosting all work, since the site is plain HTML. To use Firebase Hosting:
+
+```bash
+npm install -g firebase-tools
+firebase login
+firebase use --add            # pick your project
+firebase deploy               # deploys hosting + firestore.rules
+```
+
+---
+
+## What the dashboard covers
+
+| Website feature | Where to manage it |
+| --- | --- |
+| Booking / custom-itinerary form (`booking.html`) | **Bookings**: live inbox, table and drag-and-drop board, status pipeline, chauffeur assignment, final price and payments, WhatsApp templates, printable voucher, CSV export, manual bookings for phone/WhatsApp leads |
+| Tours on the road | **Tour calendar**: month view of every confirmed tour, plus the month's agenda |
+| Tour packages (`packages.html`, home page, booking dropdown) | **Tour packages**: title, category, days, photo, route, map stops, highlights, day-by-day itinerary, full-package price, show/hide, order, duplicate |
+| Fleet and daily rates (`fleet.html`, all prices, quote calculator) | **Fleet & prices**: daily rate per vehicle class, capacity (used for the booking form's capacity warning), luggage, photo, features, and a price preview for every package |
+| Driver-guides | **Chauffeurs**: profiles, languages, availability, who is on tour now, next tour |
+| Reviews (`reviews.html`, home page) | **Reviews**: add, edit, publish/hide, feature, star rating, source |
+| FAQ accordion (`reviews.html`) | **FAQs**: add, edit, reorder, publish/hide |
+| Contact details, WhatsApp number, currency switcher | **Settings**: business details, currency rates, announcement bar, pause online bookings, JSON backup |
+
+Other features: a live Overview with KPIs and charts, real-time "new inquiry" alerts, Ctrl/Cmd + K quick search, light and dark themes, and a mobile layout with a bottom tab bar.
+
+---
+
+## සිංහලෙන් කෙටියෙන්
+
+1. <https://console.firebase.google.com> එකේ project එකක් හදන්න. **Firestore Database** සහ **Authentication → Email/Password** enable කරන්න.
+2. Project settings → Web app (`</>`) එකේ තියෙන `firebaseConfig` අගයන් **`js/firebase-config.js`** file එකට paste කරන්න.
+3. Firestore → **Rules** එකට **`firestore.rules`** file එකේ content එක paste කරලා **Publish** කරන්න.
+4. Authentication → **Add user** කරලා ඔයාගේ email/password හදන්න. ඊට පස්සේ Firestore එකේ `admins` කියලා collection එකක් හදලා, document ID එක ඔයාගේ **UID** එක දාලා `role = owner` field එක එකතු කරන්න.
+5. `/admin/` එකට log වෙලා **Import website content** button එක ඔබන්න. එතැන් සිට dashboard එකේ කරන හැම වෙනස්කමක්ම website එකේ පෙන්නනවා. Website එකෙන් එන booking ද live dashboard එකට එනවා.
