@@ -308,9 +308,18 @@
   }
 
   /* ---------------- Tour packages ---------------- */
+  // Packages imported before they had their own photo (the admin also fixes the database).
+  var PACKAGE_IMAGE_UPGRADES = {
+    'pkg-4d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-minneriya.jpg'],
+    'pkg-7d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-yala.jpg'],
+    'pkg-10d-wildlife': ['assets/images/wildlife.jpg', 'assets/images/safari-wilpattu.jpg']
+  };
+
   function applyPackages(list) {
     if (typeof MASTER_PACKAGES !== 'undefined' && Array.isArray(MASTER_PACKAGES)) {
       MASTER_PACKAGES.splice.apply(MASTER_PACKAGES, [0, MASTER_PACKAGES.length].concat(list.map(function (p) {
+        var up = PACKAGE_IMAGE_UPGRADES[p.id];
+        if (up && p.image === up[0]) p = Object.assign({}, p, { image: up[1] });
         return Object.assign({ highlights: [], itinerary: [], routePoints: [] }, p);
       })));
       if (typeof renderPackages === 'function') renderPackages();
