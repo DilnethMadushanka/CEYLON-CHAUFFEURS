@@ -1638,6 +1638,9 @@ input[type="date"].form-control { font-variant-numeric: tabular-nums; }
   z-index: 0;
 }
 .interactive-map-box .leaflet-container { font-family: var(--font-sans); }
+.interactive-map-box .map-tiles-light { filter: saturate(0.85) contrast(0.95); }
+.interactive-map-box .map-tiles-dark { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.85) saturate(0.6); }
+.interactive-map-box .leaflet-container { background: var(--surface, #1d2420); }
 
 .packages-filter-bar {
   display: grid;
