@@ -103,6 +103,12 @@ Other features: a live Overview with KPIs and charts, real-time "new inquiry" al
 
 ---
 
+### About website images
+
+Open **Website images** in the admin to replace any photo on the site (hero, tour photos, fleet photos, logos). Each card has a ready-made AI image prompt and a **Replace** button. The package and vehicle editors also have an **Upload** button next to the photo field.
+
+Uploaded photos are resized and compressed in the browser (about 1600 px wide, under 700 KB). If Firebase **Storage** is enabled, they go there (publish `storage.rules`). If it is not enabled, which is normal on the free Spark plan, they are saved in the Firestore `media` collection instead, so nothing extra needs to be set up. Publish the updated `firestore.rules` so that admins can write to `media`.
+
 ### About visitor analytics
 
 Each page view on the public site writes one small, anonymous record to `visits`. The record holds the page, the source site, the device type, the time zone and a random browser ID. It does not store names, emails or IP addresses. The country is estimated from the visitor's time zone.

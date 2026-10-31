@@ -31,6 +31,7 @@
     { id: 'calendar', label: 'Tour calendar', icon: 'calendar', group: 'main' },
     { id: 'visitors', label: 'Website visitors', icon: 'eye', group: 'main', live: true },
     { id: 'packages', label: 'Tour packages', icon: 'map', group: 'content' },
+    { id: 'images', label: 'Website images', icon: 'image', group: 'content' },
     { id: 'fleet', label: 'Fleet & prices', icon: 'car', group: 'content' },
     { id: 'drivers', label: 'Chauffeurs', icon: 'wheel', group: 'content' },
     { id: 'reviews', label: 'Reviews', icon: 'star', group: 'content' },
@@ -41,7 +42,7 @@
   var S = {
     user: null,
     ready: {},
-    data: { bookings: [], packages: [], vehicles: [], drivers: [], reviews: [], faqs: [], settings: [], visits: [] },
+    data: { bookings: [], packages: [], vehicles: [], drivers: [], reviews: [], faqs: [], settings: [], visits: [], media: [] },
     route: 'overview',
     view: null,
     unsubs: [],

@@ -282,7 +282,7 @@
 
   var Store = {
     get mode() { return mode; },
-    collections: ['bookings', 'packages', 'vehicles', 'drivers', 'reviews', 'faqs', 'settings'],
+    collections: ['bookings', 'packages', 'vehicles', 'drivers', 'reviews', 'faqs', 'settings', 'media'],
     defaults: { settings: DEFAULT_SETTINGS, vehicles: DEFAULT_VEHICLES },
     uid: uid,
     normalizeBooking: normalizeBooking,
@@ -382,6 +382,22 @@
       return db.collection('visits').where('at', '>=', since).onSnapshot(function (snap) {
         cb(snap.docs.map(function (d) { return d.data(); }));
       }, function (err) { console.error('visits', err); if (onError) onError(err); });
+    },
+
+    /** Upload a file to Firebase Storage. Rejects when Storage is not set up (e.g. Spark plan). */
+    uploadToStorage: function (blob, path, contentType) {
+      if (mode === 'demo') return Promise.reject(new Error('demo'));
+      var base = 'https://www.gstatic.com/firebasejs/' + VERSION + '/';
+      var ready = window.firebase && firebase.storage ? Promise.resolve() : loadScript(base + 'firebase-storage-compat.js');
+      return ready.then(function () {
+        var storage = firebase.app().storage();
+        storage.setMaxUploadRetryTime(12000);
+        storage.setMaxOperationRetryTime(12000);
+        var ref = storage.ref(path);
+        var task = ref.put(blob, { contentType: contentType, cacheControl: 'public, max-age=31536000' });
+        var timeout = new Promise(function (_, reject) { setTimeout(function () { try { task.cancel(); } catch (e) { /* ignore */ } reject(new Error('storage timeout')); }, 30000); });
+        return Promise.race([task.then(function () { return ref.getDownloadURL(); }), timeout]);
+      });
     },
 
     /** Create or merge a document. Returns the id. */

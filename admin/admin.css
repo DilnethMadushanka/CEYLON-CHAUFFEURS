@@ -796,3 +796,32 @@ a.kpi:hover { transform: translateY(-3px); box-shadow: var(--shadow-md), 0 0 0 1
 .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
 .stack > * { min-width: 0; }
 @media (max-width: 720px) { .stack { gap: 16px; } }
+
+/* ---------- Website images ---------- */
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.media-card { background: var(--surface); border-radius: var(--radius-card); padding: 6px; box-shadow: var(--shadow-sm), 0 0 0 1px var(--bezel-line); display: flex; flex-direction: column; }
+.media-thumb { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius-inner); overflow: hidden; background: var(--surface-2); }
+.media-card--square .media-thumb { background: #fff; }
+.media-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.media-card--square .media-thumb img { object-fit: contain; padding: 18px; }
+.media-badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: var(--st-confirmed); color: #fff; font-size: 0.74rem; font-weight: 600; }
+.media-badge .ic { width: 13px; height: 13px; }
+.media-busy { position: absolute; inset: 0; display: none; place-items: center; align-content: center; gap: 10px; background: rgb(10 10 9 / 0.6); color: #fff; font-size: 0.86rem; }
+.media-card.is-busy .media-busy { display: grid; }
+.spin { width: 26px; height: 26px; border: 3px solid rgb(255 255 255 / 0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+.media-body { padding: 14px 12px 10px; display: grid; gap: 8px; }
+.media-body h3 { font-size: 1.05rem; }
+.media-body > p { font-size: 0.82rem; }
+.prompt { background: var(--bg); border-radius: 14px; padding: 8px 12px; font-size: 0.82rem; }
+.prompt summary { cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 550; color: var(--accent); list-style: none; }
+.prompt summary::-webkit-details-marker { display: none; }
+.prompt summary .ic { width: 15px; height: 15px; }
+.prompt p { margin-top: 8px; color: var(--ink-2); line-height: 1.5; user-select: text; }
+.media-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.media-actions label.btn { cursor: pointer; }
+.ic.flip { transform: rotate(180deg); }
+.image-row { display: flex; gap: 8px; }
+.image-row input { flex: 1; min-width: 0; }
+.upload-btn { cursor: pointer; flex: none; height: 44px; }
+.upload-btn.is-loading-soft { opacity: 0.7; pointer-events: none; }
+@media (max-width: 720px) { .media-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
