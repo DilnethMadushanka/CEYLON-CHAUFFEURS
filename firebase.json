@@ -1,0 +1,12 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "firestore.rules", "**/.*", "**/node_modules/**", "*.md", "*.MOV", "*.mov"],
+    "headers": [
+      { "source": "/admin/**", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    ]
+  }
+}

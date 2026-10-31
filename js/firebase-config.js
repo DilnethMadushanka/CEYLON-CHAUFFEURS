@@ -1,0 +1,28 @@
+/**
+ * Ceylon Chauffeurs - Firebase configuration (shared by the public site and /admin)
+ *
+ * HOW TO CONNECT (see FIREBASE_SETUP.md for the full guide):
+ *   1. Firebase console → Project settings → General → "Your apps" → Web app (</>)
+ *   2. Copy the firebaseConfig values and paste them below.
+ *   3. Deploy firestore.rules and add your admin user (FIREBASE_SETUP.md, step 4).
+ *
+ * While apiKey is still 'YOUR_API_KEY' the admin dashboard runs in DEMO MODE
+ * (data is kept in this browser only) and the public site uses its built-in data.
+ * These web keys are not secret: access is protected by firestore.rules.
+ */
+window.CC_FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyCukhpsZkUEC8raHBsk2J6o_ukhG_BkZpE',
+  authDomain: 'ceylon-chauffer.firebaseapp.com',
+  projectId: 'ceylon-chauffer',
+  storageBucket: 'ceylon-chauffer.firebasestorage.app',
+  messagingSenderId: '1050214217877',
+  appId: '1:1050214217877:web:9ca7f34281d3526f05839c',
+  measurementId: 'G-EYPNQ6SWS7'
+};
+
+window.CC_FIREBASE_SDK_VERSION = '10.14.1';
+
+window.CC_FIREBASE_READY = (function () {
+  var c = window.CC_FIREBASE_CONFIG || {};
+  return !!(c.apiKey && c.projectId && c.apiKey.indexOf('YOUR_') !== 0 && c.projectId.indexOf('YOUR_') !== 0);
+})();

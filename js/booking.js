@@ -431,7 +431,15 @@ function handleBookingSubmit(e) {
     notes: routeNotes,
     estimatedTotalUSD,
     convertedTotal: convertedTotal.formatted,
-    status: 'Confirmed & Logged'
+    status: 'Confirmed & Logged',
+    // Structured fields used by the admin dashboard
+    arrival,
+    departure,
+    adults: parseInt(adults, 10) || 0,
+    kids: parseInt(kids, 10) || 0,
+    vehicleType,
+    packageId: pkgSelect ? pkgSelect.value : 'custom',
+    currency: convertedTotal.code || 'USD'
   };
 
   // Persist inquiry in localStorage to prevent ANY lost lead
@@ -443,6 +451,11 @@ function handleBookingSubmit(e) {
     localStorage.removeItem('ceylon_booking_draft');
   } catch (err) {
     console.warn('Inquiry storage note:', err);
+  }
+
+  // Save to Firebase (admin dashboard) when js/firebase-config.js is configured
+  if (window.CCSync && window.CCSync.enabled) {
+    window.CCSync.saveBooking(inquiryRecord);
   }
 
   // ── Formal Client Proposal / Inquiry Template ──────────────
