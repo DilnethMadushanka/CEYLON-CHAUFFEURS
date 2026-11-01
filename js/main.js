@@ -520,6 +520,14 @@ function initWhatsAppLinks() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const customMsg = btn.getAttribute('data-whatsapp-msg') || CEYLON_CHAUFFEUR_CONFIG.defaultWhatsAppMessage;
+      if (btn.hasAttribute('data-book-choice')) {
+        openBookingChoice({
+          message: customMsg,
+          subject: btn.getAttribute('data-book-subject') || 'Tour booking request',
+          bookingUrl: btn.getAttribute('data-booking-url') || 'booking.html'
+        });
+        return;
+      }
       openWhatsApp(customMsg);
     });
   });
@@ -532,6 +540,88 @@ function openWhatsApp(message) {
   const encoded = encodeURIComponent(message || CEYLON_CHAUFFEUR_CONFIG.defaultWhatsAppMessage);
   const url = `https://wa.me/${CEYLON_CHAUFFEUR_CONFIG.phone}?text=${encoded}`;
   window.open(url, '_blank');
+}
+
+/**
+ * "Book tour" chooser: lets the traveller pick WhatsApp, email or the booking form
+ * instead of jumping straight to WhatsApp.
+ *   openBookingChoice({ title, message, subject, bookingUrl })
+ */
+function openBookingChoice(opts) {
+  const o = opts || {};
+  const cfg = CEYLON_CHAUFFEUR_CONFIG;
+  const message = o.message || cfg.defaultWhatsAppMessage;
+  const subject = o.subject || 'Tour booking request';
+  const emailBody = message + '\n\nMy name:\nTravel dates:\nNumber of guests:\nWhatsApp / phone:\n\nThank you!';
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  let modal = document.getElementById('book-choice-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'book-choice-modal';
+    modal.className = 'modal-overlay book-choice-overlay';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'book-choice-title');
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target.closest('[data-choice-close]')) closeBookingChoice();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeBookingChoice();
+    });
+    document.body.appendChild(modal);
+  }
+
+  const mailto = `mailto:${cfg.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(cfg.email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+  modal.innerHTML = `
+    <div class="modal-card modal-card--narrow book-choice-card">
+      <div class="modal-header">
+        <h3 id="book-choice-title"><i class="ph ph-calendar-check"></i> ${esc(o.title || 'How would you like to book?')}</h3>
+        <button class="modal-close-btn" data-choice-close aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-content book-choice-body">
+        <p class="book-choice-lead">Pick whichever is easiest for you. We usually reply within 2 to 4 hours.</p>
+        <div class="book-choice-list">
+          <button type="button" class="book-choice-option book-choice-option--wa" data-choice="whatsapp">
+            <span class="book-choice-icon"><i class="ph ph-whatsapp-logo"></i></span>
+            <span class="book-choice-text"><strong>WhatsApp</strong><small>Fastest reply · ${esc(cfg.displayPhone)}</small></span>
+            <i class="ph ph-arrow-up-right book-choice-arrow"></i>
+          </button>
+          <a class="book-choice-option" data-choice="email" href="${esc(mailto)}">
+            <span class="book-choice-icon"><i class="ph ph-envelope-simple"></i></span>
+            <span class="book-choice-text"><strong>Email</strong><small>${esc(cfg.email)}</small></span>
+            <i class="ph ph-arrow-up-right book-choice-arrow"></i>
+          </a>
+          ${o.bookingUrl ? `<a class="book-choice-option" data-choice="form" href="${esc(o.bookingUrl)}">
+            <span class="book-choice-icon"><i class="ph ph-pencil-simple-line"></i></span>
+            <span class="book-choice-text"><strong>Booking form</strong><small>Get an instant price estimate</small></span>
+            <i class="ph ph-arrow-up-right book-choice-arrow"></i>
+          </a>` : ''}
+        </div>
+        <p class="book-choice-foot">No email app? <a href="${esc(gmail)}" target="_blank" rel="noopener" data-choice-close>Send with Gmail</a></p>
+      </div>
+    </div>`;
+
+  modal.querySelector('[data-choice="whatsapp"]').addEventListener('click', () => {
+    openWhatsApp(message);
+    closeBookingChoice();
+  });
+  modal.querySelector('[data-choice="email"]').addEventListener('click', () => setTimeout(closeBookingChoice, 300));
+
+  requestAnimationFrame(() => modal.classList.add('active'));
+  document.body.style.overflow = 'hidden';
+  const first = modal.querySelector('[data-choice="whatsapp"]');
+  if (first) setTimeout(() => first.focus({ preventScroll: true }), 50);
+}
+
+function closeBookingChoice() {
+  const modal = document.getElementById('book-choice-modal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  // Keep the page locked if another modal (e.g. the itinerary) is still open underneath.
+  if (!document.querySelector('.modal-overlay.active')) document.body.style.overflow = '';
 }
 
 /**
@@ -641,6 +731,8 @@ function openPolicyModal(type) {
 
 // Make accessible globally
 window.openWhatsApp = openWhatsApp;
+window.openBookingChoice = openBookingChoice;
+window.closeBookingChoice = closeBookingChoice;
 window.CEYLON_CHAUFFEUR_CONFIG = CEYLON_CHAUFFEUR_CONFIG;
 window.CURRENCIES = CURRENCIES;
 window.convertUSD = convertUSD;
