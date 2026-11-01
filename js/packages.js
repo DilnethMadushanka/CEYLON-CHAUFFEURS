@@ -854,7 +854,7 @@ function renderPackages() {
               <i class="ph ph-list-bullets"></i> ${lblItinerary}
             </button>
             <button class="btn btn-primary btn-sm action-pkg-whatsapp" onclick="bookPackageWhatsApp('${pkg.id}')">
-              <i class="ph ph-whatsapp-logo"></i> ${lblBook}
+              <i class="ph ph-calendar-check"></i> ${lblBook}
             </button>
           </div>
         </div>
@@ -1391,7 +1391,16 @@ function bookPackageWhatsApp(packageId) {
 
   const vehicleName = VEHICLE_RATES[currentVehicle]?.name || 'Executive Sedan';
   const msg = `Hi Ceylon Chauffeur, I would like to inquire about booking the "${pkg.title}" (${pkg.days} Days) with an ${vehicleName}. Please share availability and exact itinerary details.`;
-  window.openWhatsApp(msg);
+  if (window.openBookingChoice) {
+    window.openBookingChoice({
+      title: 'Book ' + pkg.title.replace(/\s*\(.*\)\s*/, ''),
+      message: msg,
+      subject: `Tour booking request · ${pkg.title.replace(/\s*\(.*\)\s*/, '')} (${pkg.days} days)`,
+      bookingUrl: `booking.html?package=${pkg.id}&duration=${pkg.days}&vehicle=${currentVehicle}`
+    });
+  } else {
+    window.openWhatsApp(msg);
+  }
 }
 
 // Export functions to window

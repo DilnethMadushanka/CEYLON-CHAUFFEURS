@@ -530,12 +530,7 @@ _Automated inquiry via ceylonchauffeur.com_`;
   // ─── Send both emails via EmailJS (runs in background) ─────
   sendEmailsViaEmailJS(emailParams, email, bookingRef);
 
-  // ─── Automatically open WhatsApp with pre-filled template ──
-  const chauffeurPhone = window.CEYLON_CHAUFFEUR_CONFIG ? window.CEYLON_CHAUFFEUR_CONFIG.phone : '94760542557';
-  const whatsappUrl = `https://wa.me/${chauffeurPhone}?text=${encodeURIComponent(whatsAppText)}`;
-  
-  // Open WhatsApp in a new tab/window immediately
-  const waWindow = window.open(whatsappUrl, '_blank');
+  // Do not jump to WhatsApp automatically: the confirmation modal offers WhatsApp and email.
 
   // Render Confirmation Modal with receipt and WhatsApp button
   renderAutoResponderModal({
