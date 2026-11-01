@@ -3270,3 +3270,4 @@ body::after {
   .nav-menu:not(.active) .nav-link::after { left: 8px; right: 8px; }
   .nav-account { width: 42px; height: 42px; font-size: 1.25rem; }
 }
+.email-footer-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }

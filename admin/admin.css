@@ -825,3 +825,8 @@ a.kpi:hover { transform: translateY(-3px); box-shadow: var(--shadow-md), 0 0 0 1
 .upload-btn { cursor: pointer; flex: none; height: 44px; }
 .upload-btn.is-loading-soft { opacity: 0.7; pointer-events: none; }
 @media (max-width: 720px) { .media-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+
+/* Quotation email */
+.quote-form { display: grid; gap: 14px; }
+.quote-form textarea.quote-body { font: 13px/1.55 var(--font-mono, ui-monospace, monospace); min-height: 320px; resize: vertical; }
+.quote-hint { font-size: 12.5px; margin: 0; }

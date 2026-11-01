@@ -548,8 +548,47 @@ _Automated inquiry via ceylonchauffeur.com_`;
     vehicleName: vehicleData.name,
     preferredPackage: preferredPackage,
     estimatedTotalFormatted: convertedTotal.formatted,
-    whatsAppText: whatsAppText
+    whatsAppText: whatsAppText,
+    emailSubject: `Tour quotation request · Ref ${bookingRef} · ${name}`,
+    emailText: whatsAppTextToEmail(whatsAppText)
   });
+}
+
+/**
+ * The WhatsApp proposal uses *bold*, _italic_ and box-drawing borders. Email apps show those as
+ * plain characters, so strip them for the email version.
+ */
+function whatsAppTextToEmail(text) {
+  return String(text)
+    .split('\n')
+    .filter(line => !/^[╔╚]/.test(line.trim()))
+    .map(line => line.replace(/\*([^*\n]+)\*/g, '$1').replace(/(^|\s)_([^_\n]+)_(?=\s|$)/g, '$1$2').replace(/─{5,}/g, '------------------------------'))
+    .join('\n')
+    .trim();
+}
+
+/** URL-encode for use inside a single-quoted onclick string (encodeURIComponent leaves ' as is). */
+function encodeForAttr(value) {
+  return encodeURIComponent(value || '').replace(/'/g, '%27');
+}
+
+function quotationEmailTarget() {
+  const cfg = window.CEYLON_CHAUFFEUR_CONFIG || {};
+  return cfg.email || EMAILJS_CONFIG.adminEmail || 'bookings@ceylonchauffeur.com';
+}
+
+/** Customer sends the quotation to the team by email (opens their email app). */
+function emailQuotationToTeam(encodedSubject, encodedBody) {
+  const to = quotationEmailTarget();
+  window.location.href = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
+}
+
+/** Same, through Gmail in the browser, for people without an email app set up. */
+function gmailQuotationToTeam(encodedSubject, encodedBody) {
+  const to = quotationEmailTarget();
+  const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodedSubject}&body=${encodedBody}`;
+  const w = window.open(url, '_blank');
+  if (w) { try { w.opener = null; } catch (e) { /* ignore */ } }
 }
 
 /**
@@ -732,14 +771,17 @@ function renderAutoResponderModal(data) {
 
         <div class="email-footer-actions">
           <div class="email-modal-actions">
-            <button class="btn btn-whatsapp email-btn-whatsapp" onclick="continueToWhatsApp('${encodeURIComponent(data.whatsAppText)}')">
+            <button class="btn btn-whatsapp email-btn-whatsapp" onclick="continueToWhatsApp('${encodeForAttr(data.whatsAppText)}')">
               <i class="ph ph-whatsapp-logo"></i> Continue to WhatsApp with Ref #${data.bookingRef}
+            </button>
+            <button class="btn btn-outline-emerald email-btn-email" onclick="emailQuotationToTeam('${encodeForAttr(data.emailSubject)}', '${encodeForAttr(data.emailText)}')">
+              <i class="ph ph-envelope-simple"></i> Send by Email
             </button>
             <button class="btn btn-outline-emerald email-btn-print" onclick="window.print()">
               <i class="ph ph-printer"></i> Print Receipt
             </button>
           </div>
-          <span class="email-footer-note">A copy of this inquiry has been preserved locally in your session.</span>
+          <span class="email-footer-note">No email app? <a href="#" onclick="gmailQuotationToTeam('${encodeForAttr(data.emailSubject)}', '${encodeForAttr(data.emailText)}'); return false;">Send with Gmail instead</a>. A copy of this inquiry has been preserved locally in your session.</span>
         </div>
       </div>
     `;
@@ -766,5 +808,7 @@ function continueToWhatsApp(encodedMessage) {
 
 window.closeAutoResponderModal = closeAutoResponderModal;
 window.continueToWhatsApp = continueToWhatsApp;
+window.emailQuotationToTeam = emailQuotationToTeam;
+window.gmailQuotationToTeam = gmailQuotationToTeam;
 window.validateCapacity = validateCapacity;
 window.calculateQuote = calculateQuote;
