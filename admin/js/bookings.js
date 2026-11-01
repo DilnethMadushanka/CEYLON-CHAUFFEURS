@@ -213,6 +213,7 @@
       subtitle: App.statusPill(b.status) + ' <span class="muted">' + esc(b.customerCountry || '') + '</span>',
       body: drawerBody(b),
       footer: '<button class="btn btn-danger-ghost" data-del>' + icon('trash') + '<span>Delete</span></button><span class="spacer"></span>' +
+        '<button class="btn btn-ghost" data-quote>' + icon('mail') + '<span>Email quote</span></button>' +
         '<button class="btn btn-ghost" data-print>' + icon('print') + '<span>Voucher</span></button>' +
         '<button class="btn btn-primary" data-save>' + icon('check') + '<span>Save changes</span></button>',
       onClose: function () { if (location.hash.indexOf('#/bookings/') === 0) history.replaceState(null, '', '#/bookings'); }
@@ -287,6 +288,15 @@
         .then(function (ok) { if (ok) App.remove('bookings', b.id, 'Booking deleted').then(function () { layer.close(); }); });
     });
     el.querySelector('[data-print]').addEventListener('click', function () { printVoucher(current()); });
+    el.querySelector('[data-quote]').addEventListener('click', function () {
+      // Use what is on screen, even before "Save changes", so the quote matches the edits.
+      var f = new FormData(el.querySelector('form.drawer-form'));
+      var cur = Object.assign({}, current());
+      if (f.get('finalPriceUSD') !== null && f.get('finalPriceUSD') !== '') cur.finalPriceUSD = Number(f.get('finalPriceUSD'));
+      ['arrival', 'departure', 'vehicleType', 'pickupLocation', 'flightNumber'].forEach(function (k) { if (f.get(k)) cur[k] = String(f.get(k)); });
+      if (cur.arrival && cur.departure) cur.daysCount = Math.max(1, Math.round((new Date(cur.departure) - new Date(cur.arrival)) / 86400000));
+      openQuoteEmail(cur);
+    });
 
     function current() { return App.data.bookings.filter(function (x) { return x.id === id; })[0] || b; }
 
@@ -400,6 +410,138 @@
       if (b.status === 'New') patch.status = 'Contacted';
       App.save('bookings', b.id, patch, b.status === 'New' ? 'Marked as Contacted' : false);
     }
+  }
+
+  /* ---------------- Quotation by email ---------------- */
+  function quoteData(b) {
+    var biz = App.settings();
+    var v = App.vehicleOf(b.vehicleType) || {};
+    var pkg = (b.packageId && App.packageOf && App.packageOf(b.packageId)) ||
+      App.data.packages.filter(function (p) { return p.title === b.package; })[0];
+    var days = Number(b.daysCount) || 0;
+    var dates = b.arrival ? UI.fmtDate(b.arrival) + ' to ' + UI.fmtDate(b.departure) : (b.travelDates || 'To be confirmed');
+    return {
+      biz: biz,
+      first: String(b.customerName || '').split(/\s|&/)[0] || 'there',
+      ref: b.bookingRef || '',
+      tour: shortPkg(b),
+      route: pkg && pkg.route ? pkg.route : '',
+      dates: dates + (days ? ' (' + days + ' days / ' + Math.max(days - 1, 0) + ' nights)' : ''),
+      guests: (+b.adults || 0) + ' adults' + (+b.kids ? ', ' + (+b.kids) + ' children' : ''),
+      vehicle: (v.name || b.vehicle || '') + (v.models ? ' (' + v.models + ')' : ''),
+      pickup: b.pickupLocation || '',
+      total: UI.money(App.bookingValue(b)),
+      paid: Number(b.amountPaidUSD) || 0,
+      included: 'Private air-conditioned vehicle with an English-speaking chauffeur guide, fuel, highway tolls, parking fees, and the chauffeur\'s accommodation and meals.',
+      issued: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    };
+  }
+
+  function quoteEmailText(b) {
+    var q = quoteData(b);
+    var name = q.biz.businessName || 'Ceylon Chauffeurs';
+    var lines = [
+      'Dear ' + q.first + ',',
+      '',
+      'Thank you for choosing ' + name + '. Here is your personalised Sri Lanka tour quotation.',
+      '',
+      'QUOTATION  ·  Ref ' + q.ref + '  ·  ' + q.issued,
+      '',
+      'Tour: ' + q.tour
+    ];
+    if (q.route) lines.push('Route: ' + q.route);
+    lines.push('Dates: ' + q.dates, 'Guests: ' + q.guests, 'Vehicle: ' + q.vehicle);
+    if (q.pickup) lines.push('Pickup: ' + q.pickup);
+    lines.push('', 'TOTAL PRICE: ' + q.total + ' (USD)');
+    if (q.paid) lines.push('Already paid: ' + UI.money(q.paid));
+    lines.push(
+      '',
+      'Included: ' + q.included,
+      '',
+      'To confirm, simply reply to this email' + (q.biz.displayPhone ? ' or message us on WhatsApp at ' + q.biz.displayPhone : '') + '. We will then send the deposit details.',
+      '',
+      'Warm regards,',
+      name,
+      [q.biz.displayPhone, q.biz.email].filter(Boolean).join('  ·  '),
+      location.origin.indexOf('localhost') === -1 ? location.origin : ''
+    );
+    return {
+      subject: 'Your Sri Lanka tour quotation · ' + q.tour + ' · Ref ' + q.ref,
+      body: lines.join('\n').replace(/\n+$/, '')
+    };
+  }
+
+  function openQuoteEmail(b) {
+    var t = quoteEmailText(b);
+    var layer = UI.openLayer({
+      kind: 'modal', size: 'lg',
+      eyebrow: esc(b.bookingRef) + ' · quotation',
+      title: 'Email quotation',
+      subtitle: 'Check the message, then send it from your email. You can edit anything below.',
+      body: '<form class="quote-form" onsubmit="return false">' +
+        '<div class="field"><label>To</label><input type="email" name="to" value="' + esc(b.customerEmail || '') + '" placeholder="customer@email.com"></div>' +
+        '<div class="field"><label>Subject</label><input name="subject" value="' + esc(t.subject) + '"></div>' +
+        '<div class="field"><label>Message</label><textarea name="body" rows="16" class="quote-body">' + esc(t.body) + '</textarea></div>' +
+        '<p class="muted quote-hint">Tip: press <b>Quotation PDF</b>, choose "Save as PDF", and attach the file to the email for a branded copy.</p>' +
+        '</form>',
+      footer: '<button class="btn btn-ghost" data-copy>' + icon('copy') + '<span>Copy</span></button>' +
+        '<button class="btn btn-ghost" data-pdf>' + icon('print') + '<span>Quotation PDF</span></button><span class="spacer"></span>' +
+        '<button class="btn btn-ghost" data-gmail>' + icon('mail') + '<span>Send with Gmail</span></button>' +
+        '<button class="btn btn-primary" data-mailapp>' + icon('mail') + '<span>Send with email app</span></button>'
+    });
+    var el = layer.el;
+    function val(n) { return String(el.querySelector('[name=' + n + ']').value || '').trim(); }
+    function check() {
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val('to'))) { UI.toast('Add the customer\'s email address first', 'error'); el.querySelector('[name=to]').focus(); return false; }
+      return true;
+    }
+    function sent(via) {
+      var cur = App.data.bookings.filter(function (x) { return x.id === b.id; })[0] || b;
+      var patch = { activity: (cur.activity || []).concat([logEntry('Quotation emailed (' + via + ') · ' + UI.money(App.bookingValue(b)))]) };
+      if (cur.status === 'New' || cur.status === 'Contacted') patch.status = 'Quoted';
+      if (!cur.customerEmail && val('to')) patch.customerEmail = val('to');
+      App.save('bookings', cur.id, patch, patch.status ? 'Marked as Quoted' : 'Quotation logged');
+      layer.close();
+    }
+    el.querySelector('[data-mailapp]').addEventListener('click', function () {
+      if (!check()) return;
+      location.href = 'mailto:' + encodeURIComponent(val('to')).replace(/%40/g, '@') + '?subject=' + encodeURIComponent(val('subject')) + '&body=' + encodeURIComponent(el.querySelector('[name=body]').value);
+      sent('email app');
+    });
+    el.querySelector('[data-gmail]').addEventListener('click', function () {
+      if (!check()) return;
+      var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(val('to')) + '&su=' + encodeURIComponent(val('subject')) + '&body=' + encodeURIComponent(el.querySelector('[name=body]').value);
+      var w = window.open(url, '_blank');
+      if (w) { try { w.opener = null; } catch (e) { /* ignore */ } } else { UI.toast('Allow pop-ups to open Gmail', 'error'); return; }
+      sent('Gmail');
+    });
+    el.querySelector('[data-copy]').addEventListener('click', function () {
+      var text = val('subject') + '\n\n' + el.querySelector('[name=body]').value;
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { UI.toast('Quotation copied'); });
+    });
+    el.querySelector('[data-pdf]').addEventListener('click', function () { printQuotation(b); });
+  }
+
+  function printQuotation(b) {
+    var q = quoteData(b);
+    var w = window.open('', '_blank');
+    if (!w) { UI.toast('Allow pop-ups to open the quotation', 'error'); return; }
+    var row = function (k, v) { return v ? '<tr><th>' + k + '</th><td>' + esc(v) + '</td></tr>' : ''; };
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Quotation ' + esc(q.ref) + '</title><style>' +
+      'body{font-family:Geist,system-ui,sans-serif;color:#0f0f0e;margin:40px;max-width:760px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #9b5a1b;padding-bottom:16px;margin-bottom:24px}' +
+      'img{height:56px}h1{font-size:24px;margin:6px 0 0}small{color:#5f5e58}table{width:100%;border-collapse:collapse;margin-bottom:20px}th,td{text-align:left;padding:10px;border-bottom:1px solid #e4e4df;font-size:14px;vertical-align:top}th{width:32%;color:#5f5e58;font-weight:500}' +
+      '.ref{font:600 18px "Geist Mono",monospace;color:#9b5a1b}.total{display:flex;justify-content:space-between;align-items:center;background:#f6efe6;border-radius:12px;padding:18px 20px;margin:8px 0 22px}.total b{font-size:28px;color:#9b5a1b}' +
+      'h2{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:#9b5a1b;margin:22px 0 8px}p{font-size:14px;line-height:1.6}footer{margin-top:32px;font-size:12px;color:#5f5e58;border-top:1px solid #e4e4df;padding-top:12px}</style></head><body>' +
+      '<header><div><img src="' + location.href.replace(/admin\/.*$/, '') + 'assets/images/logo.png" alt=""><h1>Tour Quotation</h1></div><div style="text-align:right"><div class="ref">' + esc(q.ref) + '</div><small>Issued ' + esc(q.issued) + '</small></div></header>' +
+      '<p>Dear ' + esc(q.first) + ', thank you for choosing ' + esc(q.biz.businessName || 'Ceylon Chauffeurs') + '. Here is your personalised Sri Lanka tour quotation.</p>' +
+      '<h2>Your tour</h2><table>' + row('Tour', q.tour) + row('Route', q.route) + row('Dates', q.dates) + row('Guests', q.guests) + row('Vehicle', q.vehicle) + row('Pickup', q.pickup) + '</table>' +
+      '<div class="total"><span>Total price (USD)</span><b>' + esc(q.total) + '</b></div>' +
+      (q.paid ? '<p><small>Already paid: ' + esc(UI.money(q.paid)) + '</small></p>' : '') +
+      '<h2>Included</h2><p>' + esc(q.included) + '</p>' +
+      '<h2>How to confirm</h2><p>Reply to our email' + (q.biz.displayPhone ? ' or message us on WhatsApp at ' + esc(q.biz.displayPhone) : '') + ', and we will send the deposit details.</p>' +
+      '<footer>' + esc(q.biz.businessName || 'Ceylon Chauffeurs') + ' · ' + esc(q.biz.displayPhone || '') + ' · ' + esc(q.biz.email || '') + ' · ' + esc(q.biz.officeAddress || '') + '</footer>' +
+      '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
+    w.document.close();
   }
 
   /* ---------------- Voucher ---------------- */
