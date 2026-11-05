@@ -703,12 +703,14 @@ function openPolicyModal(type) {
       <ul>
         <li><strong>Cancellation 48+ Hours Before Pickup:</strong> 100% Full Refund of any advance deposit with zero administrative penalties.</li>
         <li><strong>Cancellation Within 24-48 Hours:</strong> 80% Refund or free date rescheduling within 12 months.</li>
+        <li><strong>Cancellation Under 24 Hours or No-Show:</strong> The advance deposit is non-refundable.</li>
         <li><strong>Flight Delays or Rescheduling:</strong> Free automatic rescheduling. We track your flight into Colombo (CMB) at all times.</li>
       </ul>
       <h4>2. Zero Hidden Surcharges Guarantee</h4>
       <p>The daily rate agreed in your proposal is 100% all-inclusive. You will never be asked to pay extra for driver fuel, expressway tolls, tourist parking permits, or driver overnight meals/accommodation.</p>
       <h4>3. Route Adjustments During Your Tour</h4>
       <p>Your itinerary is completely flexible. You may request reasonable detour stops, change daily start times, or adjust sightseeing durations directly with your chauffeur at zero extra cost.</p>
+      <p><a href="refund-policy.html">Read the full Cancellation &amp; Refund Policy</a></p>
     `;
   } else {
     title.innerHTML = `<i class="ph ph-file-text"></i> Chauffeur Service Terms & Traveler Protection`;
@@ -722,6 +724,7 @@ function openPolicyModal(type) {
       <p><strong>Excluded:</strong> Personal monument entrance fees (e.g. Sigiriya, Polonnaruwa, national park jeep fees) and personal hotel bookings, unless you choose our Full All-Inclusive Package.</p>
       <h4>4. Passenger Insurance</h4>
       <p>All passengers in Ceylon Chauffeur vehicles are fully covered under comprehensive luxury commercial passenger vehicle insurance.</p>
+      <p><a href="terms.html">Read the full Terms &amp; Conditions</a> &middot; <a href="privacy-policy.html">Privacy Policy</a></p>
     `;
   }
 
