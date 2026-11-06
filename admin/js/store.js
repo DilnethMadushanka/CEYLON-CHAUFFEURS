@@ -32,6 +32,7 @@
       rate: 65, minPax: 1, maxPax: 3, luggage: '2-3 Bags', image: 'assets/images/sedan.jpg',
       description: 'Premium Japanese comfort with whisper-quiet ride, hybrid efficiency, and climate control.',
       features: ['Dual-zone climate control', 'Free high-speed Wi-Fi', 'Fuel, tolls, parking & driver lodging included', 'Chilled water and phone charging'],
+      vehicleList: ['Toyota Premio | 3', 'Toyota Prius | 3', 'Toyota Axio | 3'],
       units: 3
     },
     {
@@ -40,6 +41,7 @@
       rate: 105, minPax: 4, maxPax: 10, luggage: '4-8 Large Bags', image: 'assets/images/van.jpg',
       description: 'Spacious reclining seats and rear A/C for families and small groups.',
       features: ['Rear air-conditioning vents', 'Reclining captain seats', 'Large luggage space', 'Child seats on request'],
+      vehicleList: ['Toyota KDH Flat Roof | 6', 'Toyota KDH High Roof | 10'],
       units: 2
     },
     {
@@ -48,6 +50,7 @@
       rate: 130, minPax: 1, maxPax: 6, luggage: '4-6 Large Bags', image: 'assets/images/van.jpg',
       description: 'Premium KDH with VVIP luxury captain seats for couples, families and executives.',
       features: ['Luxury reclining captain seats', 'Rear air-conditioning vents', 'Free high-speed Wi-Fi', 'Fuel, tolls, parking & driver lodging included'],
+      vehicleList: ['Toyota KDH VVIP | 6'],
       units: 1
     },
     {
@@ -56,6 +59,7 @@
       rate: 160, minPax: 18, maxPax: 35, luggage: '12-25 Large Bags', image: 'assets/images/bus.jpg',
       description: 'Tourist-grade coaches for groups, delegations and wedding parties.',
       features: ['Reclining coach seats', 'PA system & microphone', 'Large luggage bay', 'Experienced coach driver & assistant'],
+      vehicleList: ['Toyota Coaster | 20', 'King Long Coach | 35'],
       units: 1
     }
   ];

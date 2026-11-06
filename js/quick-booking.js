@@ -42,6 +42,19 @@ var QUICK_FLEET = {
     return cls.models.reduce(function (m, v) { return Math.max(m, v.maxPax); }, 0);
   }
 
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // Admin "Vehicles & seats" lines look like "Toyota Premio | 3".
+  function parseVehicleList(lines) {
+    return (lines || []).map(function (line) {
+      var m = String(line).match(/^(.*?)[\s|:=,-]+(\d+)\s*(pax|passengers?|seats?)?\s*$/i);
+      if (!m || !m[1].trim() || !(Number(m[2]) > 0)) return null;
+      return { name: m[1].trim(), maxPax: Number(m[2]) };
+    }).filter(Boolean);
+  }
+
   function money(usd) {
     if (window.convertUSD) {
       try { return window.convertUSD(usd).formatted; } catch (e) { /* fall through */ }
@@ -67,14 +80,14 @@ var QUICK_FLEET = {
     function renderModels() {
       var cls = QUICK_FLEET[classSel.value] || QUICK_FLEET.sedan;
       modelSel.innerHTML = cls.models.map(function (m) {
-        return '<option value="' + m.id + '">' + m.name + ' (up to ' + m.maxPax + ' Pax)</option>';
+        return '<option value="' + esc(m.name) + '">' + esc(m.name) + ' (up to ' + m.maxPax + ' Pax)</option>';
       }).join('');
       renderPax();
     }
 
     function renderPax() {
       var cls = QUICK_FLEET[classSel.value] || QUICK_FLEET.sedan;
-      var model = cls.models.filter(function (m) { return m.id === modelSel.value; })[0] || cls.models[0];
+      var model = cls.models.filter(function (m) { return m.name === modelSel.value; })[0] || cls.models[0];
       // Seating capacity of the chosen vehicle; shown read-only so visitors cannot change it.
       paxSel.value = 'Up to ' + model.maxPax + (model.maxPax === 1 ? ' Passenger' : ' Passengers');
     }
@@ -86,13 +99,19 @@ var QUICK_FLEET = {
     renderClasses();
     renderModels();
 
-    // Lets site-sync push admin-managed daily rates into the labels.
+    // Lets site-sync push admin-managed rates, vehicles and seat counts into the bar.
     window.CCQuickBooking = {
       applyRates: function (map) {
         Object.keys(QUICK_FLEET).forEach(function (k) {
-          if (map[k] && Number(map[k].rate) > 0) QUICK_FLEET[k].rate = Number(map[k].rate);
+          var v = map[k]; if (!v) return;
+          if (Number(v.rate) > 0) QUICK_FLEET[k].rate = Number(v.rate);
+          var models = parseVehicleList(v.vehicleList);
+          if (models.length) QUICK_FLEET[k].models = models;
+          if (v.active === false) delete QUICK_FLEET[k];
         });
+        if (!Object.keys(QUICK_FLEET).length) return;
         renderClasses();
+        renderModels();
       }
     };
   }

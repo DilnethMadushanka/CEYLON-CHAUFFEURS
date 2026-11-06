@@ -125,8 +125,12 @@ function prefillFromURLParams() {
 
   // Specific vehicle chosen on the quick bar (kept only while its class stays selected)
   const modelParam = urlParams.get('model');
-  if (modelParam && VEHICLE_MODELS[modelParam] && VEHICLE_MODELS[modelParam].vehicle === vehicle) {
-    selectedModel = modelParam;
+  if (modelParam && VEHICLE_MODELS[modelParam]) {
+    if (VEHICLE_MODELS[modelParam].vehicle === vehicle) selectedModel = VEHICLE_MODELS[modelParam];
+  } else if (modelParam && DAILY_RATES[vehicle]) {
+    // Vehicle names managed in the admin arrive as plain text
+    const name = modelParam.replace(/[<>]/g, '').trim().slice(0, 60);
+    if (name) selectedModel = { vehicle, name };
   }
 
   // Passenger count from the quick bar fills the adults list
@@ -212,7 +216,7 @@ function initBookingForm() {
 
   vehicleRadios.forEach(radio => {
     radio.addEventListener('change', () => {
-      if (selectedModel && VEHICLE_MODELS[selectedModel].vehicle !== radio.value) selectedModel = null;
+      if (selectedModel && selectedModel.vehicle !== radio.value) selectedModel = null;
       validateCapacity();
       calculateQuote();
       saveDraft();
@@ -324,7 +328,7 @@ function calculateQuote() {
   const totalNoteElem = document.getElementById('summary-total-note');
 
   if (durationElem) durationElem.textContent = `${days} Day${days > 1 ? 's' : ''} (${Math.max(1, days - 1)} Nights)`;
-  if (vehicleElem) vehicleElem.textContent = selectedModel ? `${vehicleData.name.split('(')[0].trim()} · ${VEHICLE_MODELS[selectedModel].name}` : vehicleData.name;
+  if (vehicleElem) vehicleElem.textContent = selectedModel ? `${vehicleData.name.split('(')[0].trim()} · ${selectedModel.name}` : vehicleData.name;
   if (dailyRateElem) dailyRateElem.textContent = `${convertedDaily.formatted} / day`;
   if (totalElem && totalElem.textContent !== convertedTotal.formatted) {
     totalElem.textContent = convertedTotal.formatted;
@@ -457,7 +461,7 @@ function handleBookingSubmit(e) {
     daysCount: days,
     passengers: `${adults} Adults, ${kids} Children`,
     vehicle: vehicleData.name,
-    vehicleModel: selectedModel ? VEHICLE_MODELS[selectedModel].name : 'Any in class',
+    vehicleModel: selectedModel ? selectedModel.name : 'Any in class',
     package: preferredPackage,
     notes: routeNotes,
     estimatedTotalUSD,
@@ -518,7 +522,7 @@ A new tour inquiry has been received through the website. Please review the clie
 ─────────────────────────────
 📆 Dates      : ${travelDatesFormatted}
 👥 Group Size : ${adults} Adults${parseInt(kids) > 0 ? `, ${kids} Children` : ''}
-🚗 Vehicle    : ${vehicleData.name.split('(')[0].trim()}${selectedModel ? ` · ${VEHICLE_MODELS[selectedModel].name}` : ''}
+🚗 Vehicle    : ${vehicleData.name.split('(')[0].trim()}${selectedModel ? ` · ${selectedModel.name}` : ''}
 🗺️ Package    : ${preferredPackage}
 
 ─────────────────────────────
@@ -548,7 +552,7 @@ _Automated inquiry via ceylonchauffeur.com_`;
     booking_ref:      bookingRef,
     travel_dates:     travelDatesFormatted,
     passengers:       `${adults} Adults, ${kids} Children`,
-    vehicle_name:     vehicleData.name.split('(')[0].trim() + (selectedModel ? ` · ${VEHICLE_MODELS[selectedModel].name}` : ''),
+    vehicle_name:     vehicleData.name.split('(')[0].trim() + (selectedModel ? ` · ${selectedModel.name}` : ''),
     tour_package:     preferredPackage,
     route_notes:      routeNotes,
     estimated_total:  convertedTotal.formatted,

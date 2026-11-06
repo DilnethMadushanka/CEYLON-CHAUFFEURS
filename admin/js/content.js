@@ -224,6 +224,10 @@
 
   function editVehicle(v) {
     var isNew = !v;
+    if (v && !v.vehicleList) {
+      var def = Store.defaults.vehicles.filter(function (d) { return d.id === v.id; })[0];
+      if (def && def.vehicleList) v = Object.assign({}, v, { vehicleList: def.vehicleList.slice() });
+    }
     v = v || { active: true, units: 1, minPax: 1, maxPax: 3, image: 'assets/images/sedan.jpg', features: [], order: vehicles().length + 1 };
     openEditor({
       col: 'vehicles', id: isNew ? null : v.id, doc: v, size: 'md', title: isNew ? 'New vehicle class' : v.name, eyebrow: 'Fleet', deleteName: v.name,
@@ -235,13 +239,21 @@
         { name: 'units', label: 'Vehicles in fleet', type: 'number', min: 0 },
         { name: 'minPax', label: 'Min passengers', type: 'number', min: 1 },
         { name: 'maxPax', label: 'Max passengers', type: 'number', min: 1, hint: 'The booking form warns travelers above this' },
+        { name: 'vehicleList', label: 'Vehicles & seats', type: 'list', rows: 4, span: 2, hint: 'One vehicle per line: name | passengers. e.g. "Toyota KDH High Roof | 10". The home page booking bar shows these and their passenger counts.' },
         { name: 'luggage', label: 'Luggage', span: 2, placeholder: 'e.g. 2-3 Bags' },
         { name: 'image', label: 'Photo', type: 'image', span: 2 },
         { name: 'description', label: 'Short description', type: 'textarea', rows: 2, span: 2 },
         { name: 'features', label: 'Features', type: 'list', span: 2 },
         { name: 'active', label: 'Show on website', type: 'toggle', span: 2 }
       ],
-      collect: function (el, data) { if (isNew) { data.id = slug(data.name); data.order = v.order; } return data; }
+      collect: function (el, data) {
+        if (isNew) { data.id = slug(data.name); data.order = v.order; }
+        // Keep the class's max passengers in step with its largest vehicle.
+        var seats = (data.vehicleList || []).map(function (l) { var m = String(l).match(/(\d+)\s*(pax|passengers?|seats?)?\s*$/i); return m ? Number(m[1]) : 0; });
+        var top = Math.max.apply(null, [0].concat(seats));
+        if (top > 0) data.maxPax = top;
+        return data;
+      }
     });
   }
 
