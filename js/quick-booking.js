@@ -75,13 +75,8 @@ var QUICK_FLEET = {
     function renderPax() {
       var cls = QUICK_FLEET[classSel.value] || QUICK_FLEET.sedan;
       var model = cls.models.filter(function (m) { return m.id === modelSel.value; })[0] || cls.models[0];
-      var previous = parseInt(paxSel.value, 10) || 2;
-      var opts = [];
-      for (var i = 1; i <= model.maxPax; i++) {
-        opts.push('<option value="' + i + '">' + i + (i === 1 ? ' Passenger' : ' Passengers') + '</option>');
-      }
-      paxSel.innerHTML = opts.join('');
-      paxSel.value = String(Math.min(previous, model.maxPax));
+      // Seating capacity of the chosen vehicle; shown read-only so visitors cannot change it.
+      paxSel.value = 'Up to ' + model.maxPax + (model.maxPax === 1 ? ' Passenger' : ' Passengers');
     }
 
     classSel.addEventListener('change', renderModels);

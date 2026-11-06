@@ -982,7 +982,7 @@ main { display: block; }
 }
 .quick-bar-form {
   display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1fr 0.8fr auto;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr auto;
   gap: 14px;
   align-items: end;
 }
@@ -1002,6 +1002,7 @@ main { display: block; }
 }
 .form-group-quick label i { color: var(--muted); font-size: 1rem; }
 .quick-bar-form .btn { min-height: 50px; }
+.quick-pax-display { cursor: default; pointer-events: none; }
 
 .hero-features {
   display: flex;
@@ -1021,7 +1022,7 @@ main { display: block; }
 .hero-feat-item i { color: var(--accent); font-size: 1.1rem; }
 
 @media (max-width: 1024px) {
-  .quick-bar-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quick-bar-form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .quick-bar-form .btn { grid-column: 1 / -1; }
 }
 @media (max-width: 640px) {
