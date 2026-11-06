@@ -13,7 +13,7 @@
 (function () {
   'use strict';
 
-  var DEFAULT_DAILY = { 65: 'sedan', 105: 'van', 160: 'bus' };
+  var DEFAULT_DAILY = { 65: 'sedan', 105: 'van', 130: 'vvip-kdh', 160: 'bus' };
   var db = null;
 
   var sync = {
@@ -286,6 +286,7 @@
       var key = DEFAULT_DAILY[orig];
       if (key && map[key] && Number(map[key].rate) > 0) el.setAttribute('data-usd-amount', map[key].rate);
     });
+    if (window.CCQuickBooking) window.CCQuickBooking.applyRates(map);
     if (typeof VEHICLE_RATES !== 'undefined') {
       Object.keys(VEHICLE_RATES).forEach(function (k) { if (map[k] && Number(map[k].rate) > 0) VEHICLE_RATES[k].rate = Number(map[k].rate); });
     }

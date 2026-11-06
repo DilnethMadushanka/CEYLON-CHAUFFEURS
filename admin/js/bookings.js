@@ -37,7 +37,7 @@
       '<div class="toolbar card">' +
         '<div class="search-box">' + icon('search') + '<input type="search" placeholder="Search name, email, country, ref…" data-q></div>' +
         '<div class="toolbar-row">' +
-          '<div class="select-wrap select-sm"><select data-vehicle><option value="all">All vehicles</option><option value="sedan">Sedan</option><option value="van">Van</option><option value="bus">Coach / Bus</option></select>' + icon('down') + '</div>' +
+          '<div class="select-wrap select-sm"><select data-vehicle><option value="all">All vehicles</option><option value="sedan">Sedan</option><option value="van">Van</option><option value="vvip-kdh">VVIP KDH</option><option value="bus">Coach / Bus</option></select>' + icon('down') + '</div>' +
           '<div class="select-wrap select-sm"><select data-sort><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="arrival">Arrival date</option><option value="value">Highest value</option></select>' + icon('down') + '</div>' +
           '<div class="seg" data-layout><button data-l="table" aria-label="Table view">' + icon('list') + '</button><button data-l="board" aria-label="Board view">' + icon('board') + '</button></div>' +
         '</div>' +
