@@ -126,9 +126,18 @@
           <div class="form-group-quick">
             <label for="quick-vehicle"><i class="ph ph-car-profile"></i> Vehicle Class</label>
             <select name="vehicle" class="form-control" id="quick-vehicle">
-              <option value="sedan" selected>Sedan (Premio / Prius / Axio) - 1-3 Pax ($65/day)</option>
-              <option value="van">Luxury Van (KDH Flat/High Roof) - 4-10 Pax ($105/day)</option>
-              <option value="bus">Luxury Bus / Coach (Coaster/King Long) - 18-35 Pax ($160/day)</option>
+              <option value="sedan" selected>Sedan · 1-3 Pax ($65/day)</option>
+              <option value="van">Luxury Van (KDH) · 1-10 Pax ($105/day)</option>
+              <option value="vvip-kdh">VVIP KDH · 1-6 Pax ($130/day)</option>
+              <option value="bus">Luxury Bus / Coach · 1-35 Pax ($160/day)</option>
+            </select>
+          </div>
+          <div class="form-group-quick">
+            <label for="quick-model"><i class="ph ph-steering-wheel"></i> Vehicle</label>
+            <select name="model" class="form-control" id="quick-model">
+              <option value="premio" selected>Toyota Premio (up to 3 Pax)</option>
+              <option value="prius">Toyota Prius (up to 3 Pax)</option>
+              <option value="axio">Toyota Axio (up to 3 Pax)</option>
             </select>
           </div>
           <div class="form-group-quick">
@@ -142,26 +151,11 @@
             </select>
           </div>
           <div class="form-group-quick">
-            <label for="quick-package"><i class="ph ph-map-trifold"></i> Tour Preference</label>
-            <select name="package" class="form-control" id="quick-package">
-              <option value="">Custom Route (Any Tailored Itinerary)</option>
-              <optgroup label="All-Rounder / Highlights">
-                <option value="pkg-4d-cultural">4-Day Cultural Highlights Tour</option>
-                <option value="pkg-7d-heritage" selected>7-Day Heritage & Hill Country</option>
-                <option value="pkg-10d-complete">10-Day Complete Island Highlights</option>
-                <option value="pkg-14d-grand">14-Day Grand Sri Lanka Loop</option>
-                <option value="pkg-21d-ultimate">21-Day Ultimate Ceylon Loop</option>
-              </optgroup>
-              <optgroup label="Wildlife & Nature">
-                <option value="pkg-4d-wildlife">4-Day Wild Safari Express</option>
-                <option value="pkg-7d-wildlife">7-Day Wild & National Parks Safari</option>
-                <option value="pkg-10d-wildlife">10-Day Ultimate Wildlife Expedition</option>
-              </optgroup>
-              <optgroup label="Beach & Coastal">
-                <option value="pkg-4d-beach">4-Day South Coast Sun & Fun</option>
-                <option value="pkg-7d-beach">7-Day Complete Coastal Explorer</option>
-                <option value="pkg-10d-beach">10-Day East-to-South Beach Loop</option>
-              </optgroup>
+            <label for="quick-pax"><i class="ph ph-users"></i> Passengers</label>
+            <select name="pax" class="form-control" id="quick-pax">
+              <option value="1">1 Passenger</option>
+              <option value="2" selected>2 Passengers</option>
+              <option value="3">3 Passengers</option>
             </select>
           </div>
           <button type="submit" class="btn btn-primary">
@@ -653,6 +647,7 @@
   <script src="js/firebase-config.js"></script>
   <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/quick-booking.js"></script>
   <script src="js/site-sync.js"></script>
   <script src="js/account-nav.js"></script>
 </body>

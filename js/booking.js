@@ -29,8 +29,22 @@ const EMAILJS_CONFIG = {
 const DAILY_RATES = {
   sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
   van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 10, luggage: '4-8 Large Bags' },
+  'vvip-kdh': { name: 'VVIP KDH (Toyota KDH VVIP Luxury Captain Seats)', rate: 130, maxPax: 6, luggage: '4-6 Large Bags' },
   bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long)', rate: 160, maxPax: 35, luggage: '12-25 Large Bags' }
 };
+
+// Specific vehicles inside each class, picked on the home page quick bar (?model=).
+const VEHICLE_MODELS = {
+  premio: { vehicle: 'sedan', name: 'Toyota Premio' },
+  prius: { vehicle: 'sedan', name: 'Toyota Prius' },
+  axio: { vehicle: 'sedan', name: 'Toyota Axio' },
+  'kdh-flat': { vehicle: 'van', name: 'Toyota KDH Flat Roof' },
+  'kdh-high': { vehicle: 'van', name: 'Toyota KDH High Roof' },
+  'kdh-vvip': { vehicle: 'vvip-kdh', name: 'Toyota KDH VVIP' },
+  coaster: { vehicle: 'bus', name: 'Toyota Coaster' },
+  'king-long': { vehicle: 'bus', name: 'King Long Coach' }
+};
+let selectedModel = null;
 
 const PACKAGE_DURATIONS = {
   'pkg-4d-cultural': 4,
@@ -109,6 +123,21 @@ function prefillFromURLParams() {
     }
   }
 
+  // Specific vehicle chosen on the quick bar (kept only while its class stays selected)
+  const modelParam = urlParams.get('model');
+  if (modelParam && VEHICLE_MODELS[modelParam] && VEHICLE_MODELS[modelParam].vehicle === vehicle) {
+    selectedModel = modelParam;
+  }
+
+  // Passenger count from the quick bar fills the adults list
+  const pax = parseInt(urlParams.get('pax'), 10);
+  const adultsSelect = document.getElementById('pax-adults');
+  if (adultsSelect && pax > 0) {
+    const values = Array.from(adultsSelect.options).map(o => parseInt(o.value, 10));
+    const best = values.filter(v => v <= pax).pop() || values[0];
+    adultsSelect.value = String(best);
+  }
+
   // Set default dates according to duration
   const effectiveDuration = (!isNaN(duration) && duration > 0) ? duration : 7;
   const arrivalDate = new Date(Date.now() + (3 * 86400000));
@@ -183,6 +212,7 @@ function initBookingForm() {
 
   vehicleRadios.forEach(radio => {
     radio.addEventListener('change', () => {
+      if (selectedModel && VEHICLE_MODELS[selectedModel].vehicle !== radio.value) selectedModel = null;
       validateCapacity();
       calculateQuote();
       saveDraft();
@@ -294,7 +324,7 @@ function calculateQuote() {
   const totalNoteElem = document.getElementById('summary-total-note');
 
   if (durationElem) durationElem.textContent = `${days} Day${days > 1 ? 's' : ''} (${Math.max(1, days - 1)} Nights)`;
-  if (vehicleElem) vehicleElem.textContent = vehicleData.name;
+  if (vehicleElem) vehicleElem.textContent = selectedModel ? `${vehicleData.name.split('(')[0].trim()} · ${VEHICLE_MODELS[selectedModel].name}` : vehicleData.name;
   if (dailyRateElem) dailyRateElem.textContent = `${convertedDaily.formatted} / day`;
   if (totalElem && totalElem.textContent !== convertedTotal.formatted) {
     totalElem.textContent = convertedTotal.formatted;
@@ -427,6 +457,7 @@ function handleBookingSubmit(e) {
     daysCount: days,
     passengers: `${adults} Adults, ${kids} Children`,
     vehicle: vehicleData.name,
+    vehicleModel: selectedModel ? VEHICLE_MODELS[selectedModel].name : 'Any in class',
     package: preferredPackage,
     notes: routeNotes,
     estimatedTotalUSD,
@@ -487,7 +518,7 @@ A new tour inquiry has been received through the website. Please review the clie
 ─────────────────────────────
 📆 Dates      : ${travelDatesFormatted}
 👥 Group Size : ${adults} Adults${parseInt(kids) > 0 ? `, ${kids} Children` : ''}
-🚗 Vehicle    : ${vehicleData.name.split('(')[0].trim()}
+🚗 Vehicle    : ${vehicleData.name.split('(')[0].trim()}${selectedModel ? ` · ${VEHICLE_MODELS[selectedModel].name}` : ''}
 🗺️ Package    : ${preferredPackage}
 
 ─────────────────────────────
@@ -517,7 +548,7 @@ _Automated inquiry via ceylonchauffeur.com_`;
     booking_ref:      bookingRef,
     travel_dates:     travelDatesFormatted,
     passengers:       `${adults} Adults, ${kids} Children`,
-    vehicle_name:     vehicleData.name.split('(')[0].trim(),
+    vehicle_name:     vehicleData.name.split('(')[0].trim() + (selectedModel ? ` · ${VEHICLE_MODELS[selectedModel].name}` : ''),
     tour_package:     preferredPackage,
     route_notes:      routeNotes,
     estimated_total:  convertedTotal.formatted,

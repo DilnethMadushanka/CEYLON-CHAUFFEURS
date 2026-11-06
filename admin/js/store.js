@@ -43,7 +43,15 @@
       units: 2
     },
     {
-      id: 'bus', order: 3, active: true,
+      id: 'vvip-kdh', order: 3, active: true,
+      name: 'VVIP KDH', models: 'Toyota KDH VVIP (Luxury Captain Seats)',
+      rate: 130, minPax: 1, maxPax: 6, luggage: '4-6 Large Bags', image: 'assets/images/van.jpg',
+      description: 'Premium KDH with VVIP luxury captain seats for couples, families and executives.',
+      features: ['Luxury reclining captain seats', 'Rear air-conditioning vents', 'Free high-speed Wi-Fi', 'Fuel, tolls, parking & driver lodging included'],
+      units: 1
+    },
+    {
+      id: 'bus', order: 4, active: true,
       name: 'Luxury Coach / Bus', models: 'Toyota Coaster, King Long / Yutong',
       rate: 160, minPax: 18, maxPax: 35, luggage: '12-25 Large Bags', image: 'assets/images/bus.jpg',
       description: 'Tourist-grade coaches for groups, delegations and wedding parties.',
