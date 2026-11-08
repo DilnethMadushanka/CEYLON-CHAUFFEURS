@@ -328,7 +328,13 @@
     return min === max ? String(max) : min + '-' + max;
   }
 
+  // Photos shipped with the site for admin-created classes. Used while the class still points at
+  // one of the built-in class photos; a photo uploaded or picked in the admin always wins.
+  var CUSTOM_VEHICLE_PHOTOS = { 'vvip-kdh-highroof': 'assets/images/vvip-kdh.jpg' };
+  var BUILT_IN_PHOTOS = /^assets\/images\/(sedan|van|bus)\.jpg$/;
+
   function vehicleImage(v) {
+    if (CUSTOM_VEHICLE_PHOTOS[v.id] && (!v.image || BUILT_IN_PHOTOS.test(v.image))) return CUSTOM_VEHICLE_PHOTOS[v.id];
     return resolveMedia(v.image) || v.image || 'assets/images/van.jpg';
   }
 
