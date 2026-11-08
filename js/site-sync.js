@@ -13,7 +13,7 @@
 (function () {
   'use strict';
 
-  var DEFAULT_DAILY = { 65: 'sedan', 105: 'van', 130: 'vvip-kdh', 160: 'bus' };
+  var DEFAULT_DAILY = { 65: 'sedan', 105: 'van', 160: 'bus' };
   var db = null;
 
   var sync = {
@@ -141,6 +141,7 @@
     var refs = {};
     Object.keys(res[5]).forEach(function (k) { refs[res[5][k]] = 1; });
     res[2].forEach(function (p) { if (p.image) refs[p.image] = 1; });
+    res[1].forEach(function (v) { if (v.image) refs[v.image] = 1; });
     var ids = Object.keys(refs).filter(function (r) { return r.indexOf('media:') === 0; });
     return Promise.all(ids.map(function (r) {
       return db.collection('media').doc(r.slice(6)).get().then(function (d) { return [r, d.exists ? d.data().data : null]; }).catch(function () { return [r, null]; });
@@ -286,6 +287,7 @@
       var key = DEFAULT_DAILY[orig];
       if (key && map[key] && Number(map[key].rate) > 0) el.setAttribute('data-usd-amount', map[key].rate);
     });
+    try { applyCustomVehicles(list); } catch (e) { console.warn(e); }
     if (window.CCQuickBooking) window.CCQuickBooking.applyRates(map);
     if (typeof VEHICLE_RATES !== 'undefined') {
       Object.keys(VEHICLE_RATES).forEach(function (k) { if (map[k] && Number(map[k].rate) > 0) VEHICLE_RATES[k].rate = Number(map[k].rate); });
@@ -306,6 +308,139 @@
         document.querySelectorAll('#' + v.id + '.fleet-card, .fleet-tab-btn[data-vehicle="' + v.id + '"]').forEach(function (el) { el.hidden = true; });
       }
     });
+  }
+
+  /* ---------------- Vehicle classes created in the admin ---------------- */
+  // The built-in classes (sedan, van, bus) have hand-written cards. Any other active class from the
+  // admin gets a card on the home page, a tab on the fleet page and an option on the booking form,
+  // placed just above the coach.
+  var BUILT_IN_VEHICLES = ['sedan', 'van', 'bus'];
+
+  function seatLines(v) {
+    return (v.vehicleList || []).map(function (line) {
+      var m = String(line).match(/^(.*?)[\s|:=,-]+(\d+)\s*(pax|passengers?|seats?)?\s*$/i);
+      return m ? { name: m[1].trim(), pax: Number(m[2]) } : null;
+    }).filter(Boolean);
+  }
+
+  function paxRange(v) {
+    var min = Number(v.minPax) || 1, max = Number(v.maxPax) || min;
+    return min === max ? String(max) : min + '-' + max;
+  }
+
+  function vehicleImage(v) {
+    return resolveMedia(v.image) || v.image || 'assets/images/van.jpg';
+  }
+
+  function insertBefore(parent, html, beforeEl) {
+    var tpl = document.createElement('template');
+    tpl.innerHTML = html.trim();
+    var el = tpl.content.firstElementChild;
+    if (beforeEl && beforeEl.parentNode === parent) parent.insertBefore(el, beforeEl); else parent.appendChild(el);
+    return el;
+  }
+
+  function bindWhatsApp(el) {
+    el.querySelectorAll('[data-cc-wa]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (window.openWhatsApp) window.openWhatsApp(btn.getAttribute('data-cc-wa'));
+      });
+    });
+  }
+
+  function applyCustomVehicles(list) {
+    var custom = list.filter(function (v) {
+      return BUILT_IN_VEHICLES.indexOf(v.id) === -1 && v.active !== false && Number(v.rate) > 0 && /^[\w-]+$/.test(v.id);
+    }).sort(byOrder);
+    if (!custom.length) return;
+
+    custom.forEach(function (v) {
+      if (document.querySelector('[data-cc-vehicle="' + v.id + '"]')) return;
+      var name = esc(v.name), models = esc(v.models || ''), rate = Number(v.rate);
+      var seats = seatLines(v);
+      var seatText = seats.length ? seats.map(function (x) { return esc(x.name) + ' (' + x.pax + ' Pax)'; }).join(', ') : paxRange(v) + ' Passengers';
+      var features = (v.features || []).map(function (f) { return '<li><i class="ph ph-check"></i> ' + esc(f) + '</li>'; }).join('');
+      var waMsg = esc('Hi Ceylon Chauffeur, I would like to inquire about booking your ' + v.name + (v.models ? ' (' + v.models + ')' : '') + ' with a private chauffeur.');
+      var bookUrl = 'booking.html?vehicle=' + encodeURIComponent(v.id);
+
+      // Home page fleet preview
+      var homeGrid = document.querySelector('.fleet-section .fleet-grid');
+      if (homeGrid) {
+        var busCard = homeGrid.querySelector('a[href="booking.html?vehicle=bus"]');
+        busCard = busCard && busCard.closest('.fleet-card');
+        var card = insertBefore(homeGrid,
+          '<article class="fleet-card is-visible" data-cc-vehicle="' + v.id + '">' +
+            '<div class="fleet-image-wrap"><img src="' + esc(vehicleImage(v)) + '" alt="' + name + '" loading="lazy" width="1376" height="768"></div>' +
+            '<div class="fleet-content">' +
+              '<span class="fleet-category-badge">' + name + '</span>' +
+              '<h3>' + (models || name) + '</h3>' +
+              (v.description ? '<p class="fleet-subtitle">' + esc(v.description) + '</p>' : '') +
+              '<div class="fleet-specs"><div class="spec-item"><i class="ph ph-users"></i> ' + seatText + '</div>' +
+              (v.luggage ? '<div class="spec-item"><i class="ph ph-suitcase-rolling"></i> ' + esc(v.luggage) + '</div>' : '') + '</div>' +
+              (features ? '<button type="button" class="fleet-details-dropdown-btn" aria-expanded="false"><span class="dropdown-btn-text" data-i18n="fleet.view_features">View Features & Inclusions</span><i class="ph ph-caret-down dropdown-icon"></i></button>' +
+                '<div class="fleet-details-collapse"><div><ul class="fleet-features-list">' + features + '</ul></div></div>' : '') +
+            '</div>' +
+            '<div class="fleet-side">' +
+              '<span class="fleet-rate-badge" data-usd-amount="' + rate + '" data-usd-period="day">$' + rate + ' / Day All-Inclusive</span>' +
+              '<div class="fleet-actions"><a href="' + bookUrl + '" class="btn btn-outline-emerald btn-sm">Get Custom Quote</a>' +
+              '<button class="btn btn-whatsapp btn-sm" data-cc-wa="' + waMsg + '"><i class="ph ph-whatsapp-logo"></i> WhatsApp</button></div>' +
+            '</div>' +
+          '</article>', busCard);
+        bindWhatsApp(card);
+      }
+
+      // Fleet page tab + detail panel
+      var tabs = document.getElementById('fleet-vehicle-tabs');
+      var busPanel = document.getElementById('bus');
+      if (tabs && busPanel && busPanel.classList.contains('fleet-detailed-card')) {
+        insertBefore(tabs,
+          '<button type="button" class="fleet-tab-btn" data-vehicle="' + v.id + '" data-cc-vehicle="' + v.id + '" role="tab" aria-selected="false" aria-controls="' + v.id + '">' +
+            '<div class="fleet-tab-icon"><i class="ph ph-van"></i></div>' +
+            '<div class="fleet-tab-info"><span class="fleet-tab-name">' + name + '</span><span class="fleet-tab-meta">' + paxRange(v) + ' Pax' + (models ? ', ' + models : '') + '</span></div>' +
+            '<span class="fleet-tab-badge" data-usd-amount="' + rate + '" data-usd-period="day">$' + rate + ' / Day</span>' +
+          '</button>', tabs.querySelector('.fleet-tab-btn[data-vehicle="bus"]'));
+        var panel = insertBefore(busPanel.parentNode,
+          '<div class="fleet-card fleet-detailed-card" id="' + v.id + '" role="tabpanel">' +
+            '<div class="fleet-image-wrap"><img src="' + esc(vehicleImage(v)) + '" alt="' + name + '" width="1376" height="768" loading="lazy"></div>' +
+            '<div class="fleet-content fleet-detailed-content">' +
+              '<span class="fleet-category-badge">' + name + '</span>' +
+              '<h2 class="fleet-title">' + name + (models ? ' (' + models + ')' : '') + '</h2>' +
+              (v.description ? '<p class="fleet-subtitle">' + esc(v.description) + '</p>' : '') +
+              '<div class="fleet-specs"><div class="spec-item"><i class="ph ph-users"></i> <strong>Capacity:</strong> ' + seatText + '</div>' +
+              (v.luggage ? '<div class="spec-item"><i class="ph ph-suitcase-rolling"></i> <strong>Luggage:</strong> ' + esc(v.luggage) + '</div>' : '') + '</div>' +
+              '<span class="fleet-rate-badge" data-usd-amount="' + rate + '" data-usd-period="day">$' + rate + ' / Day All-Inclusive</span>' +
+              (features ? '<ul class="fleet-features-list">' + features.replace(/ph-check"/g, 'ph-check-circle"') + '</ul>' : '') +
+              '<div class="fleet-actions"><a href="' + bookUrl + '" class="btn btn-primary"><i class="ph ph-calendar-check"></i> Get a Custom Quote</a>' +
+              '<button class="btn btn-outline-emerald" data-cc-wa="' + waMsg + '"><i class="ph ph-whatsapp-logo"></i> Book via WhatsApp</button></div>' +
+            '</div>' +
+          '</div>', busPanel);
+        bindWhatsApp(panel);
+        if (location.hash === '#' + v.id && window.switchFleetVehicle) window.switchFleetVehicle(v.id);
+      }
+
+      // Booking form vehicle option
+      var busOption = document.getElementById('vehicle-option-bus');
+      if (busOption && typeof DAILY_RATES !== 'undefined') {
+        DAILY_RATES[v.id] = { name: v.name + (v.models ? ' (' + v.models + ')' : ''), rate: rate, maxPax: Number(v.maxPax) || 6, luggage: v.luggage || '' };
+        insertBefore(busOption.parentNode,
+          '<label class="vehicle-radio-option" id="vehicle-option-' + v.id + '" data-cc-vehicle="' + v.id + '">' +
+            '<input type="radio" name="vehicle" value="' + v.id + '">' +
+            '<div class="vehicle-card-select">' +
+              '<div class="veh-card-icon"><i class="ph ph-van"></i></div>' +
+              '<div class="veh-card-details"><h5>' + name + '</h5>' +
+                '<p class="veh-capacity">' + paxRange(v) + ' Pax' + (v.luggage ? ', ' + esc(v.luggage) : '') + '</p>' +
+                (models ? '<p class="veh-models">' + models + '</p>' : '') + '</div>' +
+              '<div class="veh-card-price" data-usd-amount="' + rate + '" data-usd-period="day">$' + rate + ' / Day</div>' +
+            '</div>' +
+          '</label>', busOption);
+      }
+    });
+
+    if (typeof window.applyVehicleFromURL === 'function' && window.applyVehicleFromURL()) {
+      if (typeof validateCapacity === 'function') validateCapacity();
+      if (typeof calculateQuote === 'function') calculateQuote();
+    }
   }
 
   /* ---------------- Tour packages ---------------- */

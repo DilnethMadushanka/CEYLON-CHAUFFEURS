@@ -234,7 +234,7 @@
       canDelete: isNew ? false : ['sedan', 'van', 'bus'].indexOf(v.id) === -1,
       fields: [
         { name: 'name', label: 'Class name', required: true, span: 2, placeholder: 'e.g. Executive Sedan' },
-        { name: 'models', label: 'Models', span: 2, placeholder: 'e.g. Toyota Premio / Prius / Axio' },
+        { name: 'models', label: 'Models', span: 2, placeholder: 'e.g. Toyota Prius / Axio' },
         { name: 'rate', label: 'Daily rate (USD)', type: 'number', min: 1, prefix: '$', required: true },
         { name: 'units', label: 'Vehicles in fleet', type: 'number', min: 0 },
         { name: 'minPax', label: 'Min passengers', type: 'number', min: 1 },

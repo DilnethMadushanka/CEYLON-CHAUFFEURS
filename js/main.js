@@ -394,12 +394,18 @@ function initGlobalFAQAccordion() {
  * Interactive Fleet Vehicle Selector Tabs
  */
 function initFleetTabs() {
-  const tabs = document.querySelectorAll('.fleet-tab-btn');
-  const cards = document.querySelectorAll('.fleet-detailed-card');
-  if (tabs.length === 0 || cards.length === 0) return;
+  if (!document.querySelector('.fleet-tab-btn') || !document.querySelector('.fleet-detailed-card')) return;
+
+  // Vehicle classes added in the admin are inserted later by site-sync, so look tabs and cards up live.
+  const isVehicle = id => {
+    const el = id && document.getElementById(id);
+    return !!(el && el.classList.contains('fleet-detailed-card'));
+  };
 
   function activateVehicle(vehicleId, shouldScroll = false) {
     if (!vehicleId) vehicleId = 'sedan';
+    const tabs = document.querySelectorAll('.fleet-tab-btn');
+    const cards = document.querySelectorAll('.fleet-detailed-card');
 
     // Update tab buttons
     tabs.forEach(tab => {
@@ -422,20 +428,20 @@ function initFleetTabs() {
     }
   }
 
-  // Bind tab buttons
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const vId = tab.getAttribute('data-vehicle');
-      activateVehicle(vId);
-      if (history.replaceState) {
-        history.replaceState(null, null, `#${vId}`);
-      }
-    });
+  // Bind tab buttons (delegated, so tabs added later work too)
+  document.getElementById('fleet-vehicle-tabs')?.addEventListener('click', e => {
+    const tab = e.target.closest('.fleet-tab-btn');
+    if (!tab) return;
+    const vId = tab.getAttribute('data-vehicle');
+    activateVehicle(vId);
+    if (history.replaceState) {
+      history.replaceState(null, null, `#${vId}`);
+    }
   });
 
   // Check URL hash on page load (e.g. fleet.html#van or fleet.html#bus)
   const hash = window.location.hash.replace('#', '');
-  if (hash && (hash === 'sedan' || hash === 'van' || hash === 'bus')) {
+  if (isVehicle(hash)) {
     activateVehicle(hash);
   } else {
     activateVehicle('sedan');
@@ -444,7 +450,7 @@ function initFleetTabs() {
   // Handle hash changes (e.g. from footer links)
   window.addEventListener('hashchange', () => {
     const h = window.location.hash.replace('#', '');
-    if (h && (h === 'sedan' || h === 'van' || h === 'bus')) {
+    if (isVehicle(h)) {
       activateVehicle(h, true);
     }
   });
@@ -457,11 +463,12 @@ function initFleetTabs() {
  * Initialize Collapsible Feature Dropdowns on Fleet Cards (Home Page)
  */
 function initFleetDropdowns() {
-  const dropdownBtns = document.querySelectorAll('.fleet-details-dropdown-btn');
-  if (!dropdownBtns.length) return;
+  if (!document.querySelector('.fleet-grid')) return;
 
-  dropdownBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  // Delegated so cards added later (vehicle classes created in the admin) work too.
+  document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.fleet-details-dropdown-btn');
+      if (!btn) return;
       e.preventDefault();
       const card = btn.closest('.fleet-card');
       if (!card) return;
@@ -491,13 +498,12 @@ function initFleetDropdowns() {
           textSpan.textContent = (trans && trans[key]) || (nextActive ? 'Hide Features & Inclusions' : 'View Features & Inclusions');
         }
       }
-    });
   });
 
   // Re-translate dropdown labels immediately whenever user changes language
   window.addEventListener('ceylon_language_changed', (e) => {
     const activeLang = (e.detail && e.detail.language) || window.currentLanguage || localStorage.getItem('ceylon_lang') || 'en';
-    dropdownBtns.forEach(btn => {
+    document.querySelectorAll('.fleet-details-dropdown-btn').forEach(btn => {
       const textSpan = btn.querySelector('.dropdown-btn-text');
       if (!textSpan) return;
       const isOpen = btn.classList.contains('active');
