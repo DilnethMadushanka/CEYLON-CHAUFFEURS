@@ -9,7 +9,6 @@ var QUICK_FLEET = {
   sedan: {
     label: 'Sedan', rate: 65,
     models: [
-      { id: 'premio', name: 'Toyota Premio', maxPax: 3 },
       { id: 'prius', name: 'Toyota Prius', maxPax: 3 },
       { id: 'axio', name: 'Toyota Axio', maxPax: 3 }
     ]
@@ -19,13 +18,6 @@ var QUICK_FLEET = {
     models: [
       { id: 'kdh-flat', name: 'Toyota KDH Flat Roof', maxPax: 6 },
       { id: 'kdh-high', name: 'Toyota KDH High Roof', maxPax: 10 }
-    ]
-  },
-  'vvip-kdh': {
-    // Placeholder rate and capacity until the owner confirms them.
-    label: 'VVIP KDH', rate: 130,
-    models: [
-      { id: 'kdh-vvip', name: 'Toyota KDH VVIP', maxPax: 6 }
     ]
   },
   bus: {
@@ -46,7 +38,7 @@ var QUICK_FLEET = {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Admin "Vehicles & seats" lines look like "Toyota Premio | 3".
+  // Admin "Vehicles & seats" lines look like "Toyota Prius | 3".
   function parseVehicleList(lines) {
     return (lines || []).map(function (line) {
       var m = String(line).match(/^(.*?)[\s|:=,-]+(\d+)\s*(pax|passengers?|seats?)?\s*$/i);
@@ -72,7 +64,7 @@ var QUICK_FLEET = {
       var current = classSel.value || 'sedan';
       classSel.innerHTML = Object.keys(QUICK_FLEET).map(function (key) {
         var c = QUICK_FLEET[key];
-        return '<option value="' + key + '">' + c.label + ' · 1-' + maxPaxOf(c) + ' Pax (' + money(c.rate) + '/day)</option>';
+        return '<option value="' + esc(key) + '">' + esc(c.label) + ' · 1-' + maxPaxOf(c) + ' Pax (' + money(c.rate) + '/day)</option>';
       }).join('');
       classSel.value = QUICK_FLEET[current] ? current : 'sedan';
     }
@@ -109,6 +101,21 @@ var QUICK_FLEET = {
           if (models.length) QUICK_FLEET[k].models = models;
           if (v.active === false) delete QUICK_FLEET[k];
         });
+        // Vehicle classes created in the admin go after the built-in ones, just above the coach.
+        var custom = Object.keys(map).map(function (k) { return map[k]; }).filter(function (v) {
+          return !QUICK_FLEET[v.id] && v.active !== false && Number(v.rate) > 0 && ['sedan', 'van', 'bus'].indexOf(v.id) === -1;
+        }).sort(function (a, b) { return (a.order || 999) - (b.order || 999); });
+        if (custom.length) {
+          var ordered = {};
+          Object.keys(QUICK_FLEET).forEach(function (k) { if (k !== 'bus') ordered[k] = QUICK_FLEET[k]; });
+          custom.forEach(function (v) {
+            var models = parseVehicleList(v.vehicleList);
+            if (!models.length) models = [{ name: v.models || v.name, maxPax: Number(v.maxPax) || 1 }];
+            ordered[v.id] = { label: v.name, rate: Number(v.rate), models: models };
+          });
+          if (QUICK_FLEET.bus) ordered.bus = QUICK_FLEET.bus;
+          QUICK_FLEET = ordered;
+        }
         if (!Object.keys(QUICK_FLEET).length) return;
         renderClasses();
         renderModels();

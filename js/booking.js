@@ -27,20 +27,17 @@ const EMAILJS_CONFIG = {
 // ────────────────────────────────────────────────────────────────────────────
 
 const DAILY_RATES = {
-  sedan: { name: 'Executive Sedan (Toyota Premio / Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
+  sedan: { name: 'Executive Sedan (Toyota Prius / Axio)', rate: 65, maxPax: 3, luggage: '2-3 Bags' },
   van: { name: 'Luxury Van (Toyota KDH Flat & High Roof / Nissan E25)', rate: 105, maxPax: 10, luggage: '4-8 Large Bags' },
-  'vvip-kdh': { name: 'VVIP KDH (Toyota KDH VVIP Luxury Captain Seats)', rate: 130, maxPax: 6, luggage: '4-6 Large Bags' },
   bus: { name: 'Luxury Bus / Coach (Toyota Coaster / King Long)', rate: 160, maxPax: 35, luggage: '12-25 Large Bags' }
 };
 
 // Specific vehicles inside each class, picked on the home page quick bar (?model=).
 const VEHICLE_MODELS = {
-  premio: { vehicle: 'sedan', name: 'Toyota Premio' },
   prius: { vehicle: 'sedan', name: 'Toyota Prius' },
   axio: { vehicle: 'sedan', name: 'Toyota Axio' },
   'kdh-flat': { vehicle: 'van', name: 'Toyota KDH Flat Roof' },
   'kdh-high': { vehicle: 'van', name: 'Toyota KDH High Roof' },
-  'kdh-vvip': { vehicle: 'vvip-kdh', name: 'Toyota KDH VVIP' },
   coaster: { vehicle: 'bus', name: 'Toyota Coaster' },
   'king-long': { vehicle: 'bus', name: 'King Long Coach' }
 };
@@ -79,6 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * Select the vehicle class (and specific vehicle) passed in the URL. Called again by site-sync
+ * after it adds vehicle classes created in the admin.
+ */
+function applyVehicleFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const vehicle = urlParams.get('vehicle');
+  if (!vehicle || !DAILY_RATES[vehicle]) return false;
+  const vehicleRadio = Array.from(document.querySelectorAll('input[name="vehicle"]')).find(r => r.value === vehicle);
+  if (!vehicleRadio) return false;
+  vehicleRadio.checked = true;
+
+  // Specific vehicle chosen on the quick bar (kept only while its class stays selected)
+  const modelParam = urlParams.get('model');
+  if (modelParam && VEHICLE_MODELS[modelParam]) {
+    if (VEHICLE_MODELS[modelParam].vehicle === vehicle) selectedModel = VEHICLE_MODELS[modelParam];
+  } else if (modelParam) {
+    // Vehicle names managed in the admin arrive as plain text
+    const name = modelParam.replace(/[<>]/g, '').trim().slice(0, 60);
+    if (name) selectedModel = { vehicle, name };
+  }
+  return true;
+}
+window.applyVehicleFromURL = applyVehicleFromURL;
+
+/**
  * Prefill inputs from URL parameters (e.g. from index quick bar or packages modal)
  */
 function prefillFromURLParams() {
@@ -115,23 +137,7 @@ function prefillFromURLParams() {
     }
   }
 
-  // Prefill vehicle radio
-  if (vehicle && DAILY_RATES[vehicle]) {
-    const vehicleRadio = document.querySelector(`input[name="vehicle"][value="${vehicle}"]`);
-    if (vehicleRadio) {
-      vehicleRadio.checked = true;
-    }
-  }
-
-  // Specific vehicle chosen on the quick bar (kept only while its class stays selected)
-  const modelParam = urlParams.get('model');
-  if (modelParam && VEHICLE_MODELS[modelParam]) {
-    if (VEHICLE_MODELS[modelParam].vehicle === vehicle) selectedModel = VEHICLE_MODELS[modelParam];
-  } else if (modelParam && DAILY_RATES[vehicle]) {
-    // Vehicle names managed in the admin arrive as plain text
-    const name = modelParam.replace(/[<>]/g, '').trim().slice(0, 60);
-    if (name) selectedModel = { vehicle, name };
-  }
+  applyVehicleFromURL();
 
   // Passenger count from the quick bar fills the adults list
   const pax = parseInt(urlParams.get('pax'), 10);
@@ -163,7 +169,6 @@ function initBookingForm() {
   const form = document.getElementById('custom-itinerary-form');
   const arrivalInput = document.getElementById('arrival-date');
   const departureInput = document.getElementById('departure-date');
-  const vehicleRadios = document.querySelectorAll('input[name="vehicle"]');
   const adultsSelect = document.getElementById('pax-adults');
   const kidsSelect = document.getElementById('pax-kids');
   const packageSelect = document.getElementById('preferred-package');
@@ -214,13 +219,14 @@ function initBookingForm() {
     }
   });
 
-  vehicleRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      if (selectedModel && selectedModel.vehicle !== radio.value) selectedModel = null;
-      validateCapacity();
-      calculateQuote();
-      saveDraft();
-    });
+  // Delegated so vehicle classes added later from the admin work too
+  document.addEventListener('change', e => {
+    const radio = e.target;
+    if (!radio.matches || !radio.matches('input[name="vehicle"]')) return;
+    if (selectedModel && selectedModel.vehicle !== radio.value) selectedModel = null;
+    validateCapacity();
+    calculateQuote();
+    saveDraft();
   });
 
   // Save drafts on text input
